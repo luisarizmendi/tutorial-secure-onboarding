@@ -206,7 +206,7 @@ device_specific_store_driver:
 [.console-input]
 [source,bash,subs="+macros,+attributes"]
 ----
-curl -O xxxxx
+curl -O https://raw.githubusercontent.com/luisarizmendi/tutorial-secure-onboarding/master/documentation/modules/ROOT/examples/fdo-configs.tar.gz
 tar xvf fdo-configs.tar.gz
 ----
 
