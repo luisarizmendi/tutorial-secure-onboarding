@@ -5,7 +5,8 @@
 [.text-center.strong]
 == Secure Edge device onboarding with RHEL and FDO
 
-Blah, blah.
+Onboarding edge and Internet of Things (IoT) devices at scale creates significant challenges for sysadmins. To help address them, the FIDO Alliance created the FIDO Device Onboard (FDO) specification as the first widely accepted industry standard aimed at solving edge computing and IoT device onboarding challenges.
+
 
 [.tiles.browse]
 == Browse modules
