@@ -1,20 +1,21 @@
-= Welcome to Template Tutorial
+= Welcome to Secure Edge device onboarding tutorial
 :page-layout: home
 :!sectids:
 
 [.text-center.strong]
-== Publish Services to Kubernetes
+== Secure Edge device onboarding with RHEL and FDO
 
-A Kubernetes tutorial to show how you can deploy a Java service to a Kubernetes cluster as it was a child game.
+Blah, blah.
 
 [.tiles.browse]
 == Browse modules
 
 [.tile]
-.xref:01-setup.adoc[Get Started]
-* xref:01-setup.adoc#minikube[Minikube]
+.xref:00-prerequisite.adoc[0. Prerequisites]
+* xref:00-prerequisite.adoc#virtualization[Prepare your virtualization environment]
+* xref:00-prerequisite.adoc#arch[Choose your lab architecture]
+* xref:00-prerequisite.adoc#usecase[Create your use case]
 
 [.tile]
-.xref:02-deploy.adoc[Deploying]
-* xref:02-deploy.adoc#package[Package the Application]
-* xref:02-deploy.adoc#deploy[Deploy the Application]
+.xref:01-fdo.adoc[1. FIDO Device Onboarding (FDO)]
+* xref:01-fdo.adoc#intro[Understanding FDO]

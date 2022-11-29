@@ -1,5 +1,5 @@
-name: template-tutorial
-title: Template Tutorial
+name: fdo-tutorial
+title: Secure Edge device onboarding with RHEL and FDO
 version: master
 nav:
   - modules/ROOT/nav.adoc
