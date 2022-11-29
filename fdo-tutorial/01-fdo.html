@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Deploy Service :: Secure Edge device onboarding with RHEL and FDO</title>
+    <title>FIDO Device Onboarding (FDO) :: Secure Edge device onboarding with RHEL and FDO</title>
     <link rel="canonical" href="https://luisarizmendi.github.io/tutorial-secure-onboarding/fdo-tutorial/01-fdo.html">
     <link rel="prev" href="00-prerequisite.html">
     <meta name="generator" content="Antora 3.0.0">
@@ -96,81 +96,201 @@
   </div>
   <div class="content">
 <article class="doc">
-<h1 class="page">Deploy Service</h1>
-<div class="sect1">
-<h2 id="service"><a class="anchor" href="#service"></a>The Service</h2>
+<h1 class="page">FIDO Device Onboarding (FDO)</h1>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>The code:</p>
-</div>
-<div class="listingblock lines_7 console-input">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class Main {
-
-    public static void main(String[] args) {
-
-    }
-
-}
-
-./mvnw compile</code></pre>
-</div>
+<p>Jump to lab steps</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="package"><a class="anchor" href="#package"></a>Packaging the Service</h2>
+<h2 id="fdo-intro"><a class="anchor" href="#fdo-intro"></a>Understanding FIDO Device Onboarding</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>You can package the next bash script:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">#!/bin/sh
-echo "Hello World"</code></pre>
-</div>
-</div>
+
 </div>
 </div>
 <div class="sect1">
-<h2 id="deploy"><a class="anchor" href="#deploy"></a>Deploy the Service</h2>
+<h2 id="fdo-services"><a class="anchor" href="#fdo-services"></a>FDO services</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>And then you can deploy the service and execute commands inside:</p>
+<p>las dos opciones</p>
 </div>
-<div class="paragraph">
-<p>Check that the pod is up and running:</p>
-</div>
-<div class="listingblock lines_space console-input">
+<div class="sect2">
+<h3 id="fdo-services-aio"><a class="anchor" href="#fdo-services-aio"></a>Option 1: All-in-one FDO server installation</h3>
+<div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl get pods</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo firewall-cmd --add-port=8080-8083/tcp --permanent
+sudo firewall-cmd --reload</code></pre>
 </div>
-</div>
-<div class="listingblock console-output">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">NAME                        READY   STATUS    RESTARTS   AGE
-apps   1/1     Running   0          5s</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Then let&#8217;s go into the running pod to execute some commands:</p>
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl exec -ti apps /bin/bash</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo dnf install -y fdo-admin-cli fdo-manufacturing-server</code></pre>
 </div>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-Change the pod name with your pod name.
-</td>
-</tr>
-</table>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo systemctl enable --now fdo-aio</code></pre>
+</div>
+</div>
+<div class="tabset is-loading">
+<div class="ulist tabs">
+<ul>
+<li>
+<p><a id="tabset1_input"></a>input</p>
+</li>
+<li>
+<p><a id="tabset1_output"></a>output</p>
+</li>
+</ul>
+</div>
+<div class="content">
+<div class="tab-pane" aria-labelledby="tabset1_input">
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">ss -ltn</code></pre>
+</div>
+</div>
+</div>
+<div class="tab-pane" aria-labelledby="tabset1_output">
+<div class="listingblock console-output">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">State                 Recv-Q                Send-Q                               Local Address:Port                               Peer Address:Port               Process
+LISTEN                0                     128                                        0.0.0.0:8080                                    0.0.0.0:*
+LISTEN                0                     128                                        0.0.0.0:8081                                    0.0.0.0:*
+LISTEN                0                     128                                        0.0.0.0:8082                                    0.0.0.0:*
+LISTEN                0                     128                                        0.0.0.0:8083                                    0.0.0.0:*
+LISTEN                0                     128                                        0.0.0.0:22                                      0.0.0.0:*
+LISTEN                0                     128                                           [::]:22                                         [::]:*</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>cat /etc/fdo/aio/aio_configuration</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">---
+cert_organization: FDO AIO
+cert_country: US
+listen_ip_address: 0.0.0.0
+listen_port_manufacturing_server: 8080
+listen_port_owner_onboarding_server: 8081
+listen_port_rendezvous_server: 8082
+listen_port_serviceinfo_api_server: 8083
+separate_manufacturing_and_owner_voucher_store: false
+manufacturing_enable_plain_di: false
+manufacturing_disable_key_storage_filesystem: false
+manufacturing_disable_key_storage_tpm: false
+manufacturing_use_secp256r1: false
+contact_hostname: ~
+contact_addresses:
+  - IpAddr: 192.168.122.187
+  - IpAddr: "fe80::5054:ff:fe26:13c3"
+serviceinfo_api_auth_token: dnEXugA+KXFpIDs7f0XFhn/hQ5FBcr+9d/MsMDfH7TM=
+serviceinfo_api_admin_token: XWNzbEwQ6EWF+PWZrqa7d68mQFHG1NtGX9yklCNtMa8=</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="fdo-services-dedicated"><a class="anchor" href="#fdo-services-dedicated"></a>Option 2: Dedicated FDO servers</h3>
+<div class="paragraph">
+<p>TBD</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="fdo-config"><a class="anchor" href="#fdo-config"></a>FDO configuration</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>[larizmen@rhte-image-builder ~]$ cat /etc/fdo/aio/configs/serviceinfo_api_server.yml</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">---
+service_info:
+  initial_user: ~
+  files: ~
+  commands: ~
+  diskencryption_clevis: ~
+  additional_serviceinfo: ~
+bind: "0.0.0.0:8083"
+service_info_auth_token: dnEXugA+KXFpIDs7f0XFhn/hQ5FBcr+9d/MsMDfH7TM=
+admin_auth_token: XWNzbEwQ6EWF+PWZrqa7d68mQFHG1NtGX9yklCNtMa8=
+device_specific_store_driver:
+  Directory:
+    path: /etc/fdo/aio/stores/serviceinfo_api_devices</code></pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_serviceinfo_server_configuration_file"><a class="anchor" href="#_serviceinfo_server_configuration_file"></a>Serviceinfo server configuration file</h3>
+<div class="sect3">
+<h4 id="_initial_user"><a class="anchor" href="#_initial_user"></a>initial_user</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">  initial_user:
+    username: admin
+    sshkeys:
+    - "ssh-rsa AAAA...."</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_files"><a class="anchor" href="#_files"></a>files</h4>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">curl -O xxxxx
+tar xvf fdo-configs.tar.gz</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">  - path: /etc/greenboot/check/required.d/01_check_demo_file.sh
+    permissions: 644
+    source_path: /etc/fdo-configs/device0/etc/greenboot/check/required.d/01_check_demo_file.sh</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_commands"><a class="anchor" href="#_commands"></a>commands</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">  - command: systemctl
+    args:
+    - enable
+    - --now
+    - rpm-ostreed-automatic.timer</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_diskencryption_clevis"><a class="anchor" href="#_diskencryption_clevis"></a>diskencryption_clevis</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">  diskencryption_clevis:
+  - disk_label: /dev/vda4
+    binding:
+      pin: tpm2
+      config: "{}"
+    reencrypt: true</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_fdo_service_restart"><a class="anchor" href="#_fdo_service_restart"></a>FDO service restart</h3>
+<div class="paragraph">
+<p>opcion 2?</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">systemctl restart fdo-aio</code></pre>
+</div>
+</div>
 </div>
 </div>
 </div>
