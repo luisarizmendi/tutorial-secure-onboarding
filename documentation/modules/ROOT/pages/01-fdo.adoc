@@ -160,6 +160,14 @@ TBD
 == FDO configuration
 
 
+
+dos opciones
+
+
+
+
+=== Option A: Creating your own use case
+
 [larizmen@rhte-image-builder ~]$ cat /etc/fdo/aio/configs/serviceinfo_api_server.yml
 
 
@@ -182,7 +190,8 @@ device_specific_store_driver:
 
 
 
-=== Serviceinfo server configuration file
+
+
 
 ==== initial_user
 
@@ -203,28 +212,6 @@ device_specific_store_driver:
 
 
 
-[.console-input]
-[source,bash,subs="+macros,+attributes"]
-----
-curl -O https://raw.githubusercontent.com/luisarizmendi/tutorial-secure-onboarding/master/documentation/modules/ROOT/examples/fdo-configs.tar.gz
-tar xvf fdo-configs.tar.gz
-----
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -236,6 +223,9 @@ tar xvf fdo-configs.tar.gz
     permissions: 644
     source_path: /etc/fdo-configs/device0/etc/greenboot/check/required.d/01_check_demo_file.sh
 ----
+
+
+
 
 
 
@@ -266,6 +256,112 @@ tar xvf fdo-configs.tar.gz
       config: "{}"
     reencrypt: true
 ----
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+=== Option B: Using the example use case
+
+
+[.console-input]
+[source,bash,subs="+macros,+attributes"]
+----
+curl -O https://raw.githubusercontent.com/luisarizmendi/tutorial-secure-onboarding/master/documentation/modules/ROOT/examples/fdo-configs.tar.gz
+tar xvf fdo-configs.tar.gz
+----
+
+copy configs to path
+
+
+
+
+[.console-input]
+[source,bash,subs="+macros,+attributes"]
+----
+curl -O https://raw.githubusercontent.com/luisarizmendi/tutorial-secure-onboarding/master/documentation/modules/ROOT/examples/serviceinfo_api_server.yml
+----
+
+
+
+
+
+
+[source,bash,subs="+macros,+attributes"]
+----
+SSH_PUB_KEY="ssh-rsa AAAAB3......am8= user@machine"
+----
+
+
+
+[source,bash,subs="+macros,+attributes"]
+----
+PATH_FILES="/etc/fdo-configs"
+----
+
+
+[source,bash,subs="+macros,+attributes"]
+----
+RED_HAT_USER="myrhuser"
+RED_HAT_PASSWORD="myrhpassword"
+----
+
+
+
+
+[source,bash,subs="+macros,+attributes"]
+----
+SERVICE_TOKEN=$(grep service_info_auth_token /etc/fdo/aio/configs/serviceinfo_api_server.yml | awk '{print $2}')
+ADMIN_TOKEN=$(grep admin_auth_token /etc/fdo/aio/configs/serviceinfo_api_server.yml | awk '{print $2}')
+----
+
+
+
+[.console-input]
+[source,bash,subs="+macros,+attributes"]
+----
+sed -i "s|<SSH PUB KEY>|${SSH_PUB_KEY}|g" serviceinfo_api_server.yml
+sed -i "s|<PATH FILES>|${PATH_FILES}|g" serviceinfo_api_server.yml
+sed -i "s|<RED HAT USER>|${RED_HAT_USER}|g" serviceinfo_api_server.yml
+sed -i "s|<RED HAT PASSWORD>|${RED_HAT_PASSWORD}|g" serviceinfo_api_server.yml
+sed -i "s|<SERVICE TOKEN>|${SERVICE_TOKEN}|g" serviceinfo_api_server.yml
+sed -i "s|<ADMIN TOKEN>|${ADMIN_TOKEN}|g" serviceinfo_api_server.yml
+----
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

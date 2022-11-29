@@ -1,8 +1,10 @@
 #!/bin/bash
-RHC_ORGID=$1
-RHC_ACTIVATION_KEY=$2
 
+#RHC_ORGID=$1
+#RHC_ACTIVATION_KEY=$2
 
+RHC_USER=$1
+RHC_PASS=$2
 
 subscription-manager status | grep Unknown
 
