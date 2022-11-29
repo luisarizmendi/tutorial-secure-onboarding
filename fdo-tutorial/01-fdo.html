@@ -207,6 +207,11 @@ serviceinfo_api_admin_token: XWNzbEwQ6EWF+PWZrqa7d68mQFHG1NtGX9yklCNtMa8=</code>
 <h2 id="fdo-config"><a class="anchor" href="#fdo-config"></a>FDO configuration</h2>
 <div class="sectionbody">
 <div class="paragraph">
+<p>dos opciones</p>
+</div>
+<div class="sect2">
+<h3 id="_option_a_creating_your_own_use_case"><a class="anchor" href="#_option_a_creating_your_own_use_case"></a>Option A: Creating your own use case</h3>
+<div class="paragraph">
 <p>[larizmen@rhte-image-builder ~]$ cat /etc/fdo/aio/configs/serviceinfo_api_server.yml</p>
 </div>
 <div class="listingblock">
@@ -226,8 +231,6 @@ device_specific_store_driver:
     path: /etc/fdo/aio/stores/serviceinfo_api_devices</code></pre>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_serviceinfo_server_configuration_file"><a class="anchor" href="#_serviceinfo_server_configuration_file"></a>Serviceinfo server configuration file</h3>
 <div class="sect3">
 <h4 id="_initial_user"><a class="anchor" href="#_initial_user"></a>initial_user</h4>
 <div class="listingblock">
@@ -241,12 +244,6 @@ device_specific_store_driver:
 </div>
 <div class="sect3">
 <h4 id="_files"><a class="anchor" href="#_files"></a>files</h4>
-<div class="listingblock console-input">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">curl -O <a href="https://raw.githubusercontent.com/luisarizmendi/tutorial-secure-onboarding/master/documentation/modules/ROOT/examples/fdo-configs.tar.gz" class="bare">https://raw.githubusercontent.com/luisarizmendi/tutorial-secure-onboarding/master/documentation/modules/ROOT/examples/fdo-configs.tar.gz</a>
-tar xvf fdo-configs.tar.gz</code></pre>
-</div>
-</div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">  - path: /etc/greenboot/check/required.d/01_check_demo_file.sh
@@ -278,6 +275,55 @@ tar xvf fdo-configs.tar.gz</code></pre>
       config: "{}"
     reencrypt: true</code></pre>
 </div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_option_b_using_the_example_use_case"><a class="anchor" href="#_option_b_using_the_example_use_case"></a>Option B: Using the example use case</h3>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">curl -O <a href="https://raw.githubusercontent.com/luisarizmendi/tutorial-secure-onboarding/master/documentation/modules/ROOT/examples/fdo-configs.tar.gz" class="bare">https://raw.githubusercontent.com/luisarizmendi/tutorial-secure-onboarding/master/documentation/modules/ROOT/examples/fdo-configs.tar.gz</a>
+tar xvf fdo-configs.tar.gz</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>copy configs to path</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">curl -O <a href="https://raw.githubusercontent.com/luisarizmendi/tutorial-secure-onboarding/master/documentation/modules/ROOT/examples/serviceinfo_api_server.yml" class="bare">https://raw.githubusercontent.com/luisarizmendi/tutorial-secure-onboarding/master/documentation/modules/ROOT/examples/serviceinfo_api_server.yml</a></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">SSH_PUB_KEY="ssh-rsa AAAAB3......am8= user@machine"</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">PATH_FILES="/etc/fdo-configs"</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">RED_HAT_USER="myrhuser"
+RED_HAT_PASSWORD="myrhpassword"</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">SERVICE_TOKEN=$(grep service_info_auth_token /etc/fdo/aio/configs/serviceinfo_api_server.yml | awk '{print $2}')
+ADMIN_TOKEN=$(grep admin_auth_token /etc/fdo/aio/configs/serviceinfo_api_server.yml | awk '{print $2}')</code></pre>
+</div>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sed -i "s|&lt;SSH PUB KEY&gt;|${SSH_PUB_KEY}|g" serviceinfo_api_server.yml
+sed -i "s|&lt;PATH FILES&gt;|${PATH_FILES}|g" serviceinfo_api_server.yml
+sed -i "s|&lt;RED HAT USER&gt;|${RED_HAT_USER}|g" serviceinfo_api_server.yml
+sed -i "s|&lt;RED HAT PASSWORD&gt;|${RED_HAT_PASSWORD}|g" serviceinfo_api_server.yml
+sed -i "s|&lt;SERVICE TOKEN&gt;|${SERVICE_TOKEN}|g" serviceinfo_api_server.yml
+sed -i "s|&lt;ADMIN TOKEN&gt;|${ADMIN_TOKEN}|g" serviceinfo_api_server.yml</code></pre>
 </div>
 </div>
 </div>
