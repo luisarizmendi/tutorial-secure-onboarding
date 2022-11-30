@@ -111,99 +111,6 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="fdo-services"><a class="anchor" href="#fdo-services"></a>FDO services</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>las dos opciones</p>
-</div>
-<div class="sect2">
-<h3 id="fdo-services-aio"><a class="anchor" href="#fdo-services-aio"></a>Option 1: All-in-one FDO server installation</h3>
-<div class="listingblock console-input">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo firewall-cmd --add-port=8080-8083/tcp --permanent
-sudo firewall-cmd --reload</code></pre>
-</div>
-</div>
-<div class="listingblock console-input">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo dnf install -y fdo-admin-cli fdo-manufacturing-server</code></pre>
-</div>
-</div>
-<div class="listingblock console-input">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo systemctl enable --now fdo-aio</code></pre>
-</div>
-</div>
-<div class="tabset is-loading">
-<div class="ulist tabs">
-<ul>
-<li>
-<p><a id="tabset1_input"></a>input</p>
-</li>
-<li>
-<p><a id="tabset1_output"></a>output</p>
-</li>
-</ul>
-</div>
-<div class="content">
-<div class="tab-pane" aria-labelledby="tabset1_input">
-<div class="listingblock console-input">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">ss -ltn</code></pre>
-</div>
-</div>
-</div>
-<div class="tab-pane" aria-labelledby="tabset1_output">
-<div class="listingblock console-output">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">State                 Recv-Q                Send-Q                               Local Address:Port                               Peer Address:Port               Process
-LISTEN                0                     128                                        0.0.0.0:8080                                    0.0.0.0:*
-LISTEN                0                     128                                        0.0.0.0:8081                                    0.0.0.0:*
-LISTEN                0                     128                                        0.0.0.0:8082                                    0.0.0.0:*
-LISTEN                0                     128                                        0.0.0.0:8083                                    0.0.0.0:*
-LISTEN                0                     128                                        0.0.0.0:22                                      0.0.0.0:*
-LISTEN                0                     128                                           [::]:22                                         [::]:*</code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="paragraph">
-<p>cat /etc/fdo/aio/aio_configuration</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">---
-cert_organization: FDO AIO
-cert_country: US
-listen_ip_address: 0.0.0.0
-listen_port_manufacturing_server: 8080
-listen_port_owner_onboarding_server: 8081
-listen_port_rendezvous_server: 8082
-listen_port_serviceinfo_api_server: 8083
-separate_manufacturing_and_owner_voucher_store: false
-manufacturing_enable_plain_di: false
-manufacturing_disable_key_storage_filesystem: false
-manufacturing_disable_key_storage_tpm: false
-manufacturing_use_secp256r1: false
-contact_hostname: ~
-contact_addresses:
-  - IpAddr: 192.168.122.187
-  - IpAddr: "fe80::5054:ff:fe26:13c3"
-serviceinfo_api_auth_token: dnEXugA+KXFpIDs7f0XFhn/hQ5FBcr+9d/MsMDfH7TM=
-serviceinfo_api_admin_token: XWNzbEwQ6EWF+PWZrqa7d68mQFHG1NtGX9yklCNtMa8=</code></pre>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="fdo-services-dedicated"><a class="anchor" href="#fdo-services-dedicated"></a>Option 2: Dedicated FDO servers</h3>
-<div class="paragraph">
-<p>TBD</p>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
 <h2 id="fdo-config"><a class="anchor" href="#fdo-config"></a>FDO configuration</h2>
 <div class="sectionbody">
 <div class="paragraph">
@@ -282,6 +189,11 @@ device_specific_store_driver:
 <h3 id="_option_b_using_the_example_use_case"><a class="anchor" href="#_option_b_using_the_example_use_case"></a>Option B: Using the example use case</h3>
 <div class="listingblock console-input">
 <div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">curl -O <a href="https://raw.githubusercontent.com/luisarizmendi/tutorial-secure-onboarding/master/documentation/modules/ROOT/examples/serviceinfo_api_server.yml" class="bare">https://raw.githubusercontent.com/luisarizmendi/tutorial-secure-onboarding/master/documentation/modules/ROOT/examples/serviceinfo_api_server.yml</a></code></pre>
+</div>
+</div>
+<div class="listingblock console-input">
+<div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">curl -O <a href="https://raw.githubusercontent.com/luisarizmendi/tutorial-secure-onboarding/master/documentation/modules/ROOT/examples/fdo-configs.tar.gz" class="bare">https://raw.githubusercontent.com/luisarizmendi/tutorial-secure-onboarding/master/documentation/modules/ROOT/examples/fdo-configs.tar.gz</a>
 tar xvf fdo-configs.tar.gz</code></pre>
 </div>
@@ -291,17 +203,20 @@ tar xvf fdo-configs.tar.gz</code></pre>
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">curl -O <a href="https://raw.githubusercontent.com/luisarizmendi/tutorial-secure-onboarding/master/documentation/modules/ROOT/examples/serviceinfo_api_server.yml" class="bare">https://raw.githubusercontent.com/luisarizmendi/tutorial-secure-onboarding/master/documentation/modules/ROOT/examples/serviceinfo_api_server.yml</a></code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo cp -r fdo-configs/ /etc</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>ultima barra</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">PATH_FILES="/etc/fdo-configs"</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">SSH_PUB_KEY="ssh-rsa AAAAB3......am8= user@machine"</code></pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">PATH_FILES="/etc/fdo-configs"</code></pre>
 </div>
 </div>
 <div class="listingblock">
@@ -327,15 +242,155 @@ sed -i "s|&lt;ADMIN TOKEN&gt;|${ADMIN_TOKEN}|g" serviceinfo_api_server.yml</code
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_fdo_service_restart"><a class="anchor" href="#_fdo_service_restart"></a>FDO service restart</h3>
+</div>
+</div>
+<div class="sect1">
+<h2 id="fdo-services"><a class="anchor" href="#fdo-services"></a>FDO services</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>opcion 2?</p>
+<p>las dos opciones</p>
+</div>
+<div class="sect2">
+<h3 id="fdo-services-aio"><a class="anchor" href="#fdo-services-aio"></a>Option 1: All-in-one FDO server installation</h3>
+<div class="sect3">
+<h4 id="_preparing_the_fdo_services"><a class="anchor" href="#_preparing_the_fdo_services"></a>Preparing the FDO services</h4>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo firewall-cmd --add-port=8080-8083/tcp --permanent
+sudo firewall-cmd --reload</code></pre>
+</div>
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">systemctl restart fdo-aio</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo dnf install -y fdo-admin-cli fdo-manufacturing-server</code></pre>
 </div>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo systemctl enable --now fdo-aio</code></pre>
+</div>
+</div>
+<div class="tabset is-loading">
+<div class="ulist tabs">
+<ul>
+<li>
+<p><a id="tabset1_input"></a>input</p>
+</li>
+<li>
+<p><a id="tabset1_output"></a>output</p>
+</li>
+</ul>
+</div>
+<div class="content">
+<div class="tab-pane" aria-labelledby="tabset1_input">
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">ss -ltn</code></pre>
+</div>
+</div>
+</div>
+<div class="tab-pane" aria-labelledby="tabset1_output">
+<div class="listingblock console-output">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">State                 Recv-Q                Send-Q                               Local Address:Port                               Peer Address:Port               Process
+LISTEN                0                     128                                        0.0.0.0:8080                                    0.0.0.0:*
+LISTEN                0                     128                                        0.0.0.0:8081                                    0.0.0.0:*
+LISTEN                0                     128                                        0.0.0.0:8082                                    0.0.0.0:*
+LISTEN                0                     128                                        0.0.0.0:8083                                    0.0.0.0:*
+LISTEN                0                     128                                        0.0.0.0:22                                      0.0.0.0:*
+LISTEN                0                     128                                           [::]:22                                         [::]:*</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>cat /etc/fdo/aio/aio_configuration</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">---
+cert_organization: FDO AIO
+cert_country: US
+listen_ip_address: 0.0.0.0
+listen_port_manufacturing_server: 8080
+listen_port_owner_onboarding_server: 8081
+listen_port_rendezvous_server: 8082
+listen_port_serviceinfo_api_server: 8083
+separate_manufacturing_and_owner_voucher_store: false
+manufacturing_enable_plain_di: false
+manufacturing_disable_key_storage_filesystem: false
+manufacturing_disable_key_storage_tpm: false
+manufacturing_use_secp256r1: false
+contact_hostname: ~
+contact_addresses:
+  - IpAddr: 192.168.122.187
+  - IpAddr: "fe80::5054:ff:fe26:13c3"
+serviceinfo_api_auth_token: dnEXugA+KXFpIDs7f0XFhn/hQ5FBcr+9d/MsMDfH7TM=
+serviceinfo_api_admin_token: XWNzbEwQ6EWF+PWZrqa7d68mQFHG1NtGX9yklCNtMa8=</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_including_your_onboarding_automation"><a class="anchor" href="#_including_your_onboarding_automation"></a>Including your onboarding automation</h4>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo cp -f serviceinfo_api_server.yml  /etc/fdo/aio/configs/serviceinfo_api_server.yml</code></pre>
+</div>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo systemctl restart fdo-aio</code></pre>
+</div>
+</div>
+<div class="tabset is-loading">
+<div class="ulist tabs">
+<ul>
+<li>
+<p><a id="tabset2_input"></a>input</p>
+</li>
+<li>
+<p><a id="tabset2_output"></a>output</p>
+</li>
+</ul>
+</div>
+<div class="content">
+<div class="tab-pane" aria-labelledby="tabset2_input">
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">ss -ltn</code></pre>
+</div>
+</div>
+</div>
+<div class="tab-pane" aria-labelledby="tabset2_output">
+<div class="listingblock console-output">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">State                 Recv-Q                Send-Q                               Local Address:Port                               Peer Address:Port               Process
+LISTEN                0                     128                                        0.0.0.0:8080                                    0.0.0.0:*
+LISTEN                0                     128                                        0.0.0.0:8081                                    0.0.0.0:*
+LISTEN                0                     128                                        0.0.0.0:8082                                    0.0.0.0:*
+LISTEN                0                     128                                        0.0.0.0:8083                                    0.0.0.0:*
+LISTEN                0                     128                                        0.0.0.0:22                                      0.0.0.0:*
+LISTEN                0                     128                                           [::]:22                                         [::]:*</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="fdo-services-dedicated"><a class="anchor" href="#fdo-services-dedicated"></a>Option 2: Dedicated FDO servers</h3>
+<div class="paragraph">
+<p>TBD</p>
+</div>
+<div class="sect3">
+<h4 id="_preparing_the_fdo_services_2"><a class="anchor" href="#_preparing_the_fdo_services_2"></a>Preparing the FDO services</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_including_your_onboarding_automation_2"><a class="anchor" href="#_including_your_onboarding_automation_2"></a>Including your onboarding automation</h4>
+
 </div>
 </div>
 </div>
