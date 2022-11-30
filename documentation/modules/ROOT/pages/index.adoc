@@ -5,35 +5,117 @@
 [.text-center.strong]
 == Secure Edge device onboarding with RHEL and FDO
 
-Onboarding edge and Internet of Things (IoT) devices at scale creates significant challenges for sysadmins. To help address them, the FIDO Alliance created the FIDO Device Onboard (FDO) specification as the first widely accepted industry standard aimed at solving edge computing and IoT device onboarding challenges.
+Edge device onboarding could be your worst nightmare: security concerns, complexity, scalability, traceability, ... but there is a new helping hand: FIDO device onboarding (FDO) specification. Red Hat is developing an implementation of this new industry specification, and included it as tech preview in RHEL 8.6+/9.x.
 
+In this tutorial, you have the opportunity to learn more about FDO by installing and configuring the FDO servers, creating your own device onboarding use case (including the automation needed), and deploying RHEL for Edge following the FDO workflow.  
 
 [.tiles.browse]
 == Browse modules
 
+
 [.tile]
-.xref:00-prerequisite.adoc[0. Prerequisites]
+.xref:00-intro.adoc[Introduction to secure edge device onboarding]
+
+
+[.tile]
+.xref:00-prerequisite.adoc[0. Lab prerequisites]
 * xref:00-prerequisite.adoc#virtualization[Prepare your virtualization environment]
 * xref:00-prerequisite.adoc#arch[Choose your lab architecture]
 * xref:00-prerequisite.adoc#usecase[Create your use case]
 
 [.tile]
-.xref:01-fdo-intro.adoc[1.A FIDO Device Onboarding servers (FDO) - Intro]
+.xref:01-fdo-intro.adoc[1.A FIDO Device Onboarding (FDO) - Intro]
 
 
 [.tile]
-.xref:01-fdo-lab.adoc[1.B FIDO Device Onboarding servers (FDO) - LAB]
-
+.xref:01-fdo-lab.adoc[1.B FIDO Device Onboarding (FDO) - Lab]
+* xref:01-fdo-lab.adoc#fdo-services[FDO services]
+** xref:01-fdo-lab.adoc#fdo-services-aio[Option 1: All-in-one FDO server installation]
+** xref:01-fdo-lab.adoc#fdo-services-dedicated[Option 2: Dedicated FDO servers]
+* xref:01-fdo-lab.adoc#fdo-config[FDO Service API config]
+** xref:01-fdo-lab.adoc#fdo-optiona[Option A: Creating your own use case]
+*** xref:01-fdo-lab.adoc#fdo-optiona-user[initial_user]
+*** xref:01-fdo-lab.adoc#fdo-optiona-files[files]
+*** xref:01-fdo-lab.adoc#fdo-optiona-commands[commands]
+*** xref:01-fdo-lab.adoc#fdo-optiona-encrypt[diskencryption_clevis]
+** xref:01-fdo-lab.adoc#fdo-optionb[Option B: Using the example use case]
 
 
 [.tile]
-.xref:02-rfe-intro.adoc[2.A RHEL OSTree image - Intro]
+.xref:02-rfe-intro.adoc[2.A RHEL OSTree images - Intro]
 
 
 [.tile]
-.xref:02-rfe-lab.adoc[2.B RHEL OSTree image - LAB]
-
+.xref:02-rfe-lab.adoc[2.B RHEL OSTree images - Lab]
+* xref:02-rfe-lab.adoc#rfe-imagebuilder[Install Image builder]
+* xref:02-rfe-lab.adoc#rfe-image[Create the RHEL OSTree image]
+** xref:02-rfe-lab.adoc#rfe-ostreeimage[Generating the repo image]
+** xref:02-rfe-lab.adoc#rfe-publish[Publishing the repo image]
+* xref:02-rfe-lab.adoc#rfe-iso[Create the RHEL ISO]
 
 
 [.tile]
 .xref:03-onboard.adoc[3. Edge device onboarding]
+* xref:03-onboarding.adoc#onboard-vm[Creating the edge device VM]
+* xref:03-onboarding.adoc#onboard-fdoclient[FDO client in action]
+* xref:03-onboarding.adoc#onboard-fdoservers[FDO server side]
+* xref:03-onboarding.adoc#onboard-checks[Checking the edge device onboard]
+
+
+[.tile]
+.xref:99-summary.adoc[Summary]
+
+
+
+
+
+
+
+
+
+* xref:00-intro.adoc[Introduction to secure edge device onboarding]
+
+
+
+* xref:00-prerequisite.adoc[0. Lab prerequisites]
+** xref:00-prerequisite.adoc#virtualization[Prepare your virtualization environment]
+** xref:00-prerequisite.adoc#arch[Choose your lab architecture]
+** xref:00-prerequisite.adoc#usecase[Create your use case]
+
+
+
+* xref:01-fdo-intro.adoc[1.A FIDO Device Onboarding (FDO) - Intro]
+
+
+* xref:01-fdo-lab.adoc[1.B FIDO Device Onboarding (FDO) - Lab]
+** xref:01-fdo-lab.adoc#fdo-services[FDO services]
+*** xref:01-fdo-lab.adoc#fdo-services-aio[Option 1: All-in-one FDO server installation]
+*** xref:01-fdo-lab.adoc#fdo-services-dedicated[Option 2: Dedicated FDO servers]
+** xref:01-fdo-lab.adoc#fdo-config[FDO Service API config]
+*** xref:01-fdo-lab.adoc#fdo-optiona[Option A: Creating your own use case]
+**** xref:01-fdo-lab.adoc#fdo-optiona-user[initial_user]
+**** xref:01-fdo-lab.adoc#fdo-optiona-files[files]
+**** xref:01-fdo-lab.adoc#fdo-optiona-commands[commands]
+**** xref:01-fdo-lab.adoc#fdo-optiona-encrypt[diskencryption_clevis]
+*** xref:01-fdo-lab.adoc#fdo-optionb[Option B: Using the example use case]
+
+
+* xref:02-rfe-intro.adoc[2.A RHEL OSTree images - Intro]
+
+
+* xref:02-rfe-lab.adoc[2.B RHEL OSTree images - Lab]
+** xref:02-rfe-lab.adoc#rfe-imagebuilder[Install Image builder]
+** xref:02-rfe-lab.adoc#rfe-image[Create the RHEL OSTree image]
+*** xref:02-rfe-lab.adoc#rfe-ostreeimage[Generating the repo image]
+*** xref:02-rfe-lab.adoc#rfe-publish[Publishing the repo image]
+** xref:02-rfe-lab.adoc#rfe-iso[Create the RHEL ISO]
+
+
+* xref:03-onboarding.adoc[3. Edge device onboarding]
+** xref:03-onboarding.adoc#onboard-vm[Creating the edge device VM]
+** xref:03-onboarding.adoc#onboard-fdoclient[FDO client in action]
+** xref:03-onboarding.adoc#onboard-fdoservers[FDO server side]
+** xref:03-onboarding.adoc#onboard-checks[Checking the edge device onboard]
+
+
+* xref:99-summary.adoc[Summary]

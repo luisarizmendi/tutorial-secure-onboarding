@@ -1,4 +1,4 @@
-= Prerequisites
+= Lab prerequisites
 include::_attributes.adoc[]
 
 

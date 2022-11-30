@@ -1,17 +1,9 @@
-= RHEL OSTree image creation
+= RHEL OSTree images - Lab
 include::_attributes.adoc[]
 
 
 
 Jump to lab steps 
-
-
-
-
-[#rfe-intro]
-== Understanding OSTRee images
-
-
 
 
 
@@ -106,7 +98,9 @@ https://<image builder ip>:9090/
 == Create the RHEL OSTree image
 
 
-=== Creating the blueprint
+
+[#rfe-ostreeimage]
+=== Generating the repo image
 
 
 
@@ -290,11 +284,6 @@ sudo composer-cli blueprints list
 
 
 
-=== Generating the OSTree image
-
-
-
-
 
 sudo composer-cli compose start-ostree <blueprint_name> edge-commit
 
@@ -373,7 +362,8 @@ sudo chown $(whoami) <IMAGE TAR FILE>
 
 
 
-=== Publishing the OSTree image
+[#rfe-publish]
+=== Publishing the repo image
 
 
 

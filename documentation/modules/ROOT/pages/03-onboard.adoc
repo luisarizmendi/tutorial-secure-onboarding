@@ -119,7 +119,17 @@ WAIT (it could take 1 or 2 min to start)
 
 
 
+
+
+fdo_client_linuxapp::serviceinfo > Initiating disk re-encryption, disk-label: /dev/vda4, pin: tpm2, config: {}, reencrypt: true
+fdo_client_linuxapp              > Secure Device Onboarding DONE
+fdo-client-linuxapp.service: Deactivated successfully.
 Finished FDO client.
+fdo-client-linuxapp.service: Consumed 48.954s CPU time.
+
+
+
+
 
 
 
@@ -145,8 +155,56 @@ vda                                           252:0    0   20G  0 disk
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+[#onboard-fdoservers]
+== FDO server side
+
+
+
+
+
+[larizmen@rhte-image-builder aio]$ tree stores/
+stores/
+├── manufacturer_keys
+├── manufacturing_sessions
+├── mfg_sessions
+├── owner_onboarding_sessions
+├── owner_sessions
+├── owner_vouchers
+│   ├── ab98eaae-c820-0a1c-638f-bab833a01544
+│   ├── bac5b023-a5aa-1296-3e4a-82e4c84c6cf0
+│   ├── cc64cb34-5b95-809d-f60b-78b82cbc9f08
+│   └── f32977ce-1ff7-224f-7489-73d81b4f6702
+├── rendezvous_registered
+│   ├── ab98eaae-c820-0a1c-638f-bab833a01544
+│   ├── bac5b023-a5aa-1296-3e4a-82e4c84c6cf0
+│   └── cc64cb34-5b95-809d-f60b-78b82cbc9f08
+├── rendezvous_sessions
+│   ├── en_slash_5HqjQJrF5aqD9xd85+cvCX2QfEs7FTQtYXJMloc4=
+│   ├── JDKn0XIvlrBZD3kE9UCABstmoydxSjjU_slash_VanbsxSgc0=
+│   └── qGGJWI5wy96cTZ2kzEejfnHMGCrzA4NplcWlzFY_slash_KLw=
+├── serviceinfo_api_devices
+└── serviceinfo_api_per_device
+
+
+
+
+
+
+
 [#onboard-checks]
-== Checking the onboard
+== Checking the edge device onboard
 
 depends on the use case
 
@@ -172,24 +230,6 @@ greenboot script
 
 
 
-
-
-
-
-
-
-
-
-
-
-[#onboard-ideas]
-== Try out any of these ideas...
-
-
-AAP
-
-
-Microshift and ACM
 
 
 

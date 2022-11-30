@@ -1,266 +1,5 @@
-= FIDO Device Onboarding (FDO)
+= FIDO Device Onboarding (FDO) - Lab
 include::_attributes.adoc[]
-
-
-
-Jump to lab steps 
-
-
-
-
-[#fdo-intro]
-== Understanding FIDO Device Onboarding
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-[#fdo-config]
-== FDO configuration
-
-
-
-dos opciones
-
-
-
-
-=== Option A: Creating your own use case
-
-[larizmen@rhte-image-builder ~]$ cat /etc/fdo/aio/configs/serviceinfo_api_server.yml
-
-
-[source,yaml,subs="+macros,+attributes"]
-----
----
-service_info:
-  initial_user: ~
-  files: ~
-  commands: ~
-  diskencryption_clevis: ~
-  additional_serviceinfo: ~
-bind: "0.0.0.0:8083"
-service_info_auth_token: dnEXugA+KXFpIDs7f0XFhn/hQ5FBcr+9d/MsMDfH7TM=
-admin_auth_token: XWNzbEwQ6EWF+PWZrqa7d68mQFHG1NtGX9yklCNtMa8=
-device_specific_store_driver:
-  Directory:
-    path: /etc/fdo/aio/stores/serviceinfo_api_devices
-----
-
-
-
-
-
-
-==== initial_user
-
-
-
-
-
-
-[source,yaml,subs="+macros,+attributes"]
-----
-  initial_user: 
-    username: admin
-    sshkeys:
-    - "ssh-rsa AAAA...."
-----
-
-
-
-
-
-
-
-
-==== files
-
-
-
-
-
-
-
-
-
-
-
-
-[source,yaml,subs="+macros,+attributes"]
-----
-  - path: /etc/greenboot/check/required.d/01_check_demo_file.sh
-    permissions: 644
-    source_path: /etc/fdo-configs/device0/etc/greenboot/check/required.d/01_check_demo_file.sh
-----
-
-
-
-
-
-
-
-==== commands
-
-[source,yaml,subs="+macros,+attributes"]
-----
-  - command: systemctl
-    args:
-    - enable 
-    - --now
-    - rpm-ostreed-automatic.timer
-----
-
-
-
-
-==== diskencryption_clevis
-
-
-[source,yaml,subs="+macros,+attributes"]
-----
-  diskencryption_clevis: 
-  - disk_label: /dev/vda4
-    binding:
-      pin: tpm2
-      config: "{}"
-    reencrypt: true
-----
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-=== Option B: Using the example use case
-
-
-[.console-input]
-[source,bash,subs="+macros,+attributes"]
-----
-curl -O https://raw.githubusercontent.com/luisarizmendi/tutorial-secure-onboarding/master/documentation/modules/ROOT/examples/serviceinfo_api_server.yml
-----
-
-
-
-
-[.console-input]
-[source,bash,subs="+macros,+attributes"]
-----
-curl -O https://raw.githubusercontent.com/luisarizmendi/tutorial-secure-onboarding/master/documentation/modules/ROOT/examples/fdo-configs.tar.gz
-tar xvf fdo-configs.tar.gz
-----
-
-copy configs to path
-
-
-
-
-[.console-input]
-[source,bash,subs="+macros,+attributes"]
-----
-sudo cp -r fdo-configs/ /etc
-----
-
-
-
-
-
-ultima barra
-
-
-[source,bash,subs="+macros,+attributes"]
-----
-PATH_FILES="/etc/fdo-configs"
-----
-
-
-
-
-
-[source,bash,subs="+macros,+attributes"]
-----
-SSH_PUB_KEY="ssh-rsa AAAAB3......am8= user@machine"
-----
-
-
-
-[source,bash,subs="+macros,+attributes"]
-----
-RED_HAT_USER="myrhuser"
-RED_HAT_PASSWORD="myrhpassword"
-----
-
-
-
-
-[source,bash,subs="+macros,+attributes"]
-----
-SERVICE_TOKEN=$(grep service_info_auth_token /etc/fdo/aio/configs/serviceinfo_api_server.yml | awk '{print $2}')
-ADMIN_TOKEN=$(grep admin_auth_token /etc/fdo/aio/configs/serviceinfo_api_server.yml | awk '{print $2}')
-----
-
-
-
-
-
-
-[.console-input]
-[source,bash,subs="+macros,+attributes"]
-----
-sed -i "s|<SSH PUB KEY>|${SSH_PUB_KEY}|g" serviceinfo_api_server.yml
-sed -i "s|<PATH FILES>|${PATH_FILES}|g" serviceinfo_api_server.yml
-sed -i "s|<RED HAT USER>|${RED_HAT_USER}|g" serviceinfo_api_server.yml
-sed -i "s|<RED HAT PASSWORD>|${RED_HAT_PASSWORD}|g" serviceinfo_api_server.yml
-sed -i "s|<SERVICE TOKEN>|${SERVICE_TOKEN}|g" serviceinfo_api_server.yml
-sed -i "s|<ADMIN TOKEN>|${ADMIN_TOKEN}|g" serviceinfo_api_server.yml
-----
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -484,7 +223,27 @@ TBD
 
 
 
-==== Preparing the FDO services
+
+
+
+
+
+
+
+
+[#fdo-config]
+== FDO configuration
+
+
+
+dos opciones
+
+
+
+
+
+
+[larizmen@rhte-image-builder ~]$ cat /etc/fdo/aio/configs/serviceinfo_api_server.yml
 
 
 
@@ -495,11 +254,211 @@ TBD
 
 
 
-==== Including your onboarding automation
+[source,yaml,subs="+macros,+attributes"]
+----
+---
+service_info:
+  initial_user: ~
+  files: ~
+  commands: ~
+  diskencryption_clevis: ~
+  additional_serviceinfo: ~
+bind: "0.0.0.0:8083"
+service_info_auth_token: dnEXugA+KXFpIDs7f0XFhn/hQ5FBcr+9d/MsMDfH7TM=
+admin_auth_token: XWNzbEwQ6EWF+PWZrqa7d68mQFHG1NtGX9yklCNtMa8=
+device_specific_store_driver:
+  Directory:
+    path: /etc/fdo/aio/stores/serviceinfo_api_devices
+----
 
 
 
 
+
+
+[#fdo-optiona-user]
+==== initial_user
+
+
+
+
+
+
+[source,yaml,subs="+macros,+attributes"]
+----
+  initial_user: 
+    username: admin
+    sshkeys:
+    - "ssh-rsa AAAA...."
+----
+
+
+
+
+
+
+
+
+[#fdo-optiona-files]
+==== files
+
+
+
+
+
+
+
+
+
+
+
+
+[source,yaml,subs="+macros,+attributes"]
+----
+  - path: /etc/greenboot/check/required.d/01_check_demo_file.sh
+    permissions: 644
+    source_path: /etc/fdo-configs/device0/etc/greenboot/check/required.d/01_check_demo_file.sh
+----
+
+
+
+
+
+
+
+[#fdo-optiona-commands]
+==== commands
+
+[source,yaml,subs="+macros,+attributes"]
+----
+  - command: systemctl
+    args:
+    - enable 
+    - --now
+    - rpm-ostreed-automatic.timer
+----
+
+
+
+
+[#fdo-optiona-encrypt]
+==== diskencryption_clevis
+
+
+[source,yaml,subs="+macros,+attributes"]
+----
+  diskencryption_clevis: 
+  - disk_label: /dev/vda4
+    binding:
+      pin: tpm2
+      config: "{}"
+    reencrypt: true
+----
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[#fdo-optionb]
+=== Option B: Using the example use case
+
+
+[.console-input]
+[source,bash,subs="+macros,+attributes"]
+----
+curl -O https://raw.githubusercontent.com/luisarizmendi/tutorial-secure-onboarding/master/documentation/modules/ROOT/examples/serviceinfo_api_server.yml
+----
+
+
+
+
+[.console-input]
+[source,bash,subs="+macros,+attributes"]
+----
+curl -O https://raw.githubusercontent.com/luisarizmendi/tutorial-secure-onboarding/master/documentation/modules/ROOT/examples/fdo-configs.tar.gz
+tar xvf fdo-configs.tar.gz
+----
+
+copy configs to path
+
+
+
+
+[.console-input]
+[source,bash,subs="+macros,+attributes"]
+----
+sudo cp -r fdo-configs/ /etc
+----
+
+
+
+
+
+ultima barra
+
+
+[source,bash,subs="+macros,+attributes"]
+----
+PATH_FILES="/etc/fdo-configs"
+----
+
+
+
+
+
+[source,bash,subs="+macros,+attributes"]
+----
+SSH_PUB_KEY="ssh-rsa AAAAB3......am8= user@machine"
+----
+
+
+
+[source,bash,subs="+macros,+attributes"]
+----
+RED_HAT_USER="myrhuser"
+RED_HAT_PASSWORD="myrhpassword"
+----
+
+
+
+
+[source,bash,subs="+macros,+attributes"]
+----
+SERVICE_TOKEN=$(grep service_info_auth_token /etc/fdo/aio/configs/serviceinfo_api_server.yml | awk '{print $2}')
+ADMIN_TOKEN=$(grep admin_auth_token /etc/fdo/aio/configs/serviceinfo_api_server.yml | awk '{print $2}')
+----
+
+
+
+
+
+
+[.console-input]
+[source,bash,subs="+macros,+attributes"]
+----
+sed -i "s|<SSH PUB KEY>|${SSH_PUB_KEY}|g" serviceinfo_api_server.yml
+sed -i "s|<PATH FILES>|${PATH_FILES}|g" serviceinfo_api_server.yml
+sed -i "s|<RED HAT USER>|${RED_HAT_USER}|g" serviceinfo_api_server.yml
+sed -i "s|<RED HAT PASSWORD>|${RED_HAT_PASSWORD}|g" serviceinfo_api_server.yml
+sed -i "s|<SERVICE TOKEN>|${SERVICE_TOKEN}|g" serviceinfo_api_server.yml
+sed -i "s|<ADMIN TOKEN>|${ADMIN_TOKEN}|g" serviceinfo_api_server.yml
+----
 
 
 
