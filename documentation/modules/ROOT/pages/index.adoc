@@ -11,6 +11,13 @@ In this tutorial, you have the opportunity to learn more about FDO by installing
 
 Although FDO can be used with "standard" Red Hat Enterprise Linux, this tutorial will use a variant of RHEL based on OSTree images, since these systems are more suitable for edge computing use cases.
 
+
+OSTree based RHEL will be included in Red Hat Device Edge product.
+
+
+image::Device-Edge-logo.png[Red Hat Device Edge logo]
+
+
 [.tiles.browse]
 == Browse modules
 
