@@ -66,10 +66,10 @@
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="01-fdo.html">1. FIDO Device Onboarding (FDO)</a>
+    <a class="nav-link" href="#01-fdo.adoc">1. FIDO Device Onboarding (FDO)</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="01-fdo.html#intro">Understanding FDO</a>
+    <a class="nav-link" href="#01-fdo.adoc#intro">Understanding FDO</a>
   </li>
 </ul>
   </li>
@@ -158,7 +158,60 @@ sudo firewall-cmd --reload</code></pre>
 <h3 id="_creating_the_blueprint"><a class="anchor" href="#_creating_the_blueprint"></a>Creating the blueprint</h3>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"></code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">curl -O <a href="https://raw.githubusercontent.com/luisarizmendi/tutorial-secure-onboarding/master/documentation/modules/ROOT/examples/blueprint-insights.toml" class="bare">https://raw.githubusercontent.com/luisarizmendi/tutorial-secure-onboarding/master/documentation/modules/ROOT/examples/blueprint-insights.toml</a></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">name = "kvm-insights"
+description = "Deploy KVM and include in Insights"</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"><a id="packages"></a>
+name = "insights-client"
+version = "*"</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[customizations.services]
+enabled = ["cockpit","insights-client"]</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[customizations.firewall]
+ports = ["9090:tcp"]</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"><a id="customizations.sshkey"></a>
+user = "root"
+key = "&lt;SSH PUB KEY&gt;"</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"><a id="customizations.user"></a>
+name = "admin"
+description = "Admin user"
+password = '&lt;ADMIN PASSW&gt;'
+key = "&lt;SSH PUB KEY&gt;"
+home = "/home/admin/"
+shell = "/usr/bin/bash"
+groups = ["users", "wheel"]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>MISMO NOMBRE QUE EN FDO O ESTE ERROR:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">0: Error installing SSH key
+1: User admin for SSH key installation missing</code></pre>
 </div>
 </div>
 <div class="listingblock">
@@ -178,22 +231,219 @@ sed -i "s|&lt;ADMIN PASSW&gt;|${ADMIN_PASSW}|g" blueprint-insights.toml</code></
 </div>
 </div>
 <div class="paragraph">
-<p>composer-cli blueprints push ${blueprint_file}</p>
+<p>sudo composer-cli blueprints push &lt;blueprint_file&gt;</p>
 </div>
-<div class="paragraph">
-<p>composer-cli compose start-ostree ${blueprint_name} edge-commit</p>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo composer-cli blueprints push blueprint-insights.toml</code></pre>
+</div>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo composer-cli blueprints list</code></pre>
+</div>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_generating_the_ostree_image"><a class="anchor" href="#_generating_the_ostree_image"></a>Generating the OSTree image</h3>
-
+<div class="paragraph">
+<p>sudo composer-cli compose start-ostree &lt;blueprint_name&gt; edge-commit</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo composer-cli compose start-ostree kvm-insights edge-commit</code></pre>
+</div>
+</div>
+<div class="tabset is-loading">
+<div class="ulist tabs">
+<ul>
+<li>
+<p><a id="tabset1_input"></a>input</p>
+</li>
+<li>
+<p><a id="tabset1_output"></a>output</p>
+</li>
+</ul>
+</div>
+<div class="content">
+<div class="tab-pane" aria-labelledby="tabset1_input">
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">watch sudo composer-cli compose status</code></pre>
+</div>
+</div>
+</div>
+<div class="tab-pane" aria-labelledby="tabset1_output">
+<div class="listingblock console-output">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">2d1030cb-6900-4e0b-994b-248c5bb55f7c RUNNING  Wed Nov 30 10:11:30 2022 kvm-insights    0.0.1 edge-commit</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>WAIT until 'FINISHED' ( more or less 10 min with 2 cores and 4 GB )</p>
+</div>
+<div class="paragraph">
+<p>CTL-C</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo composer-cli compose image &lt;IMAGE ID&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>tar downloaded</p>
+</div>
+<div class="paragraph">
+<p>sudo chown $(whoami) &lt;IMAGE TAR FILE&gt;</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_publishing_the_ostree_image"><a class="anchor" href="#_publishing_the_ostree_image"></a>Publishing the OSTree image</h3>
+<div class="listingblock console-output">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo dnf install -y podman</code></pre>
+</div>
+</div>
+<div class="listingblock console-output">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cat &lt;&lt;EOF &gt; nginx.conf
+events {
+}
+http {
+    server{
+        listen 8080;
+        root /usr/share/nginx/html;
+        location / {
+            autoindex on;
+            }
+        }
+     }
+pid /run/nginx.pid;
+daemon off;
+EOF</code></pre>
+</div>
+</div>
+<div class="listingblock console-output">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cat &lt;&lt;EOF &gt; Dockerfile
+FROM registry.access.redhat.com/ubi8/ubi
+RUN yum -y install nginx &amp;&amp; yum clean all
+ARG commit
+ADD \$commit /usr/share/nginx/html/
+ADD nginx.conf /etc/
+EXPOSE 8080
+CMD ["/usr/sbin/nginx", "-c", "/etc/nginx.conf"]
+EOF</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>sudo podman build -t &lt;CONTAINER IMAGE NAME&gt; --build-arg commit=&lt;IMAGE TAR FILE&gt; .</p>
+</div>
+<div class="paragraph">
+<p>&lt;blueprint_name&gt;:&lt;image id&gt;</p>
+</div>
+<div class="paragraph">
+<p>sudo podman tag &lt;blueprint_name&gt;:&lt;image id&gt; &lt;blueprint_name&gt;:latest</p>
+</div>
 <div class="listingblock console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo firewall-cmd --add-port=8090-8091/tcp --permanent
 sudo firewall-cmd --reload</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>IMAGE_BUILDER_IP</p>
+</div>
+<div class="paragraph">
+<p>IMAGE_PUBLISH_PORT</p>
+</div>
+<div class="paragraph">
+<p>!!!
+name pod , cuidado que no se puede poner :  entre el blueprint y el id, hay que poner -
+!!</p>
+</div>
+<div class="paragraph">
+<p>!!
+CUIDADO CON EL PUERTO DEL HOST QUE PUEDE INTERFERIR CON FDO, 8090 could be used
+!!</p>
+</div>
+<div class="paragraph">
+<p>sudo podman run --name &lt;blueprint_name&gt;-&lt;image id&gt; -d -p  ${IMAGE_PUBLISH_PORT}:8080 &lt;blueprint_name&gt;:&lt;image id&gt;</p>
+</div>
+<div class="tabset is-loading">
+<div class="ulist tabs">
+<ul>
+<li>
+<p><a id="tabset2_input"></a>input</p>
+</li>
+<li>
+<p><a id="tabset2_output"></a>output</p>
+</li>
+</ul>
+</div>
+<div class="content">
+<div class="tab-pane" aria-labelledby="tabset2_input">
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">curl <a href="http://${IMAGE_BUILDER_IP}:${IMAGE_PUBLISH_PORT}/repo/" class="bare">http://${IMAGE_BUILDER_IP}:${IMAGE_PUBLISH_PORT}/repo/</a></code></pre>
+</div>
+</div>
+</div>
+<div class="tab-pane" aria-labelledby="tabset2_output">
+<div class="listingblock console-output">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">&lt;html&gt;
+&lt;head&gt;&lt;title&gt;Index of /repo/&lt;/title&gt;&lt;/head&gt;
+&lt;body bgcolor="white"&gt;
+&lt;h1&gt;Index of /repo/&lt;/h1&gt;&lt;hr&gt;&lt;pre&gt;&lt;a href="../"&gt;../&lt;/a&gt;
+&lt;a href="extensions/"&gt;extensions/&lt;/a&gt;                                        30-Nov-2022 09:17                   -
+&lt;a href="objects/"&gt;objects/&lt;/a&gt;                                           30-Nov-2022 09:19                   -
+&lt;a href="refs/"&gt;refs/&lt;/a&gt;                                              30-Nov-2022 09:17                   -
+&lt;a href="state/"&gt;state/&lt;/a&gt;                                             30-Nov-2022 09:17                   -
+&lt;a href="tmp/"&gt;tmp/&lt;/a&gt;                                               30-Nov-2022 09:19                   -
+&lt;a href="config"&gt;config&lt;/a&gt;                                             30-Nov-2022 09:17                  38
+&lt;/pre&gt;&lt;hr&gt;&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>check id:</p>
+</div>
+<div class="paragraph">
+<p>&lt;IMAGE BUILDER IP&gt;:&lt;PUBLISHED PORT&gt;</p>
+</div>
+<div class="tabset is-loading">
+<div class="ulist tabs">
+<ul>
+<li>
+<p><a id="tabset3_input"></a>input</p>
+</li>
+<li>
+<p><a id="tabset3_output"></a>output</p>
+</li>
+</ul>
+</div>
+<div class="content">
+<div class="tab-pane" aria-labelledby="tabset3_input">
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">curl <a href="http://${IMAGE_BUILDER_IP}:${IMAGE_PUBLISH_PORT}/compose.json" class="bare">http://${IMAGE_BUILDER_IP}:${IMAGE_PUBLISH_PORT}/compose.json</a></code></pre>
+</div>
+</div>
+</div>
+<div class="tab-pane" aria-labelledby="tabset3_output">
+<div class="listingblock console-output">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">{"ref":"rhel/9/x86_64/edge","ostree-n-metadata-total":13593,"ostree-n-metadata-written":4573,"ostree-n-content-total":42606,"ostree-n-content-written":36966,"ostree-n-cache-hits":0,"ostree-content-bytes-written":2059379595,"ostree-commit":"a05cce6c8e34a609a484889b1e494484c4bc24b9c8a7374c2ae5573a1a15f1cc","ostree-content-checksum":"2fd316eacbe7b4ea42f24d97958290459c44294301f57638cc40c62b354bd847","ostree-version":"9.0","ostree-timestamp":"2022-11-30T09:19:31Z","rpm-ostree-inputhash":"cdae77f984cc529f21a7cb0d4ad80e9422b180140891fd42238f0b3606a203fa"}</code></pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -202,7 +452,131 @@ sudo firewall-cmd --reload</code></pre>
 <div class="sect1">
 <h2 id="rfe-iso"><a class="anchor" href="#rfe-iso"></a>Create the RHEL ISO</h2>
 <div class="sectionbody">
-
+<div class="paragraph">
+<p>sda or vda</p>
+</div>
+<div class="listingblock console-output">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">DISK_DEVICE=vda</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Image builder or xxxxxxx fdo server (port default 8080)</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">FDO_MANUFACTURING_URL="http://&lt;MANUFACTURING SERVER IP&gt;:&lt;MANUFACTURING SERVER PORT&gt;"</code></pre>
+</div>
+</div>
+<div class="listingblock console-output">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cat &lt;&lt;EOF &gt; blueprint-fdo.toml
+name = "blueprint-fdo"
+description = "Blueprint for FDO"
+version = "0.0.1"
+packages = []
+modules = []
+groups = []
+distro = ""
+[customizations]
+installation_device = "/dev/${DISK_DEVICE}"
+[customizations.fdo]
+manufacturing_server_url = "${FDO_MANUFACTURING_URL}"
+diun_pub_key_insecure = "true"
+EOF</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo composer-cli blueprints push blueprint-fdo.toml</code></pre>
+</div>
+</div>
+<div class="tabset is-loading">
+<div class="ulist tabs">
+<ul>
+<li>
+<p><a id="tabset4_input"></a>input</p>
+</li>
+<li>
+<p><a id="tabset4_output"></a>output</p>
+</li>
+</ul>
+</div>
+<div class="content">
+<div class="tab-pane" aria-labelledby="tabset4_input">
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo composer-cli blueprints list</code></pre>
+</div>
+</div>
+</div>
+<div class="tab-pane" aria-labelledby="tabset4_output">
+<div class="listingblock console-output">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">blueprint-fdo
+kvm-insights</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">baserelease=$(cat /etc/redhat-release | awk '{print $6}' | awk -F . '{print $1}')
+basearch=$(arch)</code></pre>
+</div>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo composer-cli compose start-ostree blueprint-fdo edge-simplified-installer --ref rhel/${baserelease}/${basearch}/edge --url <a href="http://${IMAGE_BUILDER_IP}:${IMAGE_PUBLISH_PORT}/repo/" class="bare">http://${IMAGE_BUILDER_IP}:${IMAGE_PUBLISH_PORT}/repo/</a></code></pre>
+</div>
+</div>
+<div class="tabset is-loading">
+<div class="ulist tabs">
+<ul>
+<li>
+<p><a id="tabset5_input"></a>input</p>
+</li>
+<li>
+<p><a id="tabset5_output"></a>output</p>
+</li>
+</ul>
+</div>
+<div class="content">
+<div class="tab-pane" aria-labelledby="tabset5_input">
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo watch composer-cli compose status</code></pre>
+</div>
+</div>
+</div>
+<div class="tab-pane" aria-labelledby="tabset5_output">
+<div class="listingblock console-output">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">51494368-35f7-471f-b0fa-c19b21709c8f RUNNING  Wed Nov 30 12:12:23 2022 blueprint-fdo   0.0.1 edge-simplified-installer
+2d1030cb-6900-4e0b-994b-248c5bb55f7c FINISHED Wed Nov 30 10:19:41 2022 kvm-insights    0.0.1 edge-commit</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>WAIT (  10  min)</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">FDO_ISO_IMAGE_ID=&lt;IMAGE ID&gt;</code></pre>
+</div>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo composer-cli compose image ${FDO_ISO_IMAGE_ID}
+sudo chown $(whoami) ${FDO_ISO_IMAGE_ID}-simplified-installer.iso</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>you get an ISO file</p>
+</div>
 </div>
 </div>
 </article>

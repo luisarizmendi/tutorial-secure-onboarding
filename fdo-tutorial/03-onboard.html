@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Edge device onboarding :: Secure Edge device onboarding with RHEL and FDO</title>
+    <link rel="canonical" href="https://luisarizmendi.github.io/tutorial-secure-onboarding/fdo-tutorial/03-onboard.html">
+    <meta name="generator" content="Antora 3.0.0">
+    <link rel="stylesheet" href="../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://developers.redhat.com" target="_blank"><img src="../_/img/NewRHDFullLogo_4-color_white-wordmark.png" height="40px" alt="Red Hat Developer Program"></a>
+      <a class="navbar-item" style="font-size: 24px; color: white" href="https://luisarizmendi.github.io/tutorial-secure-onboarding">Secure Edge device onboarding with RHEL and FDO</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://developers.redhat.com/ebooks/" target="_blank">Books</a>
+        <a class="navbar-item" href="https://developers.redhat.com/cheatsheets/" target="_blank">Cheat Sheets</a>
+        <a class="navbar-item" href="https://developers.redhat.com/events/" target="_blank">Upcoming Events</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">More Tutorials</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/kubernetes-tutorial/" target="_blank">Kubernetes</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/istio-tutorial/" target="_blank">Istio</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/quarkus-tutorial/" target="_blank">Quarkus</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/knative-tutorial/" target="_blank">Knative</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/tekton-tutorial/" target="_blank">Tekton</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="fdo-tutorial" data-version="master">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html"></a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="00-prerequisite.html">0. Prerequisites</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="00-prerequisite.html#virtualization">Prepare your virtualization environment</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="00-prerequisite.html#arch">Choose your lab architecture</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="00-prerequisite.html#usecase">Create your use case</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="#01-fdo.adoc">1. FIDO Device Onboarding (FDO)</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#01-fdo.adoc#intro">Understanding FDO</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Secure Edge device onboarding with RHEL and FDO</a></li>
+    <li><a href="03-onboard.html">Edge device onboarding</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/luisarizmendi/tutorial-secure-onboarding/edit/master/documentation/modules/ROOT/pages/03-onboard.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">Edge device onboarding</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Jump to lab steps</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="onboard-vm"><a class="anchor" href="#onboard-vm"></a>Creating the edge device VM</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>use the ISO</p>
+</div>
+<div class="paragraph">
+<p>2 CPUs, 1.5 RAM 20GB</p>
+</div>
+<div class="paragraph">
+<p>BIOS &#8594; UEFI</p>
+</div>
+<div class="paragraph">
+<p>TPM????</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"> 2022-11-30T11:33:32.516Z INFO  fdo_client_linuxapp::serviceinfo &gt; Initiating disk re-encryption, disk-label: /dev/vda&gt;
+ 2022-11-30T11:33:32.945Z INFO  fdo_client_linuxapp              &gt; ServiceInfo failed, error: Error processing returne&gt;
+Caused by:
+    0: Error executing clevis
+    1: Error executing disk encryption for disk label /dev/vda4
+    2: Error rebinding clevis
+    3: Error binding clevis
+    4: Failed to bind clevis: ExitStatus(unix_wait_status(256)), stdout: , stderr:
+       A TPM2 device with the in-kernel resource manager is needed!
+       Invalid input!
+       Usage: jose jwe fmt -i JWE [-I CT] [-o JWE] [-O CT] [-c]
+
+       Converts a JWE between serialization formats
+
+         -i JSON --input=JSON     Parse JWE from JSON
+         -i FILE --input=FILE     Read JWE from FILE
+         -i -    --input=-        Read JWE from standard input
+
+         -I FILE --detached=FILE  Read decoded ciphertext from FILE
+         -I -    --detached=-     Read decoded ciphertext from standard input
+
+         -o JSON --output=JSON    Parse JWE from JSON
+         -o FILE --output=FILE    Read JWE from FILE
+         -o -    --output=-       Read JWE from standard input
+                                  Default: "-"
+
+         -O JSON --detach=JSON    Parse JWE from JSON
+         -O FILE --detach=FILE    Read JWE from FILE
+         -O -    --detach=-       Read JWE from standard input
+
+         -c      --compact        Output JWE using compact serialization
+
+       Failed to import token from file.
+       Error saving metadata to LUKS2 header in device /dev/vda4
+       Unable to update metadata; operation cancelled
+       Error adding new binding to /dev/vda4</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>GIF con el boot</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="onboard-fdoclient"><a class="anchor" href="#onboard-fdoclient"></a>FDO client in action</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>users &#8594; al pricipio solo el del blueprint???</p>
+</div>
+<div class="paragraph">
+<p>journalctl -u fdo-client-linuxapp -f</p>
+</div>
+<div class="paragraph">
+<p>Starting FDO client&#8230;&#8203;</p>
+</div>
+<div class="paragraph">
+<p>WAIT (it could take 1 or 2 min to start)</p>
+</div>
+<div class="paragraph">
+<p>Finished FDO client.</p>
+</div>
+<div class="paragraph">
+<p>[administrator@localhost ~]$ lsblk
+NAME                                          MAJ:MIN RM  SIZE RO TYPE  MOUNTPOINTS
+sr0                                            11:0    1 1024M  0 rom
+vda                                           252:0    0   20G  0 disk
+├─vda1                                        252:1    0    1M  0 part
+├─vda2                                        252:2    0  127M  0 part  /boot/efi
+├─vda3                                        252:3    0  384M  0 part  /boot
+└─vda4                                        252:4    0 19.5G  0 part
+  └─luks-0f4d6096-37cb-4eb8-88d6-abac5cd73db9 253:0    0 19.5G  0 crypt
+    └─rootvg-rootlv                           253:1    0    9G  0 lvm   /var
+                                                                        /usr
+                                                                        /
+                                                                        /sysroot</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="onboard-checks"><a class="anchor" href="#onboard-checks"></a>Checking the onboard</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>depends on the use case</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Subscription and insights</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>run openscap</p>
+</div>
+<div class="paragraph">
+<p>kvm with cockpit</p>
+</div>
+<div class="paragraph">
+<p>greenboot script</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="onboard-ideas"><a class="anchor" href="#onboard-ideas"></a>Try out any of these ideas&#8230;&#8203;</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>AAP</p>
+</div>
+<div class="paragraph">
+<p>Microshift and ACM</p>
+</div>
+</div>
+</div>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <a class="rhd-logo" href="https://developers.redhat.com" target="_blank"></div>
+</footer>
+<script src="../_/js/vendor/clipboard.js"></script>
+<script src="../_/js/site.js"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+  </body>
+</html>
