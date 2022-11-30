@@ -2,10 +2,32 @@
 include::_attributes.adoc[]
 
 
+A RHEL for Edge image is an rpm-ostree image that includes system packages to remotely install RHEL on Edge servers.
 
-quick intro
+The system packages include:
+
+* Base OS package
+* Podman as the container engine
+* Additional RPM content
+
+You can customize the image to configure the OS content as per your requirements by using either Image Builder installed on a RHEL system or using http://console.redhat.com[Red Hat Hybrid Console].
 
 
+Working with an OSTree based Operating System has multiple benefits when they are applied to edge computing use cases:
 
 
+* *Simplified management*: Secure and scale with the benefits of zero-touch provisioning, fleet health visibility, and quick security remediations throughout the whole lifecycle
+
+* *Platform consistency*: Easily create purpose-built OS images optimized for the architectural challenges inherent at edge. It makes the system more  reliable and predictable.
+
+* *Efficient over-the-air updates*: Updates transfer significantly less data and are ideal for remote sites with limited or intermittent connectivity
+
+* *Unattended resilience*: Application specific health checks detect conflicts and automatically rollback an OS update, preventing downtime
+
+
+If you want to know more about OSTree RHEL you can read the article attached below.
+
+
+++++
 include::partial$OSTree-RHEL.html[]
+++++

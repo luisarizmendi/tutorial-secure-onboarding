@@ -9,6 +9,8 @@ Edge device onboarding could be your worst nightmare: security concerns, complex
 
 In this tutorial, you have the opportunity to learn more about FDO by installing and configuring the FDO servers, creating your own device onboarding use case (including the automation needed), and deploying RHEL for Edge following the FDO workflow.  
 
+Although FDO can be used with "standard" Red Hat Enterprise Linux, this tutorial will use a variant of RHEL based on OSTree images, since these systems are more suitable for edge computing use cases.
+
 [.tiles.browse]
 == Browse modules
 
