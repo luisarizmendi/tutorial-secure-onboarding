@@ -17,3 +17,7 @@ include::_attributes.adoc[]
 
 
 
+= FIDO Device Onboarding (FDO) - Intro
+include::_attributes.adoc[]
+
+

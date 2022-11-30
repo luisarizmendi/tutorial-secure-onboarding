@@ -1,4 +1,4 @@
-= Welcome to Secure Edge device onboarding tutorial
+= Welcome to Secure Edge device onboarding
 :page-layout: home
 :!sectids:
 
