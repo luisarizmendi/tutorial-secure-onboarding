@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Lab prerequisites :: Secure Edge device onboarding with RHEL and FDO</title>
-    <link rel="canonical" href="https://luisarizmendi.github.io/tutorial-secure-onboarding/fdo-tutorial/00-prerequisite.html">
-    <link rel="prev" href="00-intro.html">
-    <link rel="next" href="01-fdo-intro.html">
+    <title>Edge device onboarding :: Secure Edge device onboarding with RHEL and FDO</title>
+    <link rel="canonical" href="https://luisarizmendi.github.io/tutorial-secure-onboarding/fdo-tutorial/03-onboarding.html">
+    <link rel="prev" href="02-rfe-lab.html">
+    <link rel="next" href="#99-summary.adoc">
     <meta name="generator" content="Antora 3.0.0">
     <link rel="stylesheet" href="../_/css/site.css">
   </head>
@@ -54,18 +54,18 @@
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="00-intro.html">Introduction to secure edge device onboarding</a>
   </li>
-  <li class="nav-item is-current-page" data-depth="1">
+  <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
     <a class="nav-link" href="00-prerequisite.html">0. Lab prerequisites</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#virtualization">Prepare your virtualization environment</a>
+    <a class="nav-link" href="00-prerequisite.html#virtualization">Prepare your virtualization environment</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#arch">Choose your lab architecture</a>
+    <a class="nav-link" href="00-prerequisite.html#arch">Choose your lab architecture</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#usecase">Create your use case</a>
+    <a class="nav-link" href="00-prerequisite.html#usecase">Create your use case</a>
   </li>
 </ul>
   </li>
@@ -144,21 +144,21 @@
   </li>
 </ul>
   </li>
-  <li class="nav-item" data-depth="1">
+  <li class="nav-item is-current-page" data-depth="1">
     <button class="nav-item-toggle"></button>
     <a class="nav-link" href="03-onboarding.html">3. Edge device onboarding</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="03-onboarding.html#onboard-vm">Creating the edge device VM</a>
+    <a class="nav-link" href="#onboard-vm">Creating the edge device VM</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="03-onboarding.html#onboard-fdoclient">FDO client in action</a>
+    <a class="nav-link" href="#onboard-fdoclient">FDO client in action</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="03-onboarding.html#onboard-fdoservers">FDO server side</a>
+    <a class="nav-link" href="#onboard-fdoservers">FDO server side</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="03-onboarding.html#onboard-checks">Checking the edge device onboard</a>
+    <a class="nav-link" href="#onboard-checks">Checking the edge device onboard</a>
   </li>
 </ul>
   </li>
@@ -180,89 +180,174 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="index.html">Secure Edge device onboarding with RHEL and FDO</a></li>
-    <li><a href="00-prerequisite.html">0. Lab prerequisites</a></li>
+    <li><a href="03-onboarding.html">3. Edge device onboarding</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/luisarizmendi/tutorial-secure-onboarding/edit/master/documentation/modules/ROOT/pages/00-prerequisite.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/luisarizmendi/tutorial-secure-onboarding/edit/master/documentation/modules/ROOT/pages/03-onboarding.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <article class="doc">
-<h1 class="page">Lab prerequisites</h1>
-<div class="sect1">
-<h2 id="_tldr"><a class="anchor" href="#_tldr"></a>TL/DR</h2>
+<h1 class="page">Edge device onboarding</h1>
+<div id="preamble">
 <div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p>Virtualization hypervisor (lab steps are based on libvirt):</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Red Hat Enterprise Linux 8/9 VM minimal-install subscribed (2 vCPUs, 4 GB memory, 50 GB disk)</p>
-</li>
-<li>
-<p>Empty VM with UEFI boot enabled (2 vCPUs, 1.5 GB memory, 20GB disk)</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>Internet connection from VMs</p>
-</li>
-<li>
-<p>(optional) Red Hat Enterprise Linux 8/9 boot ISO</p>
-</li>
-</ul>
+<div class="paragraph">
+<p>Jump to lab steps</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="virtualization"><a class="anchor" href="#virtualization"></a>Prepare your virtualization environment</h2>
+<h2 id="onboard-vm"><a class="anchor" href="#onboard-vm"></a>Creating the edge device VM</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Although you can use the steps shown in this tutorial to onboard RHEL on baremetal devices, for simplicity, we will be using virtual machines for this lab, so you will need to have a pre-configured hypervisor (which could be libvirt running on your laptop if you have enough resources) where we will be running the required servers and also to create the edge devices.</p>
+<p>use the ISO</p>
 </div>
 <div class="paragraph">
-<p>Depending on the use case or configuration that you want to follow during this lab, you could need to add "special" devices to your edge VM, for example, you probably would like to use a virtual TPM to manage keys as you will be doing it with physical devices on real edge environments.</p>
+<p>2 CPUs, 1.5 RAM 20GB</p>
 </div>
 <div class="paragraph">
-<p>This lab could be run completly offline, but in order to avoid creating local repositories we will be connecting to the public ones, so you will need Internet access from your VMs.</p>
+<p>BIOS &#8594; UEFI</p>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="arch"><a class="anchor" href="#arch"></a>Choose your lab architecture</h2>
-<div class="sectionbody">
 <div class="paragraph">
-<p>The lab environment will be composed by an edge device and one or multiple servers. You can deploy all servers in a single VM if you are short in CPU/MEM resources in your hypervisor (laptop?) or you can split services in dedicated VMs to try a more "realistic" architecture.</p>
+<p>TPM????</p>
 </div>
-<div class="sect2">
-<h3 id="_option_1_all_in_one_server"><a class="anchor" href="#_option_1_all_in_one_server"></a>Option 1: All-in-one server</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"> 2022-11-30T11:33:32.516Z INFO  fdo_client_linuxapp::serviceinfo &gt; Initiating disk re-encryption, disk-label: /dev/vda&gt;
+ 2022-11-30T11:33:32.945Z INFO  fdo_client_linuxapp              &gt; ServiceInfo failed, error: Error processing returne&gt;
+Caused by:
+    0: Error executing clevis
+    1: Error executing disk encryption for disk label /dev/vda4
+    2: Error rebinding clevis
+    3: Error binding clevis
+    4: Failed to bind clevis: ExitStatus(unix_wait_status(256)), stdout: , stderr:
+       A TPM2 device with the in-kernel resource manager is needed!
+       Invalid input!
+       Usage: jose jwe fmt -i JWE [-I CT] [-o JWE] [-O CT] [-c]
 
+       Converts a JWE between serialization formats
+
+         -i JSON --input=JSON     Parse JWE from JSON
+         -i FILE --input=FILE     Read JWE from FILE
+         -i -    --input=-        Read JWE from standard input
+
+         -I FILE --detached=FILE  Read decoded ciphertext from FILE
+         -I -    --detached=-     Read decoded ciphertext from standard input
+
+         -o JSON --output=JSON    Parse JWE from JSON
+         -o FILE --output=FILE    Read JWE from FILE
+         -o -    --output=-       Read JWE from standard input
+                                  Default: "-"
+
+         -O JSON --detach=JSON    Parse JWE from JSON
+         -O FILE --detach=FILE    Read JWE from FILE
+         -O -    --detach=-       Read JWE from standard input
+
+         -c      --compact        Output JWE using compact serialization
+
+       Failed to import token from file.
+       Error saving metadata to LUKS2 header in device /dev/vda4
+       Unable to update metadata; operation cancelled
+       Error adding new binding to /dev/vda4</code></pre>
 </div>
-<div class="sect2">
-<h3 id="_option_2_dedicated_server_vms"><a class="anchor" href="#_option_2_dedicated_server_vms"></a>Option 2: Dedicated server VMs</h3>
+</div>
 <div class="paragraph">
-<p>CPU and  mem</p>
-</div>
-<div class="paragraph">
-<p>ISO download</p>
-</div>
-<div class="paragraph">
-<p>registered sub</p>
-</div>
+<p>GIF con el boot</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="usecase"><a class="anchor" href="#usecase"></a>Create your use case</h2>
+<h2 id="onboard-fdoclient"><a class="anchor" href="#onboard-fdoclient"></a>FDO client in action</h2>
 <div class="sectionbody">
-
+<div class="paragraph">
+<p>users &#8594; al pricipio solo el del blueprint???</p>
+</div>
+<div class="paragraph">
+<p>journalctl -u fdo-client-linuxapp -f</p>
+</div>
+<div class="paragraph">
+<p>Starting FDO client&#8230;&#8203;</p>
+</div>
+<div class="paragraph">
+<p>WAIT (it could take 1 or 2 min to start)</p>
+</div>
+<div class="paragraph">
+<p>fdo_client_linuxapp::serviceinfo &gt; Initiating disk re-encryption, disk-label: /dev/vda4, pin: tpm2, config: {}, reencrypt: true
+fdo_client_linuxapp              &gt; Secure Device Onboarding DONE
+fdo-client-linuxapp.service: Deactivated successfully.
+Finished FDO client.
+fdo-client-linuxapp.service: Consumed 48.954s CPU time.</p>
+</div>
+<div class="paragraph">
+<p>[administrator@localhost ~]$ lsblk
+NAME                                          MAJ:MIN RM  SIZE RO TYPE  MOUNTPOINTS
+sr0                                            11:0    1 1024M  0 rom
+vda                                           252:0    0   20G  0 disk
+├─vda1                                        252:1    0    1M  0 part
+├─vda2                                        252:2    0  127M  0 part  /boot/efi
+├─vda3                                        252:3    0  384M  0 part  /boot
+└─vda4                                        252:4    0 19.5G  0 part
+  └─luks-0f4d6096-37cb-4eb8-88d6-abac5cd73db9 253:0    0 19.5G  0 crypt
+    └─rootvg-rootlv                           253:1    0    9G  0 lvm   /var
+                                                                        /usr
+                                                                        /
+                                                                        /sysroot</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="onboard-fdoservers"><a class="anchor" href="#onboard-fdoservers"></a>FDO server side</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>[larizmen@rhte-image-builder aio]$ tree stores/
+stores/
+├── manufacturer_keys
+├── manufacturing_sessions
+├── mfg_sessions
+├── owner_onboarding_sessions
+├── owner_sessions
+├── owner_vouchers
+│   ├── ab98eaae-c820-0a1c-638f-bab833a01544
+│   ├── bac5b023-a5aa-1296-3e4a-82e4c84c6cf0
+│   ├── cc64cb34-5b95-809d-f60b-78b82cbc9f08
+│   └── f32977ce-1ff7-224f-7489-73d81b4f6702
+├── rendezvous_registered
+│   ├── ab98eaae-c820-0a1c-638f-bab833a01544
+│   ├── bac5b023-a5aa-1296-3e4a-82e4c84c6cf0
+│   └── cc64cb34-5b95-809d-f60b-78b82cbc9f08
+├── rendezvous_sessions
+│   ├── en_slash_5HqjQJrF5aqD9xd85+cvCX2QfEs7FTQtYXJMloc4=
+│   ├── JDKn0XIvlrBZD3kE9UCABstmoydxSjjU_slash_VanbsxSgc0=
+│   └── qGGJWI5wy96cTZ2kzEejfnHMGCrzA4NplcWlzFY_slash_KLw=
+├── serviceinfo_api_devices
+└── serviceinfo_api_per_device</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="onboard-checks"><a class="anchor" href="#onboard-checks"></a>Checking the edge device onboard</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>depends on the use case</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Subscription and insights</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>run openscap</p>
+</div>
+<div class="paragraph">
+<p>kvm with cockpit</p>
+</div>
+<div class="paragraph">
+<p>greenboot script</p>
+</div>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="00-intro.html">Introduction to secure edge device onboarding</a></span>
-  <span class="next"><a href="01-fdo-intro.html">1.A FIDO Device Onboarding (FDO) - Intro</a></span>
+  <span class="prev"><a href="02-rfe-lab.html">2.B RHEL OSTree images - Lab</a></span>
+  <span class="next"><a href="#99-summary.adoc">Summary</a></span>
 </nav>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
