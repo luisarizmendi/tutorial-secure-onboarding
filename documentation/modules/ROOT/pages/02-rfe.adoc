@@ -111,11 +111,113 @@ https://<image builder ip>:9090/
 
 
 
+
 [.console-input]
 [source,bash,subs="+macros,+attributes"]
 ----
-
+curl -O https://raw.githubusercontent.com/luisarizmendi/tutorial-secure-onboarding/master/documentation/modules/ROOT/examples/blueprint-insights.toml
 ----
+
+
+
+
+
+[source,bash,subs="+macros,+attributes"]
+----
+name = "kvm-insights"
+description = "Deploy KVM and include in Insights"
+----
+
+
+
+
+
+[source,bash,subs="+macros,+attributes"]
+----
+[[packages]]
+name = "insights-client"
+version = "*"
+----
+
+
+
+
+
+
+
+
+[source,bash,subs="+macros,+attributes"]
+----
+[customizations.services]
+enabled = ["cockpit","insights-client"]
+----
+
+
+
+
+
+
+
+[source,bash,subs="+macros,+attributes"]
+----
+[customizations.firewall]
+ports = ["9090:tcp"]
+----
+
+
+
+
+
+
+
+[source,bash,subs="+macros,+attributes"]
+----
+[[customizations.sshkey]]
+user = "root"
+key = "<SSH PUB KEY>"
+----
+
+
+
+
+
+
+[source,bash,subs="+macros,+attributes"]
+----
+[[customizations.user]]
+name = "admin"
+description = "Admin user"
+password = '<ADMIN PASSW>'
+key = "<SSH PUB KEY>"
+home = "/home/admin/"
+shell = "/usr/bin/bash"
+groups = ["users", "wheel"]
+----
+
+
+
+MISMO NOMBRE QUE EN FDO O ESTE ERROR:
+
+[source,bash,subs="+macros,+attributes"]
+----
+0: Error installing SSH key
+1: User admin for SSH key installation missing
+----
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 [source,bash,subs="+macros,+attributes"]
@@ -151,7 +253,19 @@ ADMIN_PASSW=$(python3 -c 'import crypt,getpass;pw=getpass.getpass();print(crypt.
 ----
 sed -i "s|<SSH PUB KEY>|${SSH_PUB_KEY}|g" blueprint-insights.toml
 sed -i "s|<ADMIN PASSW>|${ADMIN_PASSW}|g" blueprint-insights.toml
+----
 
+
+
+
+
+sudo composer-cli blueprints push <blueprint_file>
+
+
+[.console-input]
+[source,bash,subs="+macros,+attributes"]
+----
+sudo composer-cli blueprints push blueprint-insights.toml
 ----
 
 
@@ -160,17 +274,17 @@ sed -i "s|<ADMIN PASSW>|${ADMIN_PASSW}|g" blueprint-insights.toml
 
 
 
-
-composer-cli blueprints push ${blueprint_file}
-
-
-
-
-
+[.console-input]
+[source,bash,subs="+macros,+attributes"]
+----
+sudo composer-cli blueprints list
+----
 
 
 
-composer-cli compose start-ostree ${blueprint_name} edge-commit
+
+
+
 
 
 
@@ -182,7 +296,168 @@ composer-cli compose start-ostree ${blueprint_name} edge-commit
 
 
 
+sudo composer-cli compose start-ostree <blueprint_name> edge-commit
+
+
+
+[.console-input]
+[source,bash,subs="+macros,+attributes"]
+----
+sudo composer-cli compose start-ostree kvm-insights edge-commit
+----
+
+
+
+
+
+
+
+
+
+
+[tabs]
+====
+input::
++
+--
+[.console-input]
+[source,bash,subs="+macros,+attributes"]
+----
+watch sudo composer-cli compose status
+----
+--
+output::
++
+--
+[.console-output]
+[source,bash,subs="+macros,+attributes"]
+----
+2d1030cb-6900-4e0b-994b-248c5bb55f7c RUNNING  Wed Nov 30 10:11:30 2022 kvm-insights    0.0.1 edge-commit
+----
+--
+====
+
+
+
+
+
+
+WAIT until 'FINISHED' ( more or less 10 min with 2 cores and 4 GB )
+
+
+CTL-C
+
+
+
+
+
+
+
+[source,bash,subs="+macros,+attributes"]
+----
+sudo composer-cli compose image <IMAGE ID>
+----
+
+tar downloaded
+
+
+
+
+
+
+
+sudo chown $(whoami) <IMAGE TAR FILE>
+
+
+
+
+
+
 === Publishing the OSTree image
+
+
+
+
+
+[.console-output]
+[source,bash,subs="+macros,+attributes"]
+----
+sudo dnf install -y podman
+----
+
+
+
+
+
+
+
+[.console-output]
+[source,bash,subs="+macros,+attributes"]
+----
+cat <<EOF > nginx.conf
+events {
+}
+http {
+    server{
+        listen 8080;
+        root /usr/share/nginx/html;
+        location / {
+            autoindex on;
+            }
+        }
+     }
+pid /run/nginx.pid;
+daemon off;
+EOF
+----
+
+
+
+
+[.console-output]
+[source,bash,subs="+macros,+attributes"]
+----
+cat <<EOF > Dockerfile
+FROM registry.access.redhat.com/ubi8/ubi
+RUN yum -y install nginx && yum clean all
+ARG commit
+ADD \$commit /usr/share/nginx/html/
+ADD nginx.conf /etc/
+EXPOSE 8080
+CMD ["/usr/sbin/nginx", "-c", "/etc/nginx.conf"]
+EOF
+----
+
+
+
+
+
+
+
+sudo podman build -t <CONTAINER IMAGE NAME> --build-arg commit=<IMAGE TAR FILE> .
+
+
+<blueprint_name>:<image id>
+
+
+
+
+
+
+
+
+
+
+
+sudo podman tag <blueprint_name>:<image id> <blueprint_name>:latest
+
+
+
+
+
+
+
+
 
 
 
@@ -199,8 +474,326 @@ sudo firewall-cmd --reload
 
 
 
+
+
+
+
+
+IMAGE_BUILDER_IP
+
+IMAGE_PUBLISH_PORT
+
+
+
+
+
+
+
+
+
+!!!
+name pod , cuidado que no se puede poner :  entre el blueprint y el id, hay que poner -
+!!
+
+
+!!
+CUIDADO CON EL PUERTO DEL HOST QUE PUEDE INTERFERIR CON FDO, 8090 could be used
+!!
+
+
+
+
+sudo podman run --name <blueprint_name>-<image id> -d -p  ${IMAGE_PUBLISH_PORT}:8080 <blueprint_name>:<image id>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[tabs]
+====
+input::
++
+--
+[.console-input]
+[source,bash,subs="+macros,+attributes"]
+----
+curl http://${IMAGE_BUILDER_IP}:${IMAGE_PUBLISH_PORT}/repo/
+----
+--
+output::
++
+--
+[.console-output]
+[source,bash,subs="+macros,+attributes"]
+----
+<html>
+<head><title>Index of /repo/</title></head>
+<body bgcolor="white">
+<h1>Index of /repo/</h1><hr><pre><a href="../">../</a>
+<a href="extensions/">extensions/</a>                                        30-Nov-2022 09:17                   -
+<a href="objects/">objects/</a>                                           30-Nov-2022 09:19                   -
+<a href="refs/">refs/</a>                                              30-Nov-2022 09:17                   -
+<a href="state/">state/</a>                                             30-Nov-2022 09:17                   -
+<a href="tmp/">tmp/</a>                                               30-Nov-2022 09:19                   -
+<a href="config">config</a>                                             30-Nov-2022 09:17                  38
+</pre><hr></body>
+</html>
+----
+--
+====
+
+
+
+
+
+
+
+
+check id:
+
+
+
+
+<IMAGE BUILDER IP>:<PUBLISHED PORT>
+
+
+
+
+
+
+
+
+
+
+[tabs]
+====
+input::
++
+--
+[.console-input]
+[source,bash,subs="+macros,+attributes"]
+----
+curl http://${IMAGE_BUILDER_IP}:${IMAGE_PUBLISH_PORT}/compose.json
+----
+--
+output::
++
+--
+[.console-output]
+[source,bash,subs="+macros,+attributes"]
+----
+{"ref":"rhel/9/x86_64/edge","ostree-n-metadata-total":13593,"ostree-n-metadata-written":4573,"ostree-n-content-total":42606,"ostree-n-content-written":36966,"ostree-n-cache-hits":0,"ostree-content-bytes-written":2059379595,"ostree-commit":"a05cce6c8e34a609a484889b1e494484c4bc24b9c8a7374c2ae5573a1a15f1cc","ostree-content-checksum":"2fd316eacbe7b4ea42f24d97958290459c44294301f57638cc40c62b354bd847","ostree-version":"9.0","ostree-timestamp":"2022-11-30T09:19:31Z","rpm-ostree-inputhash":"cdae77f984cc529f21a7cb0d4ad80e9422b180140891fd42238f0b3606a203fa"}
+----
+--
+====
+
+
+
+
+
+
+
+
+
 [#rfe-iso]
 == Create the RHEL ISO
+
+
+
+
+sda or vda 
+
+
+
+[.console-output]
+[source,bash,subs="+macros,+attributes"]
+----
+DISK_DEVICE=vda
+----
+
+
+
+Image builder or xxxxxxx fdo server (port default 8080)
+
+
+[source,bash,subs="+macros,+attributes"]
+----
+FDO_MANUFACTURING_URL="http://<MANUFACTURING SERVER IP>:<MANUFACTURING SERVER PORT>"
+----
+
+
+
+
+
+
+
+[.console-output]
+[source,bash,subs="+macros,+attributes"]
+----
+cat <<EOF > blueprint-fdo.toml
+name = "blueprint-fdo"
+description = "Blueprint for FDO"
+version = "0.0.1"
+packages = []
+modules = []
+groups = []
+distro = ""
+[customizations]
+installation_device = "/dev/${DISK_DEVICE}"
+[customizations.fdo]
+manufacturing_server_url = "${FDO_MANUFACTURING_URL}"
+diun_pub_key_insecure = "true"
+EOF
+----
+
+
+
+
+[source,bash,subs="+macros,+attributes"]
+----
+sudo composer-cli blueprints push blueprint-fdo.toml
+----
+
+
+
+
+
+
+
+
+[tabs]
+====
+input::
++
+--
+[.console-input]
+[source,bash,subs="+macros,+attributes"]
+----
+sudo composer-cli blueprints list
+----
+--
+output::
++
+--
+[.console-output]
+[source,bash,subs="+macros,+attributes"]
+----
+blueprint-fdo
+kvm-insights
+----
+--
+====
+
+
+
+
+
+
+[.console-input]
+[source,bash,subs="+macros,+attributes"]
+----
+baserelease=$(cat /etc/redhat-release | awk '{print $6}' | awk -F . '{print $1}')
+basearch=$(arch)
+----
+
+
+
+
+[.console-input]
+[source,bash,subs="+macros,+attributes"]
+----
+sudo composer-cli compose start-ostree blueprint-fdo edge-simplified-installer --ref rhel/${baserelease}/${basearch}/edge --url http://${IMAGE_BUILDER_IP}:${IMAGE_PUBLISH_PORT}/repo/ 
+----
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[tabs]
+====
+input::
++
+--
+[.console-input]
+[source,bash,subs="+macros,+attributes"]
+----
+sudo watch composer-cli compose status
+----
+--
+output::
++
+--
+[.console-output]
+[source,bash,subs="+macros,+attributes"]
+----
+51494368-35f7-471f-b0fa-c19b21709c8f RUNNING  Wed Nov 30 12:12:23 2022 blueprint-fdo   0.0.1 edge-simplified-installer 
+2d1030cb-6900-4e0b-994b-248c5bb55f7c FINISHED Wed Nov 30 10:19:41 2022 kvm-insights    0.0.1 edge-commit
+----
+--
+====
+
+
+
+WAIT (  10  min)
+
+
+
+
+
+[source,bash,subs="+macros,+attributes"]
+----
+FDO_ISO_IMAGE_ID=<IMAGE ID>
+----
+
+
+
+
+
+[.console-input]
+[source,bash,subs="+macros,+attributes"]
+----
+sudo composer-cli compose image ${FDO_ISO_IMAGE_ID}
+sudo chown $(whoami) ${FDO_ISO_IMAGE_ID}-simplified-installer.iso
+----
+
+
+you get an ISO file
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

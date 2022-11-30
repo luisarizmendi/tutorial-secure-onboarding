@@ -1,0 +1,523 @@
+= FIDO Device Onboarding (FDO)
+include::_attributes.adoc[]
+
+
+
+Jump to lab steps 
+
+
+
+
+[#fdo-intro]
+== Understanding FIDO Device Onboarding
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[#fdo-config]
+== FDO configuration
+
+
+
+dos opciones
+
+
+
+
+=== Option A: Creating your own use case
+
+[larizmen@rhte-image-builder ~]$ cat /etc/fdo/aio/configs/serviceinfo_api_server.yml
+
+
+[source,yaml,subs="+macros,+attributes"]
+----
+---
+service_info:
+  initial_user: ~
+  files: ~
+  commands: ~
+  diskencryption_clevis: ~
+  additional_serviceinfo: ~
+bind: "0.0.0.0:8083"
+service_info_auth_token: dnEXugA+KXFpIDs7f0XFhn/hQ5FBcr+9d/MsMDfH7TM=
+admin_auth_token: XWNzbEwQ6EWF+PWZrqa7d68mQFHG1NtGX9yklCNtMa8=
+device_specific_store_driver:
+  Directory:
+    path: /etc/fdo/aio/stores/serviceinfo_api_devices
+----
+
+
+
+
+
+
+==== initial_user
+
+
+
+
+
+
+[source,yaml,subs="+macros,+attributes"]
+----
+  initial_user: 
+    username: admin
+    sshkeys:
+    - "ssh-rsa AAAA...."
+----
+
+
+
+
+
+
+
+
+==== files
+
+
+
+
+
+
+
+
+
+
+
+
+[source,yaml,subs="+macros,+attributes"]
+----
+  - path: /etc/greenboot/check/required.d/01_check_demo_file.sh
+    permissions: 644
+    source_path: /etc/fdo-configs/device0/etc/greenboot/check/required.d/01_check_demo_file.sh
+----
+
+
+
+
+
+
+
+==== commands
+
+[source,yaml,subs="+macros,+attributes"]
+----
+  - command: systemctl
+    args:
+    - enable 
+    - --now
+    - rpm-ostreed-automatic.timer
+----
+
+
+
+
+==== diskencryption_clevis
+
+
+[source,yaml,subs="+macros,+attributes"]
+----
+  diskencryption_clevis: 
+  - disk_label: /dev/vda4
+    binding:
+      pin: tpm2
+      config: "{}"
+    reencrypt: true
+----
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+=== Option B: Using the example use case
+
+
+[.console-input]
+[source,bash,subs="+macros,+attributes"]
+----
+curl -O https://raw.githubusercontent.com/luisarizmendi/tutorial-secure-onboarding/master/documentation/modules/ROOT/examples/serviceinfo_api_server.yml
+----
+
+
+
+
+[.console-input]
+[source,bash,subs="+macros,+attributes"]
+----
+curl -O https://raw.githubusercontent.com/luisarizmendi/tutorial-secure-onboarding/master/documentation/modules/ROOT/examples/fdo-configs.tar.gz
+tar xvf fdo-configs.tar.gz
+----
+
+copy configs to path
+
+
+
+
+[.console-input]
+[source,bash,subs="+macros,+attributes"]
+----
+sudo cp -r fdo-configs/ /etc
+----
+
+
+
+
+
+ultima barra
+
+
+[source,bash,subs="+macros,+attributes"]
+----
+PATH_FILES="/etc/fdo-configs"
+----
+
+
+
+
+
+[source,bash,subs="+macros,+attributes"]
+----
+SSH_PUB_KEY="ssh-rsa AAAAB3......am8= user@machine"
+----
+
+
+
+[source,bash,subs="+macros,+attributes"]
+----
+RED_HAT_USER="myrhuser"
+RED_HAT_PASSWORD="myrhpassword"
+----
+
+
+
+
+[source,bash,subs="+macros,+attributes"]
+----
+SERVICE_TOKEN=$(grep service_info_auth_token /etc/fdo/aio/configs/serviceinfo_api_server.yml | awk '{print $2}')
+ADMIN_TOKEN=$(grep admin_auth_token /etc/fdo/aio/configs/serviceinfo_api_server.yml | awk '{print $2}')
+----
+
+
+
+
+
+
+[.console-input]
+[source,bash,subs="+macros,+attributes"]
+----
+sed -i "s|<SSH PUB KEY>|${SSH_PUB_KEY}|g" serviceinfo_api_server.yml
+sed -i "s|<PATH FILES>|${PATH_FILES}|g" serviceinfo_api_server.yml
+sed -i "s|<RED HAT USER>|${RED_HAT_USER}|g" serviceinfo_api_server.yml
+sed -i "s|<RED HAT PASSWORD>|${RED_HAT_PASSWORD}|g" serviceinfo_api_server.yml
+sed -i "s|<SERVICE TOKEN>|${SERVICE_TOKEN}|g" serviceinfo_api_server.yml
+sed -i "s|<ADMIN TOKEN>|${ADMIN_TOKEN}|g" serviceinfo_api_server.yml
+----
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[#fdo-services]
+== FDO services
+
+
+
+las dos opciones
+
+
+[#fdo-services-aio]
+=== Option 1: All-in-one FDO server installation
+
+
+
+
+==== Preparing the FDO services
+
+
+[.console-input]
+[source,bash,subs="+macros,+attributes"]
+----
+sudo firewall-cmd --add-port=8080-8083/tcp --permanent
+sudo firewall-cmd --reload
+----
+
+
+[.console-input]
+[source,bash,subs="+macros,+attributes"]
+----
+sudo dnf install -y fdo-admin-cli fdo-manufacturing-server
+----
+
+
+
+[.console-input]
+[source,bash,subs="+macros,+attributes"]
+----
+sudo systemctl enable --now fdo-aio
+----
+
+
+[tabs]
+====
+input::
++
+--
+[.console-input]
+[source,bash,subs="+macros,+attributes"]
+----
+ss -ltn
+----
+--
+output::
++
+--
+[.console-output]
+[source,bash,subs="+macros,+attributes"]
+----
+State                 Recv-Q                Send-Q                               Local Address:Port                               Peer Address:Port               Process               
+LISTEN                0                     128                                        0.0.0.0:8080                                    0.0.0.0:*                                        
+LISTEN                0                     128                                        0.0.0.0:8081                                    0.0.0.0:*                                        
+LISTEN                0                     128                                        0.0.0.0:8082                                    0.0.0.0:*                                        
+LISTEN                0                     128                                        0.0.0.0:8083                                    0.0.0.0:*                                        
+LISTEN                0                     128                                        0.0.0.0:22                                      0.0.0.0:*                                        
+LISTEN                0                     128                                           [::]:22                                         [::]:*                
+----
+--
+====
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+cat /etc/fdo/aio/aio_configuration 
+
+
+[source,yaml,subs="+macros,+attributes"]
+----
+---
+cert_organization: FDO AIO
+cert_country: US
+listen_ip_address: 0.0.0.0
+listen_port_manufacturing_server: 8080
+listen_port_owner_onboarding_server: 8081
+listen_port_rendezvous_server: 8082
+listen_port_serviceinfo_api_server: 8083
+separate_manufacturing_and_owner_voucher_store: false
+manufacturing_enable_plain_di: false
+manufacturing_disable_key_storage_filesystem: false
+manufacturing_disable_key_storage_tpm: false
+manufacturing_use_secp256r1: false
+contact_hostname: ~
+contact_addresses:
+  - IpAddr: 192.168.122.187
+  - IpAddr: "fe80::5054:ff:fe26:13c3"
+serviceinfo_api_auth_token: dnEXugA+KXFpIDs7f0XFhn/hQ5FBcr+9d/MsMDfH7TM=
+serviceinfo_api_admin_token: XWNzbEwQ6EWF+PWZrqa7d68mQFHG1NtGX9yklCNtMa8=
+----
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+==== Including your onboarding automation
+
+
+
+
+
+[.console-input]
+[source,bash,subs="+macros,+attributes"]
+----
+sudo cp -f serviceinfo_api_server.yml  /etc/fdo/aio/configs/serviceinfo_api_server.yml
+----
+
+
+
+
+[.console-input]
+[source,bash,subs="+macros,+attributes"]
+----
+sudo systemctl restart fdo-aio
+----
+
+
+
+
+[tabs]
+====
+input::
++
+--
+[.console-input]
+[source,bash,subs="+macros,+attributes"]
+----
+ss -ltn
+----
+--
+output::
++
+--
+[.console-output]
+[source,bash,subs="+macros,+attributes"]
+----
+State                 Recv-Q                Send-Q                               Local Address:Port                               Peer Address:Port               Process               
+LISTEN                0                     128                                        0.0.0.0:8080                                    0.0.0.0:*                                        
+LISTEN                0                     128                                        0.0.0.0:8081                                    0.0.0.0:*                                        
+LISTEN                0                     128                                        0.0.0.0:8082                                    0.0.0.0:*                                        
+LISTEN                0                     128                                        0.0.0.0:8083                                    0.0.0.0:*                                        
+LISTEN                0                     128                                        0.0.0.0:22                                      0.0.0.0:*                                        
+LISTEN                0                     128                                           [::]:22                                         [::]:*                
+----
+--
+====
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[#fdo-services-dedicated]
+=== Option 2: Dedicated FDO servers
+
+
+
+TBD
+
+
+
+
+
+
+==== Preparing the FDO services
+
+
+
+
+
+
+
+
+
+
+==== Including your onboarding automation
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

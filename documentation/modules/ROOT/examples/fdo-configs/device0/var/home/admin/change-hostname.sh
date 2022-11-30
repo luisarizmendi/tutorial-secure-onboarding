@@ -5,10 +5,9 @@ then
 this_hostname=$(echo $RANDOM | md5sum | head -c 8; echo;)
 
 
-####### DISABLED WHILE INVESTIGATING MICROSHIFT
-#hostnamectl set-hostname edge-${this_hostname}
-#hostnamectl --pretty set-hostname edge-${this_hostname}
-####### DISABLED WHILE INVESTIGATING MICROSHIFT
+hostnamectl set-hostname edge-${this_hostname}
+hostnamectl --pretty set-hostname edge-${this_hostname}
+
 
 
 

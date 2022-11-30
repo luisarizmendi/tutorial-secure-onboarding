@@ -1,0 +1,202 @@
+
+= Edge device onboarding
+include::_attributes.adoc[]
+
+
+
+Jump to lab steps 
+
+
+
+
+[#onboard-vm]
+== Creating the edge device VM
+
+
+
+
+
+use the ISO
+
+
+
+2 CPUs, 1.5 RAM 20GB
+
+
+
+
+
+BIOS -> UEFI
+
+
+
+
+TPM????
+
+
+[source,bash,subs="+macros,+attributes"]
+----
+ 2022-11-30T11:33:32.516Z INFO  fdo_client_linuxapp::serviceinfo > Initiating disk re-encryption, disk-label: /dev/vda>
+ 2022-11-30T11:33:32.945Z INFO  fdo_client_linuxapp              > ServiceInfo failed, error: Error processing returne>
+Caused by:
+    0: Error executing clevis
+    1: Error executing disk encryption for disk label /dev/vda4
+    2: Error rebinding clevis
+    3: Error binding clevis
+    4: Failed to bind clevis: ExitStatus(unix_wait_status(256)), stdout: , stderr:
+       A TPM2 device with the in-kernel resource manager is needed!
+       Invalid input!
+       Usage: jose jwe fmt -i JWE [-I CT] [-o JWE] [-O CT] [-c]
+       
+       Converts a JWE between serialization formats
+       
+         -i JSON --input=JSON     Parse JWE from JSON
+         -i FILE --input=FILE     Read JWE from FILE
+         -i -    --input=-        Read JWE from standard input
+       
+         -I FILE --detached=FILE  Read decoded ciphertext from FILE
+         -I -    --detached=-     Read decoded ciphertext from standard input
+       
+         -o JSON --output=JSON    Parse JWE from JSON
+         -o FILE --output=FILE    Read JWE from FILE
+         -o -    --output=-       Read JWE from standard input
+                                  Default: "-"
+       
+         -O JSON --detach=JSON    Parse JWE from JSON
+         -O FILE --detach=FILE    Read JWE from FILE
+         -O -    --detach=-       Read JWE from standard input
+       
+         -c      --compact        Output JWE using compact serialization
+       
+       Failed to import token from file.
+       Error saving metadata to LUKS2 header in device /dev/vda4
+       Unable to update metadata; operation cancelled
+       Error adding new binding to /dev/vda4
+----
+
+
+
+
+
+
+
+
+
+
+
+GIF con el boot
+
+
+
+
+
+
+
+
+[#onboard-fdoclient]
+== FDO client in action
+
+
+
+users -> al pricipio solo el del blueprint???
+
+
+
+
+
+journalctl -u fdo-client-linuxapp -f
+
+
+
+
+
+Starting FDO client...
+
+
+
+WAIT (it could take 1 or 2 min to start)
+
+
+
+
+Finished FDO client.
+
+
+
+
+
+
+[administrator@localhost ~]$ lsblk
+NAME                                          MAJ:MIN RM  SIZE RO TYPE  MOUNTPOINTS
+sr0                                            11:0    1 1024M  0 rom   
+vda                                           252:0    0   20G  0 disk  
+├─vda1                                        252:1    0    1M  0 part  
+├─vda2                                        252:2    0  127M  0 part  /boot/efi
+├─vda3                                        252:3    0  384M  0 part  /boot
+└─vda4                                        252:4    0 19.5G  0 part  
+  └─luks-0f4d6096-37cb-4eb8-88d6-abac5cd73db9 253:0    0 19.5G  0 crypt 
+    └─rootvg-rootlv                           253:1    0    9G  0 lvm   /var
+                                                                        /usr
+                                                                        /
+                                                                        /sysroot
+
+
+
+
+
+
+[#onboard-checks]
+== Checking the onboard
+
+depends on the use case
+
+
+
+
+
+ Subscription and insights
+
+
+run openscap
+
+
+
+
+
+kvm with cockpit
+
+
+
+
+greenboot script
+
+
+
+
+
+
+
+
+
+
+
+
+
+[#onboard-ideas]
+== Try out any of these ideas...
+
+
+AAP
+
+
+Microshift and ACM
+
+
+
+
+
+
+
+
+
+
