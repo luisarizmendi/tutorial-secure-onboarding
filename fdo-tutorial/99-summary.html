@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Welcome to Secure Edge device onboarding :: Secure Edge device onboarding with RHEL and FDO</title>
-    <link rel="canonical" href="https://luisarizmendi.github.io/tutorial-secure-onboarding/fdo-tutorial/index.html">
-    <link rel="next" href="00-intro.html">
+    <title>Summary :: Secure Edge device onboarding with RHEL and FDO</title>
+    <link rel="canonical" href="https://luisarizmendi.github.io/tutorial-secure-onboarding/fdo-tutorial/99-summary.html">
+    <link rel="prev" href="03-onboarding.html">
     <meta name="generator" content="Antora 3.0.0">
     <link rel="stylesheet" href="../_/css/site.css">
   </head>
@@ -161,7 +161,7 @@
   </li>
 </ul>
   </li>
-  <li class="nav-item" data-depth="1">
+  <li class="nav-item is-current-page" data-depth="1">
     <a class="nav-link" href="99-summary.html">Summary</a>
   </li>
 </ul>
@@ -175,138 +175,26 @@
 <main class="article">
 <div class="toolbar" role="navigation">
 <button class="nav-toggle"></button>
-  <a href="index.html" class="home-link is-current"></a>
+  <a href="index.html" class="home-link"></a>
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="index.html">Secure Edge device onboarding with RHEL and FDO</a></li>
-    <li><a href="index.html">Welcome to Secure Edge device onboarding</a></li>
+    <li><a href="99-summary.html">Summary</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/luisarizmendi/tutorial-secure-onboarding/edit/master/documentation/modules/ROOT/pages/index.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/luisarizmendi/tutorial-secure-onboarding/edit/master/documentation/modules/ROOT/pages/99-summary.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <article class="doc">
-<h1 class="page">Welcome to Secure Edge device onboarding</h1>
-<div class="sect1 text-center strong">
-<h2>Secure Edge device onboarding with RHEL and FDO</h2>
+<h1 class="page">Summary</h1>
+<div class="sect1">
+<h2 id="_test"><a class="anchor" href="#_test"></a>TEST</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>Edge device onboarding could be your worst nightmare: security concerns, complexity, scalability, traceability, &#8230;&#8203; but there is a new helping hand: FIDO device onboarding (FDO) specification. Red Hat is developing an implementation of this new industry specification, and included it as tech preview in RHEL 8.6+/9.x.</p>
-</div>
-<div class="paragraph">
-<p>In this tutorial, you have the opportunity to learn more about FDO by installing and configuring the FDO servers, creating your own device onboarding use case (including the automation needed), and deploying RHEL for Edge following the FDO workflow.</p>
-</div>
-</div>
-</div>
-<div class="sect1 tiles browse">
-<h2>Browse modules</h2>
-<div class="sectionbody">
-<div class="ulist tile tile">
-<div class="title"><a href="00-prerequisite.html" class="xref page">0. Lab prerequisites</a></div>
-<ul>
-<li>
-<p><a href="00-prerequisite.html#virtualization" class="xref page">Prepare your virtualization environment</a></p>
-</li>
-<li>
-<p><a href="00-prerequisite.html#arch" class="xref page">Choose your lab architecture</a></p>
-</li>
-<li>
-<p><a href="00-prerequisite.html#usecase" class="xref page">Create your use case</a></p>
-</li>
-</ul>
-</div>
-<div class="ulist tile tile">
-<div class="title"><a href="01-fdo-lab.html" class="xref page">1.B FIDO Device Onboarding (FDO) - Lab</a></div>
-<ul>
-<li>
-<p><a href="01-fdo-lab.html#fdo-services" class="xref page">FDO services</a></p>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="01-fdo-lab.html#fdo-services-aio" class="xref page">Option 1: All-in-one FDO server installation</a></p>
-</li>
-<li>
-<p><a href="01-fdo-lab.html#fdo-services-dedicated" class="xref page">Option 2: Dedicated FDO servers</a></p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p><a href="01-fdo-lab.html#fdo-config" class="xref page">FDO Service API config</a></p>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="01-fdo-lab.html#fdo-optiona" class="xref page">Option A: Creating your own use case</a></p>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="01-fdo-lab.html#fdo-optiona-user" class="xref page">initial_user</a></p>
-</li>
-<li>
-<p><a href="01-fdo-lab.html#fdo-optiona-files" class="xref page">files</a></p>
-</li>
-<li>
-<p><a href="01-fdo-lab.html#fdo-optiona-commands" class="xref page">commands</a></p>
-</li>
-<li>
-<p><a href="01-fdo-lab.html#fdo-optiona-encrypt" class="xref page">diskencryption_clevis</a></p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p><a href="01-fdo-lab.html#fdo-optionb" class="xref page">Option B: Using the example use case</a></p>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-<div class="ulist tile tile">
-<div class="title"><a href="02-rfe-lab.html" class="xref page">2.B RHEL OSTree images - Lab</a></div>
-<ul>
-<li>
-<p><a href="02-rfe-lab.html#rfe-imagebuilder" class="xref page">Install Image builder</a></p>
-</li>
-<li>
-<p><a href="02-rfe-lab.html#rfe-image" class="xref page">Create the RHEL OSTree image</a></p>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="02-rfe-lab.html#rfe-ostreeimage" class="xref page">Generating the repo image</a></p>
-</li>
-<li>
-<p><a href="02-rfe-lab.html#rfe-publish" class="xref page">Publishing the repo image</a></p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p><a href="02-rfe-lab.html#rfe-iso" class="xref page">Create the RHEL ISO</a></p>
-</li>
-</ul>
-</div>
-<div class="ulist tile">
-<div class="title"><a href="03-onboarding.html" class="xref page">3. Edge device onboarding</a></div>
-<ul>
-<li>
-<p><a href="03-onboarding.html#onboard-vm" class="xref page">Creating the edge device VM</a></p>
-</li>
-<li>
-<p><a href="03-onboarding.html#onboard-fdoclient" class="xref page">FDO client in action</a></p>
-</li>
-<li>
-<p><a href="03-onboarding.html#onboard-fdoservers" class="xref page">FDO server side</a></p>
-</li>
-<li>
-<p><a href="03-onboarding.html#onboard-checks" class="xref page">Checking the edge device onboard</a></p>
-</li>
-</ul>
-</div>
+
 </div>
 </div>
 <nav class="pagination">
-  <span class="next"><a href="00-intro.html">Introduction to secure edge device onboarding</a></span>
+  <span class="prev"><a href="03-onboarding.html">3. Edge device onboarding</a></span>
 </nav>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">

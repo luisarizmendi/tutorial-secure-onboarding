@@ -163,7 +163,7 @@
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="#99-summary.adoc">Summary</a>
+    <a class="nav-link" href="99-summary.html">Summary</a>
   </li>
 </ul>
   </li>
@@ -188,14 +188,185 @@
   <div class="content">
 <article class="doc">
 <h1 class="page">FIDO Device Onboarding (FDO) - Intro</h1>
-<div class="sect1">
-<h2 id="fdo-intro"><a class="anchor" href="#fdo-intro"></a>Understanding FIDO Device Onboarding</h2>
+<div id="preamble">
 <div class="sectionbody">
-
+<div class="paragraph">
+<p>The FIDO Device Onboard (FDO) specification is the first widely accepted industry specification aimed at solving edge computing and Internet of Things (IoT) device onboarding challenges. In my previous article, I reviewed some of those challenges, and this article explains how FDO addresses edge device onboarding at scale.</p>
+</div>
+<div class="paragraph">
+<p>The edge device onboarding problem is not new, and companies have developed solutions to cover the challenges. However, none was accepted as a standard because they were either lock-in solutions or had other issues.</p>
+</div>
+<div class="paragraph">
+<p>A common problem when creating device image templates is that the device manufacturer needs to know who the device owner or user will be and sometimes even the installation platform details to preconfigure the device. As you can probably imagine, that&#8217;s inconvenient and even more difficult if you rely on a third-party manufacturer to create the devices.</p>
 </div>
 </div>
-<h1 id="_fido_device_onboarding_fdo_intro" class="sect0"><a class="anchor" href="#_fido_device_onboarding_fdo_intro"></a>FIDO Device Onboarding (FDO) - Intro</h1>
-
+</div>
+<div class="sect1">
+<h2 id="_fdos_origins"><a class="anchor" href="#_fdos_origins"></a>FDO&#8217;s origins</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Because of these issues, a group of smart people decided it would be a good idea to think about what proper edge computing device onboarding should look like. Thanks to a great cross-company collaboration spirit (one of the best open source principles), they designed the FDO specification. In the collaboration&#8217;s words:</p>
+</div>
+<div class="paragraph">
+<p><em>The FIDO Alliance is an open industry association with a focused mission: authentication standards to help reduce the world&#8217;s over-reliance on passwords. The FIDO Alliance promotes the development of, use of, and compliance with standards for authentication and device attestation.</em></p>
+</div>
+<div class="paragraph">
+<p>Since nobody wants to reinvent the wheel, they looked for solutions that could be the foundation for the FDO implementation. Intel offered its Secure Device Onboarding (SDO) technology to the Linux Foundation, and the alliance agreed it would be a good starting point. So you could say that SDO is the parent of FDO.</p>
+</div>
+<div class="paragraph">
+<p>Taking SDO as the foundation, the alliance developed the FDO standard with these key principles in mind:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The specification should solve the authentication/trust problem with standard tools.</p>
+</li>
+<li>
+<p>The specification should be compatible with other existing zero-touch provisioning tools.</p>
+</li>
+<li>
+<p>It cannot be tied to any specific hardware or platform.</p>
+</li>
+<li>
+<p>It needs to implement "late binding," which means you don&#8217;t need to know the final owner or deployment details when creating the device templates. This approach reduces the number of templates and allows manufacturers to standardize their offerings.</p>
+</li>
+<li>
+<p>The specification must be open.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>As a result, we now have an industry-accepted specification for IoT and edge computing device onboarding promoted by the Linux Foundation Edge (LF-Edge) organization.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_fdo_components"><a class="anchor" href="#_fdo_components"></a>FDO components</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Companies typically acquire their IoT and edge computing devices from a third party (OEM) that provides the solution. There are two main players: the manufacturer and the customer or owner, and they are usually at separate locations. The manufacturer creates the device or image template at their location. The owner, who does not need any specific technical background related to the solution, receives the device, deploys it on the selected platform, boots it up, possibly customizes provisioning with a simple wizard (planned for future FDO releases), and starts using it.</p>
+</div>
+<div class="paragraph">
+<p>This model requires several pieces: The manufacturer must be able to sign the device, the owner must be able to trust the device, and the provisioning must be completed automatically with the customizations required by the owner, location, and device usage. These pieces include:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Manufacturing server</strong>: Located at the manufacturer&#8217;s premises, the Manufacturing server signs the device, creates a voucher to set the device ownership, and binds it to a specific platform or cloud.</p>
+</li>
+<li>
+<p><strong>Rendezvous server</strong>: This server is located at the owner&#8217;s premises or the platform where the device management system will be used (such as a public cloud). It receives the voucher generated by the Manufacturing server during the first device boot. The server then matches the device UUID with a target platform or cloud and provides information to the device about which Owner server endpoint it should use.</p>
+</li>
+<li>
+<p><strong>Owner or onboarding server</strong>: This is located at the owner&#8217;s premises or the platform where the device will be deployed. After device authentication, a secure channel is created between the device and this server that is used to send the required pieces (such as files and scripts) for the onboarding automation to the device.</p>
+</li>
+<li>
+<p><strong>Device client</strong>: Installed on the device as the client piece of the solution, it queries the servers where the onboarding automation will be executed. This client could be implemented on top of the device&#8217;s processor or co-processor firmware, a microcontroller unit, or as a process of an operating system.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Communication between these components happens using standard TCP/IP protocols such as HTTP/HTTPS.</p>
+</div>
+<div class="paragraph">
+<p>You could also use FDO in completely disconnected environments, provided the device has access to the Rendezvous and Owner servers.</p>
+</div>
+<div class="paragraph">
+<p>Other pieces that could be included as part of the solution are API servers that make it possible to manage the device programmatically, or proxies or edge gateways that enable non-IP systems to communicate with the servers, as depicted below.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/fdo-interfaces.webp" alt="FDO interfaces">
+</div>
+<div class="title">Figure 1. FDO interfaces (Source: FIDO Alliance)</div>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s review the role of these components by reviewing the FDO workflow during device onboarding.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_fdo_workflow"><a class="anchor" href="#_fdo_workflow"></a>FDO workflow</h2>
+<div class="sectionbody">
+<div class="imageblock">
+<div class="content">
+<img src="_images/fdo-workflow.webp" alt="FDO workflow">
+</div>
+<div class="title">Figure 2. FDO workflow</div>
+</div>
+<div class="paragraph">
+<p>There are three stages in the FDO specification: Before, during, and after the device&#8217;s first boot.</p>
+</div>
+<div class="sect2">
+<h3 id="_1_before_the_first_boot"><a class="anchor" href="#_1_before_the_first_boot"></a>1. Before the first boot</h3>
+<div class="paragraph">
+<p>This step takes place at the manufacturing location, which could be a third party or another organization inside your own company.</p>
+</div>
+<div class="paragraph">
+<p>The device is prepared at the manufacturing location. This process involves the following steps:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>The tools required to identify the device are included in the device. These include the FDO client and a set of certificates and keys that could be installed on the operating system or part of the firmware (such as in a Trusted Platform Module).</p>
+</li>
+<li>
+<p>The Rendezvous server endpoint (URL) is included in the device.</p>
+</li>
+<li>
+<p>The ownership voucher is created. This piece is not included in the device; it&#8217;s maintained separately, which is convenient if you need to change the device-platform owner assignment without touching the device.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Next, the device and the ownership voucher are sent to either the owner or a partner (a value-added reseller) who includes the device as part of a solution it resells. When there are third parties between the manufacturer and the final owner, you can track the complete chain of ownership using the ownership voucher by including different certificates and keys (shown in the diagram below).</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/vouchers.webp" alt="Ownership voucher">
+</div>
+<div class="title">Figure 3. FDO Ownership voucher (Source: FIDO Alliance)</div>
+</div>
+<div class="paragraph">
+<p>Finally, the device owner uses the ownership voucher in the target platform or cloud to register the device. That registration happens in the Rendezvous server.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_2_during_the_first_boot"><a class="anchor" href="#_2_during_the_first_boot"></a>2. During the first boot</h3>
+<div class="paragraph">
+<p>Now that everything is prepared, it&#8217;s time to connect and boot the device.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>During the first boot, the device contacts the Rendezvous server endpoint(s) configured during the manufacturing phase. After the device identifies itself, the Rendezvous server sends back the platform or cloud Owner server endpoint that that device should use.</p>
+</li>
+<li>
+<p>The device contacts the Owner server endpoint shared by the Rendezvous server and identifies itself, and the platform or cloud sends back the ownership voucher that it received before.</p>
+</li>
+<li>
+<p>A secure tunnel is created between the device and the Owner server(s). The device uses it to download the files (including the secrets) and automation tasks it should execute during the onboarding.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>This diagram shows a summary of these steps, including the communications between the Rendezvous server and the Owner server:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/services-com.webp" alt="FDO servers communication">
+</div>
+<div class="title">Figure 4. FDO servers communication (Source: FIDO Alliance)</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_3_after_the_first_boot"><a class="anchor" href="#_3_after_the_first_boot"></a>3. After the first boot</h3>
+<div class="paragraph">
+<p>The FDO specification also allows you to restart the FDO late-binding process (the steps after the manufacturing phase) if you need to transfer device ownership.</p>
+</div>
+</div>
+</div>
+</div>
 <nav class="pagination">
   <span class="prev"><a href="00-prerequisite.html">0. Lab prerequisites</a></span>
   <span class="next"><a href="01-fdo-lab.html">1.B FIDO Device Onboarding (FDO) - Lab</a></span>
