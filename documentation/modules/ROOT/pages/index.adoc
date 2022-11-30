@@ -55,7 +55,7 @@ In this tutorial, you have the opportunity to learn more about FDO by installing
 
 
 [.tile]
-.xref:03-onboard.adoc[3. Edge device onboarding]
+.xref:03-onboarding.adoc[3. Edge device onboarding]
 * xref:03-onboarding.adoc#onboard-vm[Creating the edge device VM]
 * xref:03-onboarding.adoc#onboard-fdoclient[FDO client in action]
 * xref:03-onboarding.adoc#onboard-fdoservers[FDO server side]
