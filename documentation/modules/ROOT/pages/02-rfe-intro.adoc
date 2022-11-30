@@ -30,6 +30,7 @@ If you want to know more about OSTree RHEL you can read the article attached bel
 
 
 
-++++
-include::partial$ostree-os.pdf[]
-++++
+
+include::partial$OSTree-RHEL.adoc[]
+
+
