@@ -3,8 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>FIDO Device Onboarding (FDO) :: Secure Edge device onboarding with RHEL and FDO</title>
+    <title>FIDO Device Onboarding (FDO) - Intro :: Secure Edge device onboarding with RHEL and FDO</title>
     <link rel="canonical" href="https://luisarizmendi.github.io/tutorial-secure-onboarding/fdo-tutorial/01-fdo-intro.html">
+    <link rel="prev" href="00-prerequisite.html">
+    <link rel="next" href="01-fdo-lab.html">
     <meta name="generator" content="Antora 3.0.0">
     <link rel="stylesheet" href="../_/css/site.css">
   </head>
@@ -50,8 +52,11 @@
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="00-intro.html">Introduction to secure edge device onboarding</a>
+  </li>
+  <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="00-prerequisite.html">0. Prerequisites</a>
+    <a class="nav-link" href="00-prerequisite.html">0. Lab prerequisites</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="00-prerequisite.html#virtualization">Prepare your virtualization environment</a>
@@ -64,14 +69,101 @@
   </li>
 </ul>
   </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="01-fdo-intro.html">1.A FIDO Device Onboarding (FDO) - Intro</a>
+  </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="#01-fdo.adoc">1. FIDO Device Onboarding (FDO)</a>
+    <a class="nav-link" href="01-fdo-lab.html">1.B FIDO Device Onboarding (FDO) - Lab</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#01-fdo.adoc#intro">Understanding FDO</a>
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="01-fdo-lab.html#fdo-services">FDO services</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="01-fdo-lab.html#fdo-services-aio">Option 1: All-in-one FDO server installation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="01-fdo-lab.html#fdo-services-dedicated">Option 2: Dedicated FDO servers</a>
   </li>
 </ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="01-fdo-lab.html#fdo-config">FDO Service API config</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="01-fdo-lab.html#fdo-optiona">Option A: Creating your own use case</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="01-fdo-lab.html#fdo-optiona-user">initial_user</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="01-fdo-lab.html#fdo-optiona-files">files</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="01-fdo-lab.html#fdo-optiona-commands">commands</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="01-fdo-lab.html#fdo-optiona-encrypt">diskencryption_clevis</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="01-fdo-lab.html#fdo-optionb">Option B: Using the example use case</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="02-rfe-intro.html">2.A RHEL OSTree images - Intro</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="02-rfe-lab.html">2.B RHEL OSTree images - Lab</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-rfe-lab.html#rfe-imagebuilder">Install Image builder</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="02-rfe-lab.html#rfe-image">Create the RHEL OSTree image</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="02-rfe-lab.html#rfe-ostreeimage">Generating the repo image</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="02-rfe-lab.html#rfe-publish">Publishing the repo image</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-rfe-lab.html#rfe-iso">Create the RHEL ISO</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="#03-onboarding.adoc">3. Edge device onboarding</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#03-onboarding.adoc#onboard-vm">Creating the edge device VM</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#03-onboarding.adoc#onboard-fdoclient">FDO client in action</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#03-onboarding.adoc#onboard-fdoservers">FDO server side</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#03-onboarding.adoc#onboard-checks">Checking the edge device onboard</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="#99-summary.adoc">Summary</a>
   </li>
 </ul>
   </li>
@@ -88,312 +180,24 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="index.html">Secure Edge device onboarding with RHEL and FDO</a></li>
-    <li><a href="01-fdo-intro.html">FIDO Device Onboarding (FDO)</a></li>
+    <li><a href="01-fdo-intro.html">1.A FIDO Device Onboarding (FDO) - Intro</a></li>
   </ul>
 </nav>
   <div class="edit-this-page"><a href="https://github.com/luisarizmendi/tutorial-secure-onboarding/edit/master/documentation/modules/ROOT/pages/01-fdo-intro.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <article class="doc">
-<h1 class="page">FIDO Device Onboarding (FDO)</h1>
-<div id="preamble">
-<div class="sectionbody">
-<div class="paragraph">
-<p>Jump to lab steps</p>
-</div>
-</div>
-</div>
+<h1 class="page">FIDO Device Onboarding (FDO) - Intro</h1>
 <div class="sect1">
 <h2 id="fdo-intro"><a class="anchor" href="#fdo-intro"></a>Understanding FIDO Device Onboarding</h2>
 <div class="sectionbody">
 
 </div>
 </div>
-<div class="sect1">
-<h2 id="fdo-config"><a class="anchor" href="#fdo-config"></a>FDO configuration</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>dos opciones</p>
-</div>
-<div class="sect2">
-<h3 id="_option_a_creating_your_own_use_case"><a class="anchor" href="#_option_a_creating_your_own_use_case"></a>Option A: Creating your own use case</h3>
-<div class="paragraph">
-<p>[larizmen@rhte-image-builder ~]$ cat /etc/fdo/aio/configs/serviceinfo_api_server.yml</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">---
-service_info:
-  initial_user: ~
-  files: ~
-  commands: ~
-  diskencryption_clevis: ~
-  additional_serviceinfo: ~
-bind: "0.0.0.0:8083"
-service_info_auth_token: dnEXugA+KXFpIDs7f0XFhn/hQ5FBcr+9d/MsMDfH7TM=
-admin_auth_token: XWNzbEwQ6EWF+PWZrqa7d68mQFHG1NtGX9yklCNtMa8=
-device_specific_store_driver:
-  Directory:
-    path: /etc/fdo/aio/stores/serviceinfo_api_devices</code></pre>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_initial_user"><a class="anchor" href="#_initial_user"></a>initial_user</h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">  initial_user:
-    username: admin
-    sshkeys:
-    - "ssh-rsa AAAA...."</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_files"><a class="anchor" href="#_files"></a>files</h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">  - path: /etc/greenboot/check/required.d/01_check_demo_file.sh
-    permissions: 644
-    source_path: /etc/fdo-configs/device0/etc/greenboot/check/required.d/01_check_demo_file.sh</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_commands"><a class="anchor" href="#_commands"></a>commands</h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">  - command: systemctl
-    args:
-    - enable
-    - --now
-    - rpm-ostreed-automatic.timer</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_diskencryption_clevis"><a class="anchor" href="#_diskencryption_clevis"></a>diskencryption_clevis</h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">  diskencryption_clevis:
-  - disk_label: /dev/vda4
-    binding:
-      pin: tpm2
-      config: "{}"
-    reencrypt: true</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_option_b_using_the_example_use_case"><a class="anchor" href="#_option_b_using_the_example_use_case"></a>Option B: Using the example use case</h3>
-<div class="listingblock console-input">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">curl -O <a href="https://raw.githubusercontent.com/luisarizmendi/tutorial-secure-onboarding/master/documentation/modules/ROOT/examples/serviceinfo_api_server.yml" class="bare">https://raw.githubusercontent.com/luisarizmendi/tutorial-secure-onboarding/master/documentation/modules/ROOT/examples/serviceinfo_api_server.yml</a></code></pre>
-</div>
-</div>
-<div class="listingblock console-input">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">curl -O <a href="https://raw.githubusercontent.com/luisarizmendi/tutorial-secure-onboarding/master/documentation/modules/ROOT/examples/fdo-configs.tar.gz" class="bare">https://raw.githubusercontent.com/luisarizmendi/tutorial-secure-onboarding/master/documentation/modules/ROOT/examples/fdo-configs.tar.gz</a>
-tar xvf fdo-configs.tar.gz</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>copy configs to path</p>
-</div>
-<div class="listingblock console-input">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo cp -r fdo-configs/ /etc</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>ultima barra</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">PATH_FILES="/etc/fdo-configs"</code></pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">SSH_PUB_KEY="ssh-rsa AAAAB3......am8= user@machine"</code></pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">RED_HAT_USER="myrhuser"
-RED_HAT_PASSWORD="myrhpassword"</code></pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">SERVICE_TOKEN=$(grep service_info_auth_token /etc/fdo/aio/configs/serviceinfo_api_server.yml | awk '{print $2}')
-ADMIN_TOKEN=$(grep admin_auth_token /etc/fdo/aio/configs/serviceinfo_api_server.yml | awk '{print $2}')</code></pre>
-</div>
-</div>
-<div class="listingblock console-input">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sed -i "s|&lt;SSH PUB KEY&gt;|${SSH_PUB_KEY}|g" serviceinfo_api_server.yml
-sed -i "s|&lt;PATH FILES&gt;|${PATH_FILES}|g" serviceinfo_api_server.yml
-sed -i "s|&lt;RED HAT USER&gt;|${RED_HAT_USER}|g" serviceinfo_api_server.yml
-sed -i "s|&lt;RED HAT PASSWORD&gt;|${RED_HAT_PASSWORD}|g" serviceinfo_api_server.yml
-sed -i "s|&lt;SERVICE TOKEN&gt;|${SERVICE_TOKEN}|g" serviceinfo_api_server.yml
-sed -i "s|&lt;ADMIN TOKEN&gt;|${ADMIN_TOKEN}|g" serviceinfo_api_server.yml</code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="fdo-services"><a class="anchor" href="#fdo-services"></a>FDO services</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>las dos opciones</p>
-</div>
-<div class="sect2">
-<h3 id="fdo-services-aio"><a class="anchor" href="#fdo-services-aio"></a>Option 1: All-in-one FDO server installation</h3>
-<div class="sect3">
-<h4 id="_preparing_the_fdo_services"><a class="anchor" href="#_preparing_the_fdo_services"></a>Preparing the FDO services</h4>
-<div class="listingblock console-input">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo firewall-cmd --add-port=8080-8083/tcp --permanent
-sudo firewall-cmd --reload</code></pre>
-</div>
-</div>
-<div class="listingblock console-input">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo dnf install -y fdo-admin-cli fdo-manufacturing-server</code></pre>
-</div>
-</div>
-<div class="listingblock console-input">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo systemctl enable --now fdo-aio</code></pre>
-</div>
-</div>
-<div class="tabset is-loading">
-<div class="ulist tabs">
-<ul>
-<li>
-<p><a id="tabset1_input"></a>input</p>
-</li>
-<li>
-<p><a id="tabset1_output"></a>output</p>
-</li>
-</ul>
-</div>
-<div class="content">
-<div class="tab-pane" aria-labelledby="tabset1_input">
-<div class="listingblock console-input">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">ss -ltn</code></pre>
-</div>
-</div>
-</div>
-<div class="tab-pane" aria-labelledby="tabset1_output">
-<div class="listingblock console-output">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">State                 Recv-Q                Send-Q                               Local Address:Port                               Peer Address:Port               Process
-LISTEN                0                     128                                        0.0.0.0:8080                                    0.0.0.0:*
-LISTEN                0                     128                                        0.0.0.0:8081                                    0.0.0.0:*
-LISTEN                0                     128                                        0.0.0.0:8082                                    0.0.0.0:*
-LISTEN                0                     128                                        0.0.0.0:8083                                    0.0.0.0:*
-LISTEN                0                     128                                        0.0.0.0:22                                      0.0.0.0:*
-LISTEN                0                     128                                           [::]:22                                         [::]:*</code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="paragraph">
-<p>cat /etc/fdo/aio/aio_configuration</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">---
-cert_organization: FDO AIO
-cert_country: US
-listen_ip_address: 0.0.0.0
-listen_port_manufacturing_server: 8080
-listen_port_owner_onboarding_server: 8081
-listen_port_rendezvous_server: 8082
-listen_port_serviceinfo_api_server: 8083
-separate_manufacturing_and_owner_voucher_store: false
-manufacturing_enable_plain_di: false
-manufacturing_disable_key_storage_filesystem: false
-manufacturing_disable_key_storage_tpm: false
-manufacturing_use_secp256r1: false
-contact_hostname: ~
-contact_addresses:
-  - IpAddr: 192.168.122.187
-  - IpAddr: "fe80::5054:ff:fe26:13c3"
-serviceinfo_api_auth_token: dnEXugA+KXFpIDs7f0XFhn/hQ5FBcr+9d/MsMDfH7TM=
-serviceinfo_api_admin_token: XWNzbEwQ6EWF+PWZrqa7d68mQFHG1NtGX9yklCNtMa8=</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_including_your_onboarding_automation"><a class="anchor" href="#_including_your_onboarding_automation"></a>Including your onboarding automation</h4>
-<div class="listingblock console-input">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo cp -f serviceinfo_api_server.yml  /etc/fdo/aio/configs/serviceinfo_api_server.yml</code></pre>
-</div>
-</div>
-<div class="listingblock console-input">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo systemctl restart fdo-aio</code></pre>
-</div>
-</div>
-<div class="tabset is-loading">
-<div class="ulist tabs">
-<ul>
-<li>
-<p><a id="tabset2_input"></a>input</p>
-</li>
-<li>
-<p><a id="tabset2_output"></a>output</p>
-</li>
-</ul>
-</div>
-<div class="content">
-<div class="tab-pane" aria-labelledby="tabset2_input">
-<div class="listingblock console-input">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">ss -ltn</code></pre>
-</div>
-</div>
-</div>
-<div class="tab-pane" aria-labelledby="tabset2_output">
-<div class="listingblock console-output">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">State                 Recv-Q                Send-Q                               Local Address:Port                               Peer Address:Port               Process
-LISTEN                0                     128                                        0.0.0.0:8080                                    0.0.0.0:*
-LISTEN                0                     128                                        0.0.0.0:8081                                    0.0.0.0:*
-LISTEN                0                     128                                        0.0.0.0:8082                                    0.0.0.0:*
-LISTEN                0                     128                                        0.0.0.0:8083                                    0.0.0.0:*
-LISTEN                0                     128                                        0.0.0.0:22                                      0.0.0.0:*
-LISTEN                0                     128                                           [::]:22                                         [::]:*</code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="fdo-services-dedicated"><a class="anchor" href="#fdo-services-dedicated"></a>Option 2: Dedicated FDO servers</h3>
-<div class="paragraph">
-<p>TBD</p>
-</div>
-<div class="sect3">
-<h4 id="_preparing_the_fdo_services_2"><a class="anchor" href="#_preparing_the_fdo_services_2"></a>Preparing the FDO services</h4>
-
-</div>
-<div class="sect3">
-<h4 id="_including_your_onboarding_automation_2"><a class="anchor" href="#_including_your_onboarding_automation_2"></a>Including your onboarding automation</h4>
-
-</div>
-</div>
-</div>
-</div>
+<nav class="pagination">
+  <span class="prev"><a href="00-prerequisite.html">0. Lab prerequisites</a></span>
+  <span class="next"><a href="01-fdo-lab.html">1.B FIDO Device Onboarding (FDO) - Lab</a></span>
+</nav>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
   <div class="toc-menu"></div>

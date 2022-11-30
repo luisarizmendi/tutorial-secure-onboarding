@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Prerequisites :: Secure Edge device onboarding with RHEL and FDO</title>
+    <title>Lab prerequisites :: Secure Edge device onboarding with RHEL and FDO</title>
     <link rel="canonical" href="https://luisarizmendi.github.io/tutorial-secure-onboarding/fdo-tutorial/00-prerequisite.html">
-    <link rel="prev" href="index.html">
-    <link rel="next" href="#01-fdo.adoc">
+    <link rel="prev" href="00-intro.html">
+    <link rel="next" href="01-fdo-intro.html">
     <meta name="generator" content="Antora 3.0.0">
     <link rel="stylesheet" href="../_/css/site.css">
   </head>
@@ -51,9 +51,12 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="00-intro.html">Introduction to secure edge device onboarding</a>
+  </li>
   <li class="nav-item is-current-page" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="00-prerequisite.html">0. Prerequisites</a>
+    <a class="nav-link" href="00-prerequisite.html">0. Lab prerequisites</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="#virtualization">Prepare your virtualization environment</a>
@@ -67,13 +70,100 @@
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="01-fdo-intro.html">1.A FIDO Device Onboarding (FDO) - Intro</a>
+  </li>
+  <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="#01-fdo.adoc">1. FIDO Device Onboarding (FDO)</a>
+    <a class="nav-link" href="01-fdo-lab.html">1.B FIDO Device Onboarding (FDO) - Lab</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#01-fdo.adoc#intro">Understanding FDO</a>
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="01-fdo-lab.html#fdo-services">FDO services</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="01-fdo-lab.html#fdo-services-aio">Option 1: All-in-one FDO server installation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="01-fdo-lab.html#fdo-services-dedicated">Option 2: Dedicated FDO servers</a>
   </li>
 </ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="01-fdo-lab.html#fdo-config">FDO Service API config</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="01-fdo-lab.html#fdo-optiona">Option A: Creating your own use case</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="01-fdo-lab.html#fdo-optiona-user">initial_user</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="01-fdo-lab.html#fdo-optiona-files">files</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="01-fdo-lab.html#fdo-optiona-commands">commands</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="01-fdo-lab.html#fdo-optiona-encrypt">diskencryption_clevis</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="01-fdo-lab.html#fdo-optionb">Option B: Using the example use case</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="02-rfe-intro.html">2.A RHEL OSTree images - Intro</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="02-rfe-lab.html">2.B RHEL OSTree images - Lab</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-rfe-lab.html#rfe-imagebuilder">Install Image builder</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="02-rfe-lab.html#rfe-image">Create the RHEL OSTree image</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="02-rfe-lab.html#rfe-ostreeimage">Generating the repo image</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="02-rfe-lab.html#rfe-publish">Publishing the repo image</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-rfe-lab.html#rfe-iso">Create the RHEL ISO</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="#03-onboarding.adoc">3. Edge device onboarding</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#03-onboarding.adoc#onboard-vm">Creating the edge device VM</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#03-onboarding.adoc#onboard-fdoclient">FDO client in action</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#03-onboarding.adoc#onboard-fdoservers">FDO server side</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#03-onboarding.adoc#onboard-checks">Checking the edge device onboard</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="#99-summary.adoc">Summary</a>
   </li>
 </ul>
   </li>
@@ -90,14 +180,14 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="index.html">Secure Edge device onboarding with RHEL and FDO</a></li>
-    <li><a href="00-prerequisite.html">0. Prerequisites</a></li>
+    <li><a href="00-prerequisite.html">0. Lab prerequisites</a></li>
   </ul>
 </nav>
   <div class="edit-this-page"><a href="https://github.com/luisarizmendi/tutorial-secure-onboarding/edit/master/documentation/modules/ROOT/pages/00-prerequisite.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <article class="doc">
-<h1 class="page">Prerequisites</h1>
+<h1 class="page">Lab prerequisites</h1>
 <div class="sect1">
 <h2 id="_tldr"><a class="anchor" href="#_tldr"></a>TL/DR</h2>
 <div class="sectionbody">
@@ -171,8 +261,8 @@
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="index.html">Secure Edge device onboarding with RHEL and FDO</a></span>
-  <span class="next"><a href="#01-fdo.adoc">1. FIDO Device Onboarding (FDO)</a></span>
+  <span class="prev"><a href="00-intro.html">Introduction to secure edge device onboarding</a></span>
+  <span class="next"><a href="01-fdo-intro.html">1.A FIDO Device Onboarding (FDO) - Intro</a></span>
 </nav>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
