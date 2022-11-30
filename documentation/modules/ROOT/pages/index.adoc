@@ -18,5 +18,13 @@ Onboarding edge and Internet of Things (IoT) devices at scale creates significan
 * xref:00-prerequisite.adoc#usecase[Create your use case]
 
 [.tile]
-.xref:01-fdo.adoc[1. FIDO Device Onboarding (FDO)]
+.xref:01-fdo.adoc[1. FIDO Device Onboarding servers (FDO)]
 * xref:01-fdo.adoc#intro[Understanding FDO]
+
+[.tile]
+.xref:02-rfe.adoc[2. RHEL OSTree image creation]
+* xref:02-rfe.adoc#intro[Understanding FDO]
+
+[.tile]
+.xref:03-onboard.adoc[3. Edge device onboarding]
+* xref:03-onboard.adoc#intro[Understanding FDO]

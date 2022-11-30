@@ -1,0 +1,206 @@
+= RHEL OSTree image creation
+include::_attributes.adoc[]
+
+
+
+Jump to lab steps 
+
+
+
+
+[#rfe-intro]
+== Understanding OSTRee images
+
+
+
+
+
+
+[#rfe-imagebuilder]
+== Install Image builder
+
+
+
+
+[.console-input]
+[source,bash,subs="+macros,+attributes"]
+----
+sudo dnf install -y osbuild-composer composer-cli  bash-completion
+----
+
+
+
+
+[.console-input]
+[source,bash,subs="+macros,+attributes"]
+----
+sudo systemctl enable osbuild-composer.socket --now
+----
+
+
+
+
+
+Load the shell configuration script so that the autocomplete feature for the composer-cli command starts working immediately without reboot:
+
+
+[.console-input]
+[source,bash,subs="+macros,+attributes"]
+----
+source /etc/bash_completion.d/composer-cli
+----
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[.console-input]
+[source,bash,subs="+macros,+attributes"]
+----
+sudo dnf install -y cockpit-composer
+----
+
+
+[.console-input]
+[source,bash,subs="+macros,+attributes"]
+----
+sudo systemctl enable cockpit.socket --now
+----
+
+
+
+[.console-input]
+[source,bash,subs="+macros,+attributes"]
+----
+sudo firewall-cmd --add-service=cockpit && firewall-cmd --add-service=cockpit --permanent
+sudo firewall-cmd --reload 
+----
+
+
+
+
+
+
+
+
+https://<image builder ip>:9090/
+
+
+
+
+
+
+
+
+[#rfe-image]
+== Create the RHEL OSTree image
+
+
+=== Creating the blueprint
+
+
+
+
+[.console-input]
+[source,bash,subs="+macros,+attributes"]
+----
+
+----
+
+
+[source,bash,subs="+macros,+attributes"]
+----
+SSH_PUB_KEY="ssh-rsa AAAAB3......am8= user@machine"
+----
+      
+
+
+
+
+
+[.console-input]
+[source,bash,subs="+macros,+attributes"]
+----
+ADMIN_PASSW=$(python3 -c 'import crypt,getpass;pw=getpass.getpass();print(crypt.crypt(pw) if (pw==getpass.getpass("Confirm: ")) else exit())')
+----
+
+
+
+
+
+
+
+
+
+
+
+
+
+[.console-input]
+[source,bash,subs="+macros,+attributes"]
+----
+sed -i "s|<SSH PUB KEY>|${SSH_PUB_KEY}|g" blueprint-insights.toml
+sed -i "s|<ADMIN PASSW>|${ADMIN_PASSW}|g" blueprint-insights.toml
+
+----
+
+
+
+
+
+
+
+
+composer-cli blueprints push ${blueprint_file}
+
+
+
+
+
+
+
+
+composer-cli compose start-ostree ${blueprint_name} edge-commit
+
+
+
+
+
+=== Generating the OSTree image
+
+
+
+
+
+=== Publishing the OSTree image
+
+
+
+[.console-input]
+[source,bash,subs="+macros,+attributes"]
+----
+sudo firewall-cmd --add-port=8090-8091/tcp --permanent 
+sudo firewall-cmd --reload 
+----
+
+
+
+
+
+
+
+[#rfe-iso]
+== Create the RHEL ISO
+
+
+
