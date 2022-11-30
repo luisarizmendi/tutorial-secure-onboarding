@@ -4,7 +4,6 @@ Probably you are getting their benefits but you don’t even know that you were 
 
 '''''
 
-[[5a65]]
 == A “Git-like” Linux Operating System
 
 _Probably you are getting their benefits but you don’t even know that you were using them*, I’m talking about libostree Operating Systems._
@@ -29,7 +28,7 @@ ____
 Note: This is a long article, so I will be nice and I will tell you a secret, at the end of it I’ve included a summary that tries to cover the topic at high-level and outline the benefits of this kind of systems.
 ____
 
-[[974f]]
+
 == Why do we need “something” different?
 
 When it comes to technology, sometimes “_less is more_”. If your smartphone provides a GPS map APP you probably won’t buy a physical GPS navigator. If your Linux can provide effective and easy-to-use out-of-box features, why would you need to configure and maintain any additional tools?
@@ -40,7 +39,7 @@ You will also see how this “something” different, let’s call it _libostree
 
 After that, we will see how common problems of several solution use cases will greatly benefit from the usage of libostree Linux.
 
-[[ce64]]
+
 == Being in “Jail” is not always a bad thing
 
 Some years ago, some people were struggling with the complexity of developing using core aspects of the OS without “breaking things”, or at least having a safe way to “break things”. They ended up writing down a set of capabilities that they would like to have implemented to simplify the development (of GNOME) by being able to quickly create a new “instance” of the OS in the same system where they will perform some changes that could be easily reverted… but that will also cover several additional needs, such as sharing data between these multiple “versions” of the OS, using the system installed apps, specific hardware usage, etc…
@@ -59,12 +58,12 @@ image::https://cdn-images-1.medium.com/max/800/1*E5x-H71-MDNgxzNDsWuZFA.png[RHEL
 
 But just using _chroot_ was not enough because in order to provide these capabilities you need to make it work with other different bootloader components like GRUB, kernel init files, FS mount, etc… and not just only that, you need to take into account how to perform certain operations such as platform updates… and that’s what *_libostree_* is all about.
 
-[[7b8b]]
+
 == A “Git-like versioning model” for bootable filesystem
 
 If you want to read a formal description of what libostree is you can check how it is described in its own https://github.com/ostreedev/ostree[source code repository:]
 
-[[f4d4]]
+
 https://ostreedev.github.io/ostree/[*libostree* +
 __This project is now known as “libostree”, though it is still appropriate to use the previous name: “OSTree” (or…__ostreedev.github.io]https://ostreedev.github.io/ostree/[]
 
@@ -90,7 +89,7 @@ ____
 
 I’ve already shared one reason, we need additional specific features to make the versioned filesystem become an actual versioned Linux bootable system (GRUB, init files, etc), but there is something more. Git was designed as a source code repository versioning system, which means that its features are focused on “text files”, in contrast, what we will need is mostly versioning of a mix of “text files” and “binary files” so the features must be optimized for both, not just text. For that reason, _libostree_ is not just Git, it uses Git concepts and applies them in a very similar way, but the implementation is not exactly the same one.
 
-[[c660]]
+
 == File “replicas” without multiplying the space needs
 
 Now that we understood that _chroot_ is the right technology to create the “jailed” root filesystem environments and that we would like to have a versioning system similar to what we get with Git, we need the Linux functionality that glues them together, and that is the file “hard linking”.
@@ -103,7 +102,7 @@ The two different types of links exist because they offer different capabilities
 
 So it’s clear that soft-links are not an option and hard links are the way to go… but there is something else to bear in mind when using hard links…
 
-[[ca77]]
+
 == You won’t break it if you cannot touch it
 
 We have seen how Hard links provide the benefits that we saw, but its usage also has a big implication that we need to address: if you change the content in one hard-link file and so all the remaining file hard links pointing to the same inode will be changed too.
@@ -124,7 +123,7 @@ ____
 Note: deployments can also be deleted to save some disk space, for example in this case if you won’t need zsh anymore you could remove the deployment that contains the binary (but remember that it will only free the size of that binary if that was the only change between deployments, the rest are just hard links)
 ____
 
-[[0787]]
+
 == Read-only does not mean do-not-update at all
 
 Let’s say that you have several application binaries that you would like to update, as we have seen, you need to create a new replica of your chroot filesystem with the new versions of the binaries but, how do I use that new replica?
@@ -157,7 +156,7 @@ This approach simplifies a lot the management at scale but also permits to have 
 
 And talking about Software packages, probably when I create a new OS image revision I will need to add or remove Software Packages, but I’m generating the new deployment with _libostree_ now….
 
-[[42d6]]
+
 == Does it mean that I don’t need any Package System?
 
 You might be thinking…if libostree is the one who manages the updates of the system… I don’t need any package manager (APT, DNF, etc)…well, no, _libostree_ is not a package manager and you probably want to install one in your system.
@@ -182,7 +181,7 @@ How is that “combination” between _libostree_ and _rpm_ done? DNF installs t
 
 {empty}5. Reboot to pick up the new system files
 
-[[c541]]
+
 == What about the configs and user data?
 
 We have been talking about the need of mounting the root OS filesystem as read-only to prevent changes on the file hard-links out of the _libostree_ control, but any OS will need write access to configuration files, or user data, so you cannot make all the OS directories read-only.
@@ -211,7 +210,7 @@ We can see here how `/usr` is mounted as read-only and. In order to maintain the
 
 The rest of the directories are “special” locations that you can find in Linux distros, but you can also find a new `/sysroot` directory along with a new `/ostree` link. As we saw, our root directory tree is in fact a _chroot jail_, which means that your `/` “virtual” directory tree is in fact hosted “physically” somewhere else (along with other `/` from different deployments). That “real” place where the different chroot directories are holded is `/sysroot`, in fact, if you check the screen captures that I included above to demonstrate the different OS deployments using chroot, you will see that they are placed in `/sysroot/ostree`and that’s also why the `/sysroot` directory on each deployment chroot directory is empty (because it must “really exist” on the system, outside the _chroot jail_).
 
-[[e028]]
+
 == I should have included a TL/DR in this article…
 
 …although if you have read all this “stuff” until this point, you probably don’t mind if I add a quick summary here.
@@ -235,7 +234,7 @@ _Libostree_ is a new system for versioning updates of Linux-based Operating Syst
 * [#f312]#You can have prepared multiple OS deployments (parallel installs) where you can boot at anytime#
 * [#f92b]#You have a track of changes thanks to a versioning system inspired by Git source-code repositories#
 
-[[02b4]]
+
 == But why a libostree OS could be interesting to me?
 
 I know that you like to learn new things to expand your mind and wisdom, but let’s focus just for a moment on the practical side of the _libostree_ / _OSTree_ concept. We have seen the benefits but, how is it relevant for any business/technical use case?
@@ -258,7 +257,7 @@ For those reasons, you find _libostree_ Operating Systems such as Fedora/https:/
 
 This is another interesting use case. In a previous article relative to https://fidoalliance.org/intro-to-fido-device-onboard/[FIDO device onboarding (FDO)] feature (link below), which is quite interesting for Edge Computing use cases and which is available on RHEL, I introduced some common aspects that you find in an Edge computing solution architecture.
 
-[[b689]]
+
 https://luis-javier-arizmendi-alonso.medium.com/edge-computing-device-onboarding-part-i-introducing-the-challenge-59add9a86200[*Edge Computing device onboarding — Part I— Introducing the challenge* +
 __This article outlines the challenges that you will face while performing a secure device onboarding at the scale…__luis-javier-arizmendi-alonso.medium.com]https://luis-javier-arizmendi-alonso.medium.com/edge-computing-device-onboarding-part-i-introducing-the-challenge-59add9a86200[]
 
@@ -281,7 +280,7 @@ If you paid attention to the benefits stated about _libostree_, you probably can
 
 These are some of the points why the usage of _libostree_ Operating Systems as the base systems on Edge Computing devices is a good idea, and for example, https://docs.ota.here.com/ota-client/latest/comparing-full-filesystem-update-strategies.html[it is why some embedded systems manufacturers are moving away from old “dual-bank” architectures and providing _libostree_ devices.]
 
-[[35b2]]
+
 == I’m convinced, how can I play with one libostree OS?
 
 Good!, I will give you two options here.
@@ -302,7 +301,7 @@ But if you want to go with an option more “Enterprise ready” I would suggest
 
 You could start from the https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/composing_installing_and_managing_rhel_for_edge_images/introducing-rhel-for-edge-images_composing-installing-managing-rhel-for-edge-images[official docs] but if you want a quick ramp-up you could use the “quick-start” scripts that I created (link below) to simplify the RHEL for Edge image creation.
 
-[[a615]]
+
 https://github.com/luisarizmendi/rhel-edge-quickstart[*GitHub - luisarizmendi/rhel-edge-quickstart* +
 __These scripts help to quickly create and publish RHEL for Edge images. You should execute them in a RHEL 9 server which…__github.com]https://github.com/luisarizmendi/rhel-edge-quickstart[]
 

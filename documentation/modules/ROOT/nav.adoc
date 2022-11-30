@@ -1,6 +1,8 @@
 
 * xref:00-intro.adoc[Introduction to secure edge device onboarding]
-
+** xref:00-intro.adoc#intro-scaling[Scaling device deployment for the edge]
+** xref:00-intro.adoc#intro-security[An additional concern: Device security]
+** xref:00-intro.adoc#intro-fdo[How FDO addresses these challenges]
 
 
 * xref:00-prerequisite.adoc[0. Lab prerequisites]
@@ -11,6 +13,13 @@
 
 
 * xref:01-fdo-intro.adoc[1.A FIDO Device Onboarding (FDO) - Intro]
+** xref:01-fdo-intro.adoc#fdo-intro-origins[FDO's origins]
+** xref:01-fdo-intro.adoc#fdo-intro-components[FDO components]
+** xref:01-fdo-intro.adoc#fdo-intro-workflow[FDO workflow]
+*** xref:01-fdo-intro.adoc#fdo-intro-workflow-before[1. Before the first boot]
+*** xref:01-fdo-intro.adoc#fdo-intro-workflow-during[2. During the first boot]
+*** xref:01-fdo-intro.adoc#fdo-intro-workflow-after[3. After the first boot]
+
 
 
 * xref:01-fdo-lab.adoc[1.B FIDO Device Onboarding (FDO) - Lab]
@@ -27,6 +36,8 @@
 
 
 * xref:02-rfe-intro.adoc[2.A RHEL OSTree images - Intro]
+** xref:02-rfe-intro.adoc#rfe-intro-benefits[OSTree RHEL benefits for edge computing]
+** xref:02-rfe-intro.adoc#rfe-intro-article[OSTree-based Operating Systems article]
 
 
 * xref:02-rfe-lab.adoc[2.B RHEL OSTree images - Lab]

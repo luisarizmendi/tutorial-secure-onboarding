@@ -2,20 +2,25 @@
 :page-layout: home
 :!sectids:
 
-[.text-center.strong]
+
 == Secure Edge device onboarding with RHEL and FDO
 
 Edge device onboarding could be your worst nightmare: security concerns, complexity, scalability, traceability, ... but there is a new helping hand: FIDO device onboarding (FDO) specification. Red Hat is developing an implementation of this new industry specification, and included it as tech preview in RHEL 8.6+/9.x.
 
 In this tutorial, you have the opportunity to learn more about FDO by installing and configuring the FDO servers, creating your own device onboarding use case (including the automation needed), and deploying RHEL for Edge following the FDO workflow.  
 
-Although FDO can be used with "standard" Red Hat Enterprise Linux, this tutorial will use a variant of RHEL based on OSTree images, since these systems are more suitable for edge computing use cases.
-
-
-OSTree based RHEL will be included in Red Hat Device Edge product.
+Although FDO can be used with "standard" Red Hat Enterprise Linux, this tutorial will use a variant of RHEL based on https://ostreedev.github.io/ostree/[OSTree] images, since these systems are more suitable for edge computing use cases. OSTree based RHEL will be included in Red Hat Device Edge product.
 
 
 image::Device-Edge-logo.png[Red Hat Device Edge logo]
+
+The lab will consist in three main steps:
+
+. Install and configure the required FDO servers
+. Create an OSTree RHEL image (OSTree Operating Systems are based on images which contain all required RPMs, in contrast with installing with an standard RHEL ISO and then start installing RPMs with DNF/YUM)
+. Use the generated OSTree RHEL image to deploy an edge device system which will use the configured FDO services to automate the device onboarding in a secure way.
+
+Let's start!
 
 
 [.tiles.browse]
@@ -24,6 +29,9 @@ image::Device-Edge-logo.png[Red Hat Device Edge logo]
 
 [.tile]
 .xref:00-intro.adoc[Introduction to secure edge device onboarding]
+* xref:00-intro.adoc#intro-scaling[Scaling device deployment for the edge]
+* xref:00-intro.adoc#intro-security[An additional concern: Device security]
+* xref:00-intro.adoc#intro-fdo[How FDO addresses these challenges]
 
 
 [.tile]
@@ -34,6 +42,13 @@ image::Device-Edge-logo.png[Red Hat Device Edge logo]
 
 [.tile]
 .xref:01-fdo-intro.adoc[1.A FIDO Device Onboarding (FDO) - Intro]
+* xref:01-fdo-intro.adoc#fdo-intro-origins[FDO's origins]
+* xref:01-fdo-intro.adoc#fdo-intro-components[FDO components]
+* xref:01-fdo-intro.adoc#fdo-intro-workflow[FDO workflow]
+** xref:01-fdo-intro.adoc#fdo-intro-workflow-before[1. Before the first boot]
+** xref:01-fdo-intro.adoc#fdo-intro-workflow-during[2. During the first boot]
+** xref:01-fdo-intro.adoc#fdo-intro-workflow-after[3. After the first boot]
+
 
 
 [.tile]
@@ -52,6 +67,11 @@ image::Device-Edge-logo.png[Red Hat Device Edge logo]
 
 [.tile]
 .xref:02-rfe-intro.adoc[2.A RHEL OSTree images - Intro]
+* xref:02-rfe-intro.adoc#rfe-intro-benefits[OSTree RHEL benefits for edge computing]
+* xref:02-rfe-intro.adoc#rfe-intro-article[OSTree-based Operating Systems article]
+
+
+
 
 
 [.tile]

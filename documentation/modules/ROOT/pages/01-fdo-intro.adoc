@@ -9,6 +9,7 @@ The edge device onboarding problem is not new, and companies have developed solu
 
 A common problem when creating device image templates is that the device manufacturer needs to know who the device owner or user will be and sometimes even the installation platform details to preconfigure the device. As you can probably imagine, that's inconvenient and even more difficult if you rely on a third-party manufacturer to create the devices.
 
+[#fdo-intro-origins]
 == FDO's origins
 
 Because of these issues, a group of smart people decided it would be a good idea to think about what proper edge computing device onboarding should look like. Thanks to a great cross-company collaboration spirit (one of the best open source principles), they designed the FDO specification. In the collaboration's words:
@@ -28,6 +29,7 @@ Taking SDO as the foundation, the alliance developed the FDO standard with these
 
 As a result, we now have an industry-accepted specification for IoT and edge computing device onboarding promoted by the Linux Foundation Edge (LF-Edge) organization.
 
+[#fdo-intro-components]
 == FDO components
 
 Companies typically acquire their IoT and edge computing devices from a third party (OEM) that provides the solution. There are two main players: the manufacturer and the customer or owner, and they are usually at separate locations. The manufacturer creates the device or image template at their location. The owner, who does not need any specific technical background related to the solution, receives the device, deploys it on the selected platform, boots it up, possibly customizes provisioning with a simple wizard (planned for future FDO releases), and starts using it.
@@ -55,7 +57,7 @@ image::fdo-interfaces.webp[FDO interfaces]
 
 Let's review the role of these components by reviewing the FDO workflow during device onboarding.
 
-
+[#fdo-intro-workflow]
 == FDO workflow
 
 
@@ -64,6 +66,7 @@ image::fdo-workflow.webp[FDO workflow]
 
 There are three stages in the FDO specification: Before, during, and after the device's first boot.
 
+[#fdo-intro-workflow-before]
 === 1. Before the first boot
 
 This step takes place at the manufacturing location, which could be a third party or another organization inside your own company.
@@ -84,6 +87,7 @@ image::vouchers.webp[Ownership voucher]
 
 Finally, the device owner uses the ownership voucher in the target platform or cloud to register the device. That registration happens in the Rendezvous server.
 
+[#fdo-intro-workflow-during]
 === 2. During the first boot
 
 Now that everything is prepared, it's time to connect and boot the device.
@@ -99,7 +103,7 @@ This diagram shows a summary of these steps, including the communications betwee
 .FDO servers communication (Source: FIDO Alliance)
 image::services-com.webp[FDO servers communication]
 
-
+[#fdo-intro-workflow-after]
 === 3. After the first boot
 
 The FDO specification also allows you to restart the FDO late-binding process (the steps after the manufacturing phase) if you need to transfer device ownership.

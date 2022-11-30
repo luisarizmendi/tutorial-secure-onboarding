@@ -17,14 +17,18 @@ For example, the technical requirements for an edge onboarding architecture must
 Scale, security, and automation are the three points that are particularly relevant for edge and Internet of Things (IoT) device onboarding.
 
 
+[#intro-scaling]
 == Scaling device deployment for the edge
 
 Think about the most common way devices are deployed in non-edge-computing architectures: You send the device to the place where it will be used, then you send (or give remote access to) a specialist who performs the installation, configures the device, and deploys the required applications on top of it.
 
 This model is valid if you don't have a lot of devices to install. However, consider the scale of a typical edge computing solution, where you could have hundreds or thousands of devices to deploy. Sending specialized people to all locations could be slow, expensive (think about edge locations like windmills in a mountain range), and even insecure. You need new ways of deploying and performing the initial device configuration. What are the alternatives?
 
-You can minimize costs by preparing the devices in a central place before shipping them. You could deploy and install the device, probably using images you can flash to the device and then send the preinstalled device to where it is needed.
+.Device onboarding model 1
+image::onboard-model1.png[Device onboarding model 1]
 
+
+You can minimize costs by preparing the devices in a central place before shipping them. You could deploy and install the device, probably using images you can flash to the device and then send the preinstalled device to where it is needed.
 
 If you want to take this approach, you have a couple of options. You could build specific images for each device. Or you might create an image template that can be easily customized by a nontechnical person or automatically using zero-touch provisioning. Customizations might include specific variables for the site, device purpose, and so forth.
 
@@ -32,22 +36,30 @@ If you don't want to end up with a sea of device images, which could be complex 
 
 You could embed all the intelligence and options in the image template. Or you could build something more flexible and scalable by including the intelligence and options in a remote, centralized piece of the solution that will decide, depending on the device type, which components and configurations to apply.
 
+
+[#intro-security]
 == An additional concern: Device security
 
 Your solution must also take device security into account. As part of every deployment, you will probably need to include sensitive data, such as passwords, certificates, tokens, or keys. How do you plan to distribute them?
 
 If you decide to inject those items into the images or templates, you create risk, since someone could access the image and extract that sensitive information. It's better to have the device download them at installation time using a secure channel.
 
-This means the edge device has to download these secrets from your central server. But how will you set up that secure channel? You could use encrypted communications or a virtual private network (VPN) tunnel, but that's not enough. How can you be sure that the device is what it says it is and not a possible attacker trying to steal information or gain access to your network? You have another concern: authentication and authorization.
+.Device onboarding model 2
+image::onboard-model2.png[Device onboarding model 2]
 
+This means the edge device has to download these secrets from your central server. But how will you set up that secure channel? You could use encrypted communications or a virtual private network (VPN) tunnel, but that's not enough. How can you be sure that the device is what it says it is and not a possible attacker trying to steal information or gain access to your network? You have another concern: authentication and authorization.
 
 Authentication is even more important, especially for companies that use third-party providers to create the device images or add other value to the supply chain. You need to determine whether the device asking to be introduced into your network can be trusted or not, depending in part upon who provides the image.
 
+[#intro-fdo]
 == How FDO addresses these challenges
 
 It's expensive to send specialized people out to deploy edge devices, so you need to automate device onboarding (system deployment and first configuration) as much as possible.
 
 You could deploy an architecture where you provision template images (to avoid having one image per system) and store the configurations in an external system. When the device boots up, it starts an automation process that finishes provisioning it, including the specific settings and software it needs to do its job.
+
+.Device onboarding model 3
+image::onboard-model3.png[Device onboarding model 3]
 
 This approach provides zero-touch provisioning that doesn't need a specialized person at the edge location, but you still need to solve sensitive information provisioning and other security concerns. You need a system that creates secure channels and downloads the secrets from an external system after being authenticated and trusted by that system.
 
