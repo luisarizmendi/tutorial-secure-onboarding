@@ -51,7 +51,19 @@
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
     <a class="nav-link" href="00-intro.html">Introduction to secure edge device onboarding</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="00-intro.html#intro-scaling">Scaling device deployment for the edge</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="00-intro.html#intro-security">An additional concern: Device security</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="00-intro.html#intro-fdo">How FDO addresses these challenges</a>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
@@ -69,7 +81,31 @@
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
     <a class="nav-link" href="01-fdo-intro.html">1.A FIDO Device Onboarding (FDO) - Intro</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-fdo-intro.html#fdo-intro-origins">FDO&#8217;s origins</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-fdo-intro.html#fdo-intro-components">FDO components</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="01-fdo-intro.html#fdo-intro-workflow">FDO workflow</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="01-fdo-intro.html#fdo-intro-workflow-before">1. Before the first boot</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="01-fdo-intro.html#fdo-intro-workflow-during">2. During the first boot</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="01-fdo-intro.html#fdo-intro-workflow-after">3. After the first boot</a>
+  </li>
+</ul>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
@@ -117,7 +153,16 @@
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
     <a class="nav-link" href="02-rfe-intro.html">2.A RHEL OSTree images - Intro</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-rfe-intro.html#rfe-intro-benefits">OSTree RHEL benefits for edge computing</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-rfe-intro.html#rfe-intro-article">OSTree-based Operating Systems article</a>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
@@ -187,7 +232,7 @@
   <div class="content">
 <article class="doc">
 <h1 class="page">Welcome to Secure Edge device onboarding</h1>
-<div class="sect1 text-center strong">
+<div class="sect1">
 <h2>Secure Edge device onboarding with RHEL and FDO</h2>
 <div class="sectionbody">
 <div class="paragraph">
@@ -197,22 +242,52 @@
 <p>In this tutorial, you have the opportunity to learn more about FDO by installing and configuring the FDO servers, creating your own device onboarding use case (including the automation needed), and deploying RHEL for Edge following the FDO workflow.</p>
 </div>
 <div class="paragraph">
-<p>Although FDO can be used with "standard" Red Hat Enterprise Linux, this tutorial will use a variant of RHEL based on OSTree images, since these systems are more suitable for edge computing use cases.</p>
-</div>
-<div class="paragraph">
-<p>OSTree based RHEL will be included in Red Hat Device Edge product.</p>
+<p>Although FDO can be used with "standard" Red Hat Enterprise Linux, this tutorial will use a variant of RHEL based on <a href="https://ostreedev.github.io/ostree/">OSTree</a> images, since these systems are more suitable for edge computing use cases. OSTree based RHEL will be included in Red Hat Device Edge product.</p>
 </div>
 <div class="imageblock">
 <div class="content">
 <img src="_images/Device-Edge-logo.png" alt="Red Hat Device Edge logo">
 </div>
 </div>
+<div class="paragraph">
+<p>The lab will consist in three main steps:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Install and configure the required FDO servers</p>
+</li>
+<li>
+<p>Create an OSTree RHEL image (OSTree Operating Systems are based on images which contain all required RPMs, in contrast with installing with an standard RHEL ISO and then start installing RPMs with DNF/YUM)</p>
+</li>
+<li>
+<p>Use the generated OSTree RHEL image to deploy an edge device system which will use the configured FDO services to automate the device onboarding in a secure way.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s start!</p>
+</div>
 </div>
 </div>
 <div class="sect1 tiles browse">
 <h2>Browse modules</h2>
 <div class="sectionbody">
-<div class="ulist tile tile">
+<div class="ulist tile">
+<div class="title"><a href="00-intro.html" class="xref page">Introduction to secure edge device onboarding</a></div>
+<ul>
+<li>
+<p><a href="00-intro.html#intro-scaling" class="xref page">Scaling device deployment for the edge</a></p>
+</li>
+<li>
+<p><a href="00-intro.html#intro-security" class="xref page">An additional concern: Device security</a></p>
+</li>
+<li>
+<p><a href="00-intro.html#intro-fdo" class="xref page">How FDO addresses these challenges</a></p>
+</li>
+</ul>
+</div>
+<div class="ulist tile">
 <div class="title"><a href="00-prerequisite.html" class="xref page">0. Lab prerequisites</a></div>
 <ul>
 <li>
@@ -226,7 +301,34 @@
 </li>
 </ul>
 </div>
-<div class="ulist tile tile">
+<div class="ulist tile">
+<div class="title"><a href="01-fdo-intro.html" class="xref page">1.A FIDO Device Onboarding (FDO) - Intro</a></div>
+<ul>
+<li>
+<p><a href="01-fdo-intro.html#fdo-intro-origins" class="xref page">FDO&#8217;s origins</a></p>
+</li>
+<li>
+<p><a href="01-fdo-intro.html#fdo-intro-components" class="xref page">FDO components</a></p>
+</li>
+<li>
+<p><a href="01-fdo-intro.html#fdo-intro-workflow" class="xref page">FDO workflow</a></p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="01-fdo-intro.html#fdo-intro-workflow-before" class="xref page">1. Before the first boot</a></p>
+</li>
+<li>
+<p><a href="01-fdo-intro.html#fdo-intro-workflow-during" class="xref page">2. During the first boot</a></p>
+</li>
+<li>
+<p><a href="01-fdo-intro.html#fdo-intro-workflow-after" class="xref page">3. After the first boot</a></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="ulist tile">
 <div class="title"><a href="01-fdo-lab.html" class="xref page">1.B FIDO Device Onboarding (FDO) - Lab</a></div>
 <ul>
 <li>
@@ -273,7 +375,18 @@
 </li>
 </ul>
 </div>
-<div class="ulist tile tile">
+<div class="ulist tile">
+<div class="title"><a href="02-rfe-intro.html" class="xref page">2.A RHEL OSTree images - Intro</a></div>
+<ul>
+<li>
+<p><a href="02-rfe-intro.html#rfe-intro-benefits" class="xref page">OSTree RHEL benefits for edge computing</a></p>
+</li>
+<li>
+<p><a href="02-rfe-intro.html#rfe-intro-article" class="xref page">OSTree-based Operating Systems article</a></p>
+</li>
+</ul>
+</div>
+<div class="ulist tile">
 <div class="title"><a href="02-rfe-lab.html" class="xref page">2.B RHEL OSTree images - Lab</a></div>
 <ul>
 <li>

@@ -52,7 +52,19 @@
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
     <a class="nav-link" href="00-intro.html">Introduction to secure edge device onboarding</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="00-intro.html#intro-scaling">Scaling device deployment for the edge</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="00-intro.html#intro-security">An additional concern: Device security</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="00-intro.html#intro-fdo">How FDO addresses these challenges</a>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
@@ -70,7 +82,31 @@
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
     <a class="nav-link" href="01-fdo-intro.html">1.A FIDO Device Onboarding (FDO) - Intro</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-fdo-intro.html#fdo-intro-origins">FDO&#8217;s origins</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-fdo-intro.html#fdo-intro-components">FDO components</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="01-fdo-intro.html#fdo-intro-workflow">FDO workflow</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="01-fdo-intro.html#fdo-intro-workflow-before">1. Before the first boot</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="01-fdo-intro.html#fdo-intro-workflow-during">2. During the first boot</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="01-fdo-intro.html#fdo-intro-workflow-after">3. After the first boot</a>
+  </li>
+</ul>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
@@ -118,7 +154,16 @@
 </ul>
   </li>
   <li class="nav-item is-current-page" data-depth="1">
+    <button class="nav-item-toggle"></button>
     <a class="nav-link" href="02-rfe-intro.html">2.A RHEL OSTree images - Intro</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#rfe-intro-benefits">OSTree RHEL benefits for edge computing</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#rfe-intro-article">OSTree-based Operating Systems article</a>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
@@ -212,6 +257,11 @@
 <div class="paragraph">
 <p>You can customize the image to configure the OS content as per your requirements by using either Image Builder installed on a RHEL system or using <a href="http://console.redhat.com">Red Hat Hybrid Console</a>.</p>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="rfe-intro-benefits"><a class="anchor" href="#rfe-intro-benefits"></a>OSTree RHEL benefits for edge computing</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>Working with an OSTree based Operating System has multiple benefits when they are applied to edge computing use cases:</p>
 </div>
@@ -234,6 +284,13 @@
 <div class="paragraph">
 <p>If you want to know more about OSTree RHEL you can read the article attached below originally <a href="https://luis-javier-arizmendi-alonso.medium.com/a-git-like-linux-operating-system-d84211e97933">published in Medium</a>.</p>
 </div>
+<hr>
+</div>
+</div>
+<div class="sect1">
+<h2 id="rfe-intro-article"><a class="anchor" href="#rfe-intro-article"></a>OSTree-based Operating Systems article</h2>
+<div class="sectionbody">
+<hr>
 </div>
 </div>
 <div class="sect1">
@@ -243,10 +300,11 @@
 <p>Probably you are getting their benefits but you don’t even know that you were using them, I’m talking about libostree Operating Systems.</p>
 </div>
 <hr>
-<div class="paragraph">
-<p>[[5a65]]
-== A “Git-like” Linux Operating System</p>
 </div>
+</div>
+<div class="sect1">
+<h2 id="_a_git_like_linux_operating_system_2"><a class="anchor" href="#_a_git_like_linux_operating_system_2"></a>A “Git-like” Linux Operating System</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p><em>Probably you are getting their benefits but you don’t even know that you were using them*, I’m talking about libostree Operating Systems.</em></p>
 </div>
@@ -284,10 +342,11 @@
 </div>
 </blockquote>
 </div>
-<div class="paragraph">
-<p>[[974f]]
-== Why do we need “something” different?</p>
 </div>
+</div>
+<div class="sect1">
+<h2 id="_why_do_we_need_something_different"><a class="anchor" href="#_why_do_we_need_something_different"></a>Why do we need “something” different?</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>When it comes to technology, sometimes “<em>less is more</em>”. If your smartphone provides a GPS map APP you probably won’t buy a physical GPS navigator. If your Linux can provide effective and easy-to-use out-of-box features, why would you need to configure and maintain any additional tools?</p>
 </div>
@@ -303,7 +362,7 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="ce64"><a class="anchor" href="#ce64"></a>Being in “Jail” is not always a bad thing</h2>
+<h2 id="_being_in_jail_is_not_always_a_badthing"><a class="anchor" href="#_being_in_jail_is_not_always_a_badthing"></a>Being in “Jail” is not always a bad thing</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Some years ago, some people were struggling with the complexity of developing using core aspects of the OS without “breaking things”, or at least having a safe way to “break things”. They ended up writing down a set of capabilities that they would like to have implemented to simplify the development (of GNOME) by being able to quickly create a new “instance” of the OS in the same system where they will perform some changes that could be easily reverted… but that will also cover several additional needs, such as sharing data between these multiple “versions” of the OS, using the system installed apps, specific hardware usage, etc…</p>
@@ -331,14 +390,15 @@
 <div class="paragraph">
 <p>But just using <em>chroot</em> was not enough because in order to provide these capabilities you need to make it work with other different bootloader components like GRUB, kernel init files, FS mount, etc… and not just only that, you need to take into account how to perform certain operations such as platform updates… and that’s what <strong><em>libostree</em></strong> is all about.</p>
 </div>
-<div class="paragraph">
-<p>[[7b8b]]
-== A “Git-like versioning model” for bootable filesystem</p>
 </div>
+</div>
+<div class="sect1">
+<h2 id="_a_git_like_versioning_model_for_bootable_filesystem"><a class="anchor" href="#_a_git_like_versioning_model_for_bootable_filesystem"></a>A “Git-like versioning model” for bootable filesystem</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>If you want to read a formal description of what libostree is you can check how it is described in its own <a href="https://github.com/ostreedev/ostree">source code repository:</a></p>
 </div>
-<div id="f4d4" class="paragraph">
+<div class="paragraph">
 <p><a href="https://ostreedev.github.io/ostree/"><strong>libostree</strong><br>
 <em>This project is now known as “libostree”, though it is still appropriate to use the previous name: “OSTree” (or…</em>ostreedev.github.io</a>https://ostreedev.github.io/ostree/[]</p>
 </div>
@@ -380,7 +440,7 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="c660"><a class="anchor" href="#c660"></a>File “replicas” without multiplying the space needs</h2>
+<h2 id="_file_replicas_without_multiplying_the_spaceneeds"><a class="anchor" href="#_file_replicas_without_multiplying_the_spaceneeds"></a>File “replicas” without multiplying the space needs</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Now that we understood that <em>chroot</em> is the right technology to create the “jailed” root filesystem environments and that we would like to have a versioning system similar to what we get with Git, we need the Linux functionality that glues them together, and that is the file “hard linking”.</p>
@@ -402,7 +462,7 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="ca77"><a class="anchor" href="#ca77"></a>You won’t break it if you cannot touch it</h2>
+<h2 id="_you_wont_break_it_if_you_cannot_touchit"><a class="anchor" href="#_you_wont_break_it_if_you_cannot_touchit"></a>You won’t break it if you cannot touch it</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>We have seen how Hard links provide the benefits that we saw, but its usage also has a big implication that we need to address: if you change the content in one hard-link file and so all the remaining file hard links pointing to the same inode will be changed too.</p>
@@ -434,10 +494,11 @@
 </div>
 </blockquote>
 </div>
-<div class="paragraph">
-<p>[[0787]]
-== Read-only does not mean do-not-update at all</p>
 </div>
+</div>
+<div class="sect1">
+<h2 id="_read_only_does_not_mean_do_not_update_atall"><a class="anchor" href="#_read_only_does_not_mean_do_not_update_atall"></a>Read-only does not mean do-not-update at all</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>Let’s say that you have several application binaries that you would like to update, as we have seen, you need to create a new replica of your chroot filesystem with the new versions of the binaries but, how do I use that new replica?</p>
 </div>
@@ -487,10 +548,11 @@
 <div class="paragraph">
 <p>And talking about Software packages, probably when I create a new OS image revision I will need to add or remove Software Packages, but I’m generating the new deployment with <em>libostree</em> now….</p>
 </div>
-<div class="paragraph">
-<p>[[42d6]]
-== Does it mean that I don’t need any Package System?</p>
 </div>
+</div>
+<div class="sect1">
+<h2 id="_does_it_mean_that_i_dont_need_any_packagesystem"><a class="anchor" href="#_does_it_mean_that_i_dont_need_any_packagesystem"></a>Does it mean that I don’t need any Package System?</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>You might be thinking…if libostree is the one who manages the updates of the system… I don’t need any package manager (APT, DNF, etc)…well, no, <em>libostree</em> is not a package manager and you probably want to install one in your system.</p>
 </div>
@@ -527,7 +589,7 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="c541"><a class="anchor" href="#c541"></a>What about the configs and user data?</h2>
+<h2 id="_what_about_the_configs_and_userdata"><a class="anchor" href="#_what_about_the_configs_and_userdata"></a>What about the configs and user data?</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>We have been talking about the need of mounting the root OS filesystem as read-only to prevent changes on the file hard-links out of the <em>libostree</em> control, but any OS will need write access to configuration files, or user data, so you cannot make all the OS directories read-only.</p>
@@ -575,7 +637,7 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="e028"><a class="anchor" href="#e028"></a>I should have included a TL/DR in this article…</h2>
+<h2 id="_i_should_have_included_a_tldr_in_thisarticle"><a class="anchor" href="#_i_should_have_included_a_tldr_in_thisarticle"></a>I should have included a TL/DR in this article…</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>…although if you have read all this “stuff” until this point, you probably don’t mind if I add a quick summary here.</p>
@@ -624,10 +686,11 @@
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p>[[02b4]]
-== But why a libostree OS could be interesting to me?</p>
 </div>
+</div>
+<div class="sect1">
+<h2 id="_but_why_a_libostree_os_could_be_interesting_tome"><a class="anchor" href="#_but_why_a_libostree_os_could_be_interesting_tome"></a>But why a libostree OS could be interesting to me?</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>I know that you like to learn new things to expand your mind and wisdom, but let’s focus just for a moment on the practical side of the <em>libostree</em> / <em>OSTree</em> concept. We have seen the benefits but, how is it relevant for any business/technical use case?</p>
 </div>
@@ -659,7 +722,7 @@
 <div class="paragraph">
 <p>This is another interesting use case. In a previous article relative to <a href="https://fidoalliance.org/intro-to-fido-device-onboard/">FIDO device onboarding (FDO)</a> feature (link below), which is quite interesting for Edge Computing use cases and which is available on RHEL, I introduced some common aspects that you find in an Edge computing solution architecture.</p>
 </div>
-<div id="b689" class="paragraph">
+<div class="paragraph">
 <p><a href="https://luis-javier-arizmendi-alonso.medium.com/edge-computing-device-onboarding-part-i-introducing-the-challenge-59add9a86200"><strong>Edge Computing device onboarding — Part I— Introducing the challenge</strong><br>
 <em>This article outlines the challenges that you will face while performing a secure device onboarding at the scale…</em>luis-javier-arizmendi-alonso.medium.com</a>https://luis-javier-arizmendi-alonso.medium.com/edge-computing-device-onboarding-part-i-introducing-the-challenge-59add9a86200[]</p>
 </div>
@@ -713,10 +776,11 @@
 <div class="paragraph">
 <p>These are some of the points why the usage of <em>libostree</em> Operating Systems as the base systems on Edge Computing devices is a good idea, and for example, <a href="https://docs.ota.here.com/ota-client/latest/comparing-full-filesystem-update-strategies.html">it is why some embedded systems manufacturers are moving away from old “dual-bank” architectures and providing <em>libostree</em> devices.</a></p>
 </div>
-<div class="paragraph">
-<p>[[35b2]]
-== I’m convinced, how can I play with one libostree OS?</p>
 </div>
+</div>
+<div class="sect1">
+<h2 id="_im_convinced_how_can_i_play_with_one_libostree_os"><a class="anchor" href="#_im_convinced_how_can_i_play_with_one_libostree_os"></a>I’m convinced, how can I play with one libostree OS?</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>Good!, I will give you two options here.</p>
 </div>
@@ -747,7 +811,7 @@
 <div class="paragraph">
 <p>You could start from the <a href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/composing_installing_and_managing_rhel_for_edge_images/introducing-rhel-for-edge-images_composing-installing-managing-rhel-for-edge-images">official docs</a> but if you want a quick ramp-up you could use the “quick-start” scripts that I created (link below) to simplify the RHEL for Edge image creation.</p>
 </div>
-<div id="a615" class="paragraph">
+<div class="paragraph">
 <p><a href="https://github.com/luisarizmendi/rhel-edge-quickstart"><strong>GitHub - luisarizmendi/rhel-edge-quickstart</strong><br>
 <em>These scripts help to quickly create and publish RHEL for Edge images. You should execute them in a RHEL 9 server which…</em>github.com</a>https://github.com/luisarizmendi/rhel-edge-quickstart[]</p>
 </div>

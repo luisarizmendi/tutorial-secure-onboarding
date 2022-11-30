@@ -52,7 +52,19 @@
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
     <a class="nav-link" href="00-intro.html">Introduction to secure edge device onboarding</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="00-intro.html#intro-scaling">Scaling device deployment for the edge</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="00-intro.html#intro-security">An additional concern: Device security</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="00-intro.html#intro-fdo">How FDO addresses these challenges</a>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
@@ -70,7 +82,31 @@
 </ul>
   </li>
   <li class="nav-item is-current-page" data-depth="1">
+    <button class="nav-item-toggle"></button>
     <a class="nav-link" href="01-fdo-intro.html">1.A FIDO Device Onboarding (FDO) - Intro</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#fdo-intro-origins">FDO&#8217;s origins</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#fdo-intro-components">FDO components</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="#fdo-intro-workflow">FDO workflow</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#fdo-intro-workflow-before">1. Before the first boot</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#fdo-intro-workflow-during">2. During the first boot</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#fdo-intro-workflow-after">3. After the first boot</a>
+  </li>
+</ul>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
@@ -118,7 +154,16 @@
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
     <a class="nav-link" href="02-rfe-intro.html">2.A RHEL OSTree images - Intro</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-rfe-intro.html#rfe-intro-benefits">OSTree RHEL benefits for edge computing</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-rfe-intro.html#rfe-intro-article">OSTree-based Operating Systems article</a>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
@@ -202,7 +247,7 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="_fdos_origins"><a class="anchor" href="#_fdos_origins"></a>FDO&#8217;s origins</h2>
+<h2 id="fdo-intro-origins"><a class="anchor" href="#fdo-intro-origins"></a>FDO&#8217;s origins</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Because of these issues, a group of smart people decided it would be a good idea to think about what proper edge computing device onboarding should look like. Thanks to a great cross-company collaboration spirit (one of the best open source principles), they designed the FDO specification. In the collaboration&#8217;s words:</p>
@@ -241,7 +286,7 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="_fdo_components"><a class="anchor" href="#_fdo_components"></a>FDO components</h2>
+<h2 id="fdo-intro-components"><a class="anchor" href="#fdo-intro-components"></a>FDO components</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Companies typically acquire their IoT and edge computing devices from a third party (OEM) that provides the solution. There are two main players: the manufacturer and the customer or owner, and they are usually at separate locations. The manufacturer creates the device or image template at their location. The owner, who does not need any specific technical background related to the solution, receives the device, deploys it on the selected platform, boots it up, possibly customizes provisioning with a simple wizard (planned for future FDO releases), and starts using it.</p>
@@ -286,7 +331,7 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="_fdo_workflow"><a class="anchor" href="#_fdo_workflow"></a>FDO workflow</h2>
+<h2 id="fdo-intro-workflow"><a class="anchor" href="#fdo-intro-workflow"></a>FDO workflow</h2>
 <div class="sectionbody">
 <div class="imageblock">
 <div class="content">
@@ -298,7 +343,7 @@
 <p>There are three stages in the FDO specification: Before, during, and after the device&#8217;s first boot.</p>
 </div>
 <div class="sect2">
-<h3 id="_1_before_the_first_boot"><a class="anchor" href="#_1_before_the_first_boot"></a>1. Before the first boot</h3>
+<h3 id="fdo-intro-workflow-before"><a class="anchor" href="#fdo-intro-workflow-before"></a>1. Before the first boot</h3>
 <div class="paragraph">
 <p>This step takes place at the manufacturing location, which could be a third party or another organization inside your own company.</p>
 </div>
@@ -332,7 +377,7 @@
 </div>
 </div>
 <div class="sect2">
-<h3 id="_2_during_the_first_boot"><a class="anchor" href="#_2_during_the_first_boot"></a>2. During the first boot</h3>
+<h3 id="fdo-intro-workflow-during"><a class="anchor" href="#fdo-intro-workflow-during"></a>2. During the first boot</h3>
 <div class="paragraph">
 <p>Now that everything is prepared, it&#8217;s time to connect and boot the device.</p>
 </div>
@@ -360,7 +405,7 @@
 </div>
 </div>
 <div class="sect2">
-<h3 id="_3_after_the_first_boot"><a class="anchor" href="#_3_after_the_first_boot"></a>3. After the first boot</h3>
+<h3 id="fdo-intro-workflow-after"><a class="anchor" href="#fdo-intro-workflow-after"></a>3. After the first boot</h3>
 <div class="paragraph">
 <p>The FDO specification also allows you to restart the FDO late-binding process (the steps after the manufacturing phase) if you need to transfer device ownership.</p>
 </div>

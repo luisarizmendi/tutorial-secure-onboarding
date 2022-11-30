@@ -52,7 +52,19 @@
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
   <li class="nav-item is-current-page" data-depth="1">
+    <button class="nav-item-toggle"></button>
     <a class="nav-link" href="00-intro.html">Introduction to secure edge device onboarding</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#intro-scaling">Scaling device deployment for the edge</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#intro-security">An additional concern: Device security</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#intro-fdo">How FDO addresses these challenges</a>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
@@ -70,7 +82,31 @@
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
     <a class="nav-link" href="01-fdo-intro.html">1.A FIDO Device Onboarding (FDO) - Intro</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-fdo-intro.html#fdo-intro-origins">FDO&#8217;s origins</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-fdo-intro.html#fdo-intro-components">FDO components</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="01-fdo-intro.html#fdo-intro-workflow">FDO workflow</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="01-fdo-intro.html#fdo-intro-workflow-before">1. Before the first boot</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="01-fdo-intro.html#fdo-intro-workflow-during">2. During the first boot</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="01-fdo-intro.html#fdo-intro-workflow-after">3. After the first boot</a>
+  </li>
+</ul>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
@@ -118,7 +154,16 @@
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
     <a class="nav-link" href="02-rfe-intro.html">2.A RHEL OSTree images - Intro</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-rfe-intro.html#rfe-intro-benefits">OSTree RHEL benefits for edge computing</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-rfe-intro.html#rfe-intro-article">OSTree-based Operating Systems article</a>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
@@ -227,13 +272,19 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="_scaling_device_deployment_for_the_edge"><a class="anchor" href="#_scaling_device_deployment_for_the_edge"></a>Scaling device deployment for the edge</h2>
+<h2 id="intro-scaling"><a class="anchor" href="#intro-scaling"></a>Scaling device deployment for the edge</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Think about the most common way devices are deployed in non-edge-computing architectures: You send the device to the place where it will be used, then you send (or give remote access to) a specialist who performs the installation, configures the device, and deploys the required applications on top of it.</p>
 </div>
 <div class="paragraph">
 <p>This model is valid if you don&#8217;t have a lot of devices to install. However, consider the scale of a typical edge computing solution, where you could have hundreds or thousands of devices to deploy. Sending specialized people to all locations could be slow, expensive (think about edge locations like windmills in a mountain range), and even insecure. You need new ways of deploying and performing the initial device configuration. What are the alternatives?</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/onboard-model1.png" alt="Device onboarding model 1">
+</div>
+<div class="title">Figure 1. Device onboarding model 1</div>
 </div>
 <div class="paragraph">
 <p>You can minimize costs by preparing the devices in a central place before shipping them. You could deploy and install the device, probably using images you can flash to the device and then send the preinstalled device to where it is needed.</p>
@@ -250,13 +301,19 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="_an_additional_concern_device_security"><a class="anchor" href="#_an_additional_concern_device_security"></a>An additional concern: Device security</h2>
+<h2 id="intro-security"><a class="anchor" href="#intro-security"></a>An additional concern: Device security</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Your solution must also take device security into account. As part of every deployment, you will probably need to include sensitive data, such as passwords, certificates, tokens, or keys. How do you plan to distribute them?</p>
 </div>
 <div class="paragraph">
 <p>If you decide to inject those items into the images or templates, you create risk, since someone could access the image and extract that sensitive information. It&#8217;s better to have the device download them at installation time using a secure channel.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/onboard-model2.png" alt="Device onboarding model 2">
+</div>
+<div class="title">Figure 2. Device onboarding model 2</div>
 </div>
 <div class="paragraph">
 <p>This means the edge device has to download these secrets from your central server. But how will you set up that secure channel? You could use encrypted communications or a virtual private network (VPN) tunnel, but that&#8217;s not enough. How can you be sure that the device is what it says it is and not a possible attacker trying to steal information or gain access to your network? You have another concern: authentication and authorization.</p>
@@ -267,13 +324,19 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="_how_fdo_addresses_these_challenges"><a class="anchor" href="#_how_fdo_addresses_these_challenges"></a>How FDO addresses these challenges</h2>
+<h2 id="intro-fdo"><a class="anchor" href="#intro-fdo"></a>How FDO addresses these challenges</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>It&#8217;s expensive to send specialized people out to deploy edge devices, so you need to automate device onboarding (system deployment and first configuration) as much as possible.</p>
 </div>
 <div class="paragraph">
 <p>You could deploy an architecture where you provision template images (to avoid having one image per system) and store the configurations in an external system. When the device boots up, it starts an automation process that finishes provisioning it, including the specific settings and software it needs to do its job.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/onboard-model3.png" alt="Device onboarding model 3">
+</div>
+<div class="title">Figure 3. Device onboarding model 3</div>
 </div>
 <div class="paragraph">
 <p>This approach provides zero-touch provisioning that doesn&#8217;t need a specialized person at the edge location, but you still need to solve sensitive information provisioning and other security concerns. You need a system that creates secure channels and downloads the secrets from an external system after being authenticated and trusted by that system.</p>
