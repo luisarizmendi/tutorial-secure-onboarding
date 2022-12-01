@@ -3,9 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Welcome to Secure Edge device onboarding :: Secure Edge device onboarding with RHEL and FDO</title>
-    <link rel="canonical" href="https://luisarizmendi.github.io/tutorial-secure-onboarding/fdo-tutorial/index.html">
-    <link rel="next" href="00-intro.html">
+    <title>Lab prerequisites :: Secure Edge device onboarding with RHEL and FDO</title>
+    <link rel="canonical" href="https://luisarizmendi.github.io/tutorial-secure-onboarding/fdo-tutorial/00-prerequisites.html">
+    <link rel="prev" href="00-intro.html">
+    <link rel="next" href="01-fdo-intro.html">
     <meta name="generator" content="Antora 3.0.0">
     <link rel="stylesheet" href="../_/css/site.css">
   </head>
@@ -65,18 +66,18 @@
   </li>
 </ul>
   </li>
-  <li class="nav-item" data-depth="1">
+  <li class="nav-item is-current-page" data-depth="1">
     <button class="nav-item-toggle"></button>
     <a class="nav-link" href="00-prerequisites.html">0. Lab prerequisites</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="00-prerequisites.html#virtualization">Prepare your virtualization environment</a>
+    <a class="nav-link" href="#virtualization">Prepare your virtualization environment</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="00-prerequisites.html#arch">Choose your lab architecture</a>
+    <a class="nav-link" href="#arch">Choose your lab architecture</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="00-prerequisites.html#usecase">Create your use case</a>
+    <a class="nav-link" href="#usecase">Create your use case</a>
   </li>
 </ul>
   </li>
@@ -220,220 +221,197 @@
 <main class="article">
 <div class="toolbar" role="navigation">
 <button class="nav-toggle"></button>
-  <a href="index.html" class="home-link is-current"></a>
+  <a href="index.html" class="home-link"></a>
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="index.html">Secure Edge device onboarding with RHEL and FDO</a></li>
-    <li><a href="index.html">Welcome to Secure Edge device onboarding</a></li>
+    <li><a href="00-prerequisites.html">0. Lab prerequisites</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/luisarizmendi/tutorial-secure-onboarding/edit/master/documentation/modules/ROOT/pages/index.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/luisarizmendi/tutorial-secure-onboarding/edit/master/documentation/modules/ROOT/pages/00-prerequisites.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <article class="doc">
-<h1 class="page">Welcome to Secure Edge device onboarding</h1>
+<h1 class="page">Lab prerequisites</h1>
 <div class="sect1">
-<h2>Secure Edge device onboarding with RHEL and FDO</h2>
+<h2 id="tldr"><a class="anchor" href="#tldr"></a>TL/DR</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Edge device onboarding could be your worst nightmare: security concerns, complexity, scalability, traceability, &#8230;&#8203; but there is a new helping hand: FIDO device onboarding (FDO) specification.</p>
+<p>This lab has been created trying to minimize the pre-requisites. You should be able to run it using just your own (modern) laptop with any Hypervisor installed on it (lab tested with <code>libvirt</code>).</p>
 </div>
 <div class="paragraph">
-<p>Red Hat is developing an implementation of this new industry specification, and included it as tech preview in RHEL 8.6+/9.x.</p>
+<p>Summary of minimal system pre-requisites:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Virtualization hypervisor with at least 6 vCPUs (threads), 8 GB memory and 100 GB disk.</p>
+</li>
+<li>
+<p>Internet connection from VMs.</p>
+</li>
+<li>
+<p>Valid RHEL subscriptions and account.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="virtualization"><a class="anchor" href="#virtualization"></a>Prepare your virtualization environment</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Although you can use the steps shown in this tutorial to onboard RHEL on baremetal devices, for simplicity, we will be using virtual machines for this lab, so you will need to have a pre-configured hypervisor where we will be running the required servers and edge devices.</p>
 </div>
 <div class="paragraph">
-<p>In this tutorial, you have the opportunity to learn more about FDO by installing and configuring the FDO servers, creating your own device onboarding use case (including the automation needed), and deploying RHEL for Edge following the FDO workflow.</p>
+<p>If you are using Linux, you can install and enable <code>libvirt</code> with these commands:</p>
 </div>
-<div class="paragraph">
-<p>Although FDO can be used with "standard" Red Hat Enterprise Linux, this tutorial will use a variant of RHEL based on <a href="https://ostreedev.github.io/ostree/">OSTree</a> images, since these systems are more suitable for edge computing use cases. OSTree based RHEL will be included in Red Hat Device Edge product.</p>
-</div>
-<div class="imageblock">
+<div class="listingblock console-input">
 <div class="content">
-<img src="_images/Device-Edge-logo.png" alt="Red Hat Device Edge logo">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo dnf -y install libguestfs-tools-c libvirt-daemon-config-network libvirt-daemon-kvm libvirt qemu-kvm virt-install virt-manager virt-viewer
+
+sudo systemctl enable --now libvirtd</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The lab will consist in three main steps:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Install and configure the required FDO servers</p>
-</li>
-<li>
-<p>Create an OSTree RHEL image (OSTree Operating Systems are based on images which contain all required RPMs, in contrast with installing with an standard RHEL ISO and then start installing RPMs with DNF/YUM)</p>
-</li>
-<li>
-<p>Use the generated OSTree RHEL image to deploy an edge device system which will use the configured FDO services to automate the device onboarding in a secure way.</p>
-</li>
-</ol>
+<p>Depending on the use case or configuration that you want to follow during this lab, you could need to add "special" devices to your edge VM, for example, you probably would like to use a virtual TPM to manage keys as you will be doing it with physical devices on real edge environments.</p>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s start!</p>
+<p>This lab could be run completly offline, but in order to avoid creating local repositories we will be connecting to the public ones, so you will need Internet access from your VMs.</p>
 </div>
 </div>
 </div>
-<div class="sect1 tiles browse">
-<h2>Browse modules</h2>
+<div class="sect1">
+<h2 id="arch"><a class="anchor" href="#arch"></a>Choose your lab architecture</h2>
 <div class="sectionbody">
-<div class="ulist tile">
-<div class="title"><a href="00-intro.html" class="xref page">Introduction to secure edge device onboarding</a></div>
-<ul>
-<li>
-<p><a href="00-intro.html#intro-scaling" class="xref page">Scaling device deployment for the edge</a></p>
-</li>
-<li>
-<p><a href="00-intro.html#intro-security" class="xref page">An additional concern: Device security</a></p>
-</li>
-<li>
-<p><a href="00-intro.html#intro-fdo" class="xref page">How FDO addresses these challenges</a></p>
-</li>
-</ul>
+<div class="paragraph">
+<p>The lab environment will be composed by an edge device and one or multiple servers (image-builder and FDO services). You can deploy all servers in a single VM (Option 1) if you are short in CPU/MEM resources in your hypervisor (laptop?) or you can split services in dedicated VMs (Option 2) to try a more "realistic" architecture.</p>
 </div>
-<div class="ulist tile">
-<div class="title"><a href="00-prerequisites.html" class="xref page">0. Lab prerequisites</a></div>
-<ul>
-<li>
-<p><a href="00-prerequisites.html#virtualization" class="xref page">Prepare your virtualization environment</a></p>
-</li>
-<li>
-<p><a href="00-prerequisites.html#arch" class="xref page">Choose your lab architecture</a></p>
-</li>
-<li>
-<p><a href="00-prerequisites.html#usecase" class="xref page">Create your use case</a></p>
-</li>
-</ul>
+<div class="sect2">
+<h3 id="_option_1_all_in_one_server"><a class="anchor" href="#_option_1_all_in_one_server"></a>Option 1: All-in-one server</h3>
+<div class="paragraph">
+<p>For this option you just need the minimial system requirements described in <a href="#tldr">TL/DR section</a>.</p>
 </div>
-<div class="ulist tile">
-<div class="title"><a href="01-fdo-intro.html" class="xref page">1.a FDO - Intro</a></div>
-<ul>
-<li>
-<p><a href="01-fdo-intro.html#fdo-intro-origins" class="xref page">FDO&#8217;s origins</a></p>
-</li>
-<li>
-<p><a href="01-fdo-intro.html#fdo-intro-components" class="xref page">FDO components</a></p>
-</li>
-<li>
-<p><a href="01-fdo-intro.html#fdo-intro-workflow" class="xref page">FDO workflow</a></p>
+<div class="paragraph">
+<p>You will also need to <a href="https://access.redhat.com/downloads/content/479/ver=/rhel---9/9.1/x86_64/product-software">download a RHEL ISO</a> (At this moment, the latest one is RHEL 9.1).</p>
+</div>
+<div class="paragraph">
+<p>Once you have <code>libvirt</code> or any other hypervisor installed, and your RHEL ISO downloaded, you can create a VM (I recommend using`virt-manager` in case of <code>libvirt</code>) with <strong>2 vCPUs, 4 GB memory and 50 GB disk</strong> using the "Local install media" option selecting the RHEL ISO.</p>
+</div>
+<div class="paragraph">
+<p>During the RHEL 9 install wizard you can introduce your Red Hat account to register your system, so when the installation finishs your RHEL will be already subscribed. If you decide to use RHEL 8, you will need to subscribe your VM using <code>subscription-manager</code> manually after the first install.</p>
+</div>
+<div class="paragraph">
+<p>Select the minimal install to save some disk space.</p>
+</div>
+<div class="paragraph">
+<p>If you want to be sure that you VM has access to Internet, check if you get a <code>HTML code 200</code> when you ask for a web page, for example running this command in your RHEL VM:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">curl -LsI redhat.com | grep HTTP | tail -n 1</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In addition to that RHEL VM, you will need to create an additional VM (min <strong>2 vCPUs, 1.5 GB memory, 20GB disk</strong>) during the lab steps (please, do not create it yet, just take into account that you will need those system resources).</p>
+</div>
+<div class="paragraph">
+<p>In summary, for Option 1 you will need to have this VM installed and prepared:</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="01-fdo-intro.html#fdo-intro-workflow-before" class="xref page">1. Before the first boot</a></p>
-</li>
-<li>
-<p><a href="01-fdo-intro.html#fdo-intro-workflow-during" class="xref page">2. During the first boot</a></p>
-</li>
-<li>
-<p><a href="01-fdo-intro.html#fdo-intro-workflow-after" class="xref page">3. After the first boot</a></p>
+<p>1x Red Hat Enterprise Linux 8/9 VM minimal-install subscribed (2 vCPUs, 4 GB memory, 50 GB disk)</p>
 </li>
 </ul>
 </div>
-</li>
-</ul>
+<div class="paragraph">
+<p>and you will need enough resources to create the following VM during the lab steps:</p>
 </div>
-<div class="ulist tile">
-<div class="title"><a href="01-fdo-lab.html" class="xref page">1.b FDO - Lab</a></div>
-<ul>
-<li>
-<p><a href="01-fdo-lab.html#fdo-services" class="xref page">FDO services</a></p>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="01-fdo-lab.html#fdo-services-aio" class="xref page">Option 1: All-in-one FDO server installation</a></p>
-</li>
-<li>
-<p><a href="01-fdo-lab.html#fdo-services-dedicated" class="xref page">Option 2: Dedicated FDO servers</a></p>
+<p>1x Empty VM with UEFI boot enabled (2 vCPUs, 1.5 GB memory, 20GB disk)</p>
 </li>
 </ul>
 </div>
-</li>
-<li>
-<p><a href="01-fdo-lab.html#fdo-config" class="xref page">FDO Service API config</a></p>
+</div>
+<div class="sect2">
+<h3 id="_option_2_dedicated_server_vms"><a class="anchor" href="#_option_2_dedicated_server_vms"></a>Option 2: Dedicated server VMs</h3>
+<div class="paragraph">
+<p>If your hypervisor system has enough CPU and RAM, you probably would like to use a more realistic architecture, where the FDO services are running in dedicated servers. In this case, you will still need the VMs shown in "Option 1", but you will need to run three additional VMs.</p>
+</div>
+<div class="paragraph">
+<p>For Option 2 you will need to have this VM installed and prepared:</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="01-fdo-lab.html#fdo-optiona" class="xref page">Option A: Creating your own use case</a></p>
+<p>1x Red Hat Enterprise Linux 8/9 VM minimal-install subscribed (2 vCPUs, 4 GB memory, 50 GB disk)</p>
+</li>
+<li>
+<p>3x Red Hat Enterprise Linux 8/9 VM minimal-install subscribed (2 vCPUs, 2 GB memory, 50 GB disk)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>and you will need enough resources to create the following VM during the lab steps:</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="01-fdo-lab.html#fdo-optiona-user" class="xref page">initial_user</a></p>
-</li>
-<li>
-<p><a href="01-fdo-lab.html#fdo-optiona-files" class="xref page">files</a></p>
-</li>
-<li>
-<p><a href="01-fdo-lab.html#fdo-optiona-commands" class="xref page">commands</a></p>
-</li>
-<li>
-<p><a href="01-fdo-lab.html#fdo-optiona-encrypt" class="xref page">diskencryption_clevis</a></p>
+<p>1x Empty VM with UEFI boot enabled (2 vCPUs, 1.5 GB memory, 20GB disk)</p>
 </li>
 </ul>
 </div>
-</li>
-<li>
-<p><a href="01-fdo-lab.html#fdo-optionb" class="xref page">Option B: Using the example use case</a></p>
-</li>
-</ul>
 </div>
-</li>
-</ul>
 </div>
-<div class="ulist tile">
-<div class="title"><a href="02-rfe-intro.html" class="xref page">2.a RHEL OSTree images - Intro</a></div>
-<ul>
-<li>
-<p><a href="02-rfe-intro.html#rfe-intro-benefits" class="xref page">OSTree RHEL benefits for edge computing</a></p>
-</li>
-<li>
-<p><a href="02-rfe-intro.html#rfe-intro-article" class="xref page">OSTree-based Operating Systems article</a></p>
-</li>
-</ul>
 </div>
-<div class="ulist tile">
-<div class="title"><a href="02-rfe-lab.html" class="xref page">2.b RHEL OSTree images - Lab</a></div>
-<ul>
-<li>
-<p><a href="02-rfe-lab.html#rfe-imagebuilder" class="xref page">Install Image builder</a></p>
-</li>
-<li>
-<p><a href="02-rfe-lab.html#rfe-image" class="xref page">Create the RHEL OSTree image</a></p>
+<div class="sect1">
+<h2 id="usecase"><a class="anchor" href="#usecase"></a>Create your use case</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>During the Edge device onboarding, you will be able to run an associated automation as part of that first boot. Although in this lab we present an example where the VM will be configured with a random hostname, registered in Insights and configured with several custom scripts, the idea is that you don&#8217;t use that example.</p>
+</div>
+<div class="paragraph">
+<p>This tutorial shouldn&#8217;t be a copy/paste lab. <strong>The idea is to enable you to create your own device onboarding use case</strong>, so you will need to have one already prepared and that you will use to "inject" it as part of the onboarding process (thanks to FDO).</p>
+</div>
+<div class="paragraph">
+<p>Proably you will need to addapt your automation to the way that FDO is working and that&#8217;s <strong>the main goal of this tuturial, that you can get any automation and know how to addapt it in order to "process" it during device onboarding when using FDO</strong>.</p>
+</div>
+<div class="paragraph">
+<p>If you don&#8217;t have already any automation that you would like to use, you could think in advance an automation that you would like to test during the edge device onboarding. Some examples could be:</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="02-rfe-lab.html#rfe-ostreeimage" class="xref page">Generating the repo image</a></p>
+<p>Include the edge device in Ansible Automation Platform and run a job right after onboading</p>
 </li>
 <li>
-<p><a href="02-rfe-lab.html#rfe-publish" class="xref page">Publishing the repo image</a></p>
+<p>Install Microshift and import it into ACM</p>
+</li>
+<li>
+<p>Run OpenScap automatically or taks associated to system hardening</p>
+</li>
+<li>
+<p>Launch an ansible playbook locally to configure additional external systems</p>
+</li>
+<li>
+<p>Run the first boot configuration (maybe in external systems?) of any service running on the edge system (ie. observability, monitoring, logging, &#8230;&#8203; )</p>
 </li>
 </ul>
 </div>
-</li>
-<li>
-<p><a href="02-rfe-lab.html#rfe-iso" class="xref page">Create the RHEL ISO</a></p>
-</li>
-</ul>
+<div class="paragraph">
+<p><strong>Be creative! but please have your automation prepared before the lab, so you can focus on the FDO concepts instead of debugging Ansible or Bash scripts</strong>.</p>
 </div>
-<div class="ulist tile">
-<div class="title"><a href="03-onboarding.html" class="xref page">3. Edge device onboarding - Lab</a></div>
-<ul>
-<li>
-<p><a href="03-onboarding.html#onboard-vm" class="xref page">Creating the edge device VM</a></p>
-</li>
-<li>
-<p><a href="03-onboarding.html#onboard-fdoclient" class="xref page">FDO client in action</a></p>
-</li>
-<li>
-<p><a href="03-onboarding.html#onboard-fdoservers" class="xref page">FDO server side</a></p>
-</li>
-<li>
-<p><a href="03-onboarding.html#onboard-checks" class="xref page">Checking the edge device onboard</a></p>
-</li>
-</ul>
+<div class="paragraph">
+<p>In case that you don&#8217;t have enough imagination, you can proceed using the example that is presented during the lab steps.</p>
 </div>
 </div>
 </div>
 <nav class="pagination">
-  <span class="next"><a href="00-intro.html">Introduction to secure edge device onboarding</a></span>
+  <span class="prev"><a href="00-intro.html">Introduction to secure edge device onboarding</a></span>
+  <span class="next"><a href="01-fdo-intro.html">1.a FDO - Intro</a></span>
 </nav>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
