@@ -31,11 +31,12 @@ Working with an OSTree based Operating System has multiple benefits when they ar
 If you want to know more about OSTree RHEL you can read the article attached below originally https://luis-javier-arizmendi-alonso.medium.com/a-git-like-linux-operating-system-d84211e97933[published in Medium].
 
 
-'''''
+
 [#rfe-intro-article]
 == OSTree-based Operating Systems article
-'''''
 
+'''''
+'''''
 
 
 include::partial$OSTree-RHEL.adoc[]
