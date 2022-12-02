@@ -53,6 +53,21 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="00-prerequisites.html">Lab prerequisites</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="00-prerequisites.html#virtualization">Prepare your virtualization environment</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="00-prerequisites.html#arch">Choose your lab architecture</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="00-prerequisites.html#usecase">Create your use case</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
     <a class="nav-link" href="00-intro.html">Introduction to secure edge device onboarding</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
@@ -63,21 +78,6 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="00-intro.html#intro-fdo">How FDO addresses these challenges</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="00-prerequisites.html">0. Lab prerequisites</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="00-prerequisites.html#virtualization">Prepare your virtualization environment</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="00-prerequisites.html#arch">Choose your lab architecture</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="00-prerequisites.html#usecase">Create your use case</a>
   </li>
 </ul>
   </li>
@@ -151,6 +151,9 @@
   </li>
 </ul>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-fdo-lab.html#fdo-summary">FDO Lab summary</a>
+  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
@@ -180,6 +183,12 @@
     <a class="nav-link" href="#rfe-ostreeimage">Generating the repo image</a>
   </li>
   <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#rfe-ostreeimage-optiona">Option A: Using your own FDO onboarding automation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#rfe-ostreeimage-optionb">Option B: Using the provided FDO automation example</a>
+  </li>
+  <li class="nav-item" data-depth="3">
     <a class="nav-link" href="#rfe-publish">Publishing the repo image</a>
   </li>
 </ul>
@@ -204,6 +213,9 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="03-onboarding.html#onboard-checks">Checking the edge device onboard</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="03-onboarding.html#onboard-change">Updating the onboard automation</a>
   </li>
 </ul>
   </li>
@@ -236,17 +248,32 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Jump to lab steps</p>
+<p>As explained in the <a href="02-rfe-intro.html" class="xref page">RHEL for Edge introduction</a>, in order to use an OSTree RHEL you need to create an image. You have two options while creating these images, you can use the <a href="https://console.redhat.com/edge/manage-images">Red Hat Hybrid Console</a> on the cloud or install and use Image Builder in a RHEL system.</p>
+</div>
+<div class="paragraph">
+<p>In this lab we are going to use the second option, since at this moment the FDO integration is not yet ready in the Red Hat Hybrid Console.</p>
+</div>
+<div class="paragraph">
+<p>Once Image builder is installed, you will need to create a RHEL "edge" image. In this lab we will perform the steps manually, so you understand better the procedure, but Red Hat is developing an <a href="https://github.com/redhat-cop/infra.osbuild">Ansible collection</a> to automate the RHEL for Edge image creation and life-cycle management.</p>
+</div>
+<div class="paragraph">
+<p>las dos opciones</p>
 </div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="rfe-imagebuilder"><a class="anchor" href="#rfe-imagebuilder"></a>Install Image builder</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>The first step is to install the Image Builder in one of the RHEL VMs that you prepared.</p>
+</div>
 <div class="listingblock console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo dnf install -y osbuild-composer composer-cli  bash-completion</code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>Remember to enable the service:</p>
 </div>
 <div class="listingblock console-input">
 <div class="content">
@@ -261,32 +288,54 @@
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">source /etc/bash_completion.d/composer-cli</code></pre>
 </div>
 </div>
-<div class="listingblock console-input">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo dnf install -y cockpit-composer</code></pre>
-</div>
+<div class="paragraph">
+<p>We will be using the CLI to create and manage the RHEL images, but you can also use <a href="https://www.redhat.com/sysadmin/intro-cockpit">Cockpit</a>. You can install it and enable it by running these commands (including opening the TCP ports if you have a Firewall installed in your system)</p>
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo systemctl enable cockpit.socket --now</code></pre>
-</div>
-</div>
-<div class="listingblock console-input">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo firewall-cmd --add-service=cockpit &amp;&amp; firewall-cmd --add-service=cockpit --permanent
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo dnf install -y cockpit-composer
+
+sudo systemctl enable cockpit.socket --now
+
+sudo firewall-cmd --add-service=cockpit &amp;&amp; firewall-cmd --add-service=cockpit --permanent
 sudo firewall-cmd --reload</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p><a href="https://&lt;image" class="bare">https://&lt;image</a> builder ip&gt;:9090/</p>
+<p>If you want to take a look at Cockpit just go to <code><a href="http://&lt;image-builder" class="bare">http://&lt;image-builder</a> IP&gt;:9090</code></p>
 </div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="rfe-image"><a class="anchor" href="#rfe-image"></a>Create the RHEL OSTree image</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>You are going to follow three steps:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Generate a new OSTree RHEL repository</p>
+</li>
+<li>
+<p>Download the repository and publish it in a Web server</p>
+</li>
+<li>
+<p>Use Image Builder to create an ISO image using the repository published on the Web server</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s beging with the first step.</p>
+</div>
 <div class="sect2">
 <h3 id="rfe-ostreeimage"><a class="anchor" href="#rfe-ostreeimage"></a>Generating the repo image</h3>
+<div class="sect3">
+<h4 id="rfe-ostreeimage-optiona"><a class="anchor" href="#rfe-ostreeimage-optiona"></a>Option A: Using your own FDO onboarding automation</h4>
+
+</div>
+<div class="sect3">
+<h4 id="rfe-ostreeimage-optionb"><a class="anchor" href="#rfe-ostreeimage-optionb"></a>Option B: Using the provided FDO automation example</h4>
 <div class="listingblock console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">curl -O <a href="https://raw.githubusercontent.com/luisarizmendi/tutorial-secure-onboarding/master/documentation/modules/ROOT/examples/blueprint-insights.toml" class="bare">https://raw.githubusercontent.com/luisarizmendi/tutorial-secure-onboarding/master/documentation/modules/ROOT/examples/blueprint-insights.toml</a></code></pre>
@@ -426,6 +475,7 @@ sed -i "s|&lt;ADMIN PASSW&gt;|${ADMIN_PASSW}|g" blueprint-insights.toml</code></
 </div>
 <div class="paragraph">
 <p>sudo chown $(whoami) &lt;IMAGE TAR FILE&gt;</p>
+</div>
 </div>
 </div>
 <div class="sect2">

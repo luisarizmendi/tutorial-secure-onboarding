@@ -52,6 +52,21 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="00-prerequisites.html">Lab prerequisites</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="00-prerequisites.html#virtualization">Prepare your virtualization environment</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="00-prerequisites.html#arch">Choose your lab architecture</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="00-prerequisites.html#usecase">Create your use case</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
     <a class="nav-link" href="00-intro.html">Introduction to secure edge device onboarding</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
@@ -62,21 +77,6 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="00-intro.html#intro-fdo">How FDO addresses these challenges</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="00-prerequisites.html">0. Lab prerequisites</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="00-prerequisites.html#virtualization">Prepare your virtualization environment</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="00-prerequisites.html#arch">Choose your lab architecture</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="00-prerequisites.html#usecase">Create your use case</a>
   </li>
 </ul>
   </li>
@@ -150,6 +150,9 @@
   </li>
 </ul>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-fdo-lab.html#fdo-summary">FDO Lab summary</a>
+  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
@@ -179,6 +182,12 @@
     <a class="nav-link" href="02-rfe-lab.html#rfe-ostreeimage">Generating the repo image</a>
   </li>
   <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="02-rfe-lab.html#rfe-ostreeimage-optiona">Option A: Using your own FDO onboarding automation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="02-rfe-lab.html#rfe-ostreeimage-optionb">Option B: Using the provided FDO automation example</a>
+  </li>
+  <li class="nav-item" data-depth="3">
     <a class="nav-link" href="02-rfe-lab.html#rfe-publish">Publishing the repo image</a>
   </li>
 </ul>
@@ -203,6 +212,9 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="03-onboarding.html#onboard-checks">Checking the edge device onboard</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="03-onboarding.html#onboard-change">Updating the onboard automation</a>
   </li>
 </ul>
   </li>
@@ -232,11 +244,43 @@
   <div class="content">
 <article class="doc">
 <h1 class="page">Summary</h1>
-<div class="sect1">
-<h2 id="_test"><a class="anchor" href="#_test"></a>TEST</h2>
-<div class="sectionbody">
-
+<div class="paragraph">
+<p>During these tutorial we have reviewed the following main topics:</p>
 </div>
+<div class="ulist">
+<ul>
+<li>
+<p>The edge device onboarding challange, where we find different problems if we compate it with the Data Center server onboarding, including the scale, lack of specialized people onsite or connectivity requirements.</p>
+</li>
+<li>
+<p>FIDO Device Onboarding Specification (FDO), which is the specification selected by the industry to try to overcome the edge device onboarding challanges.</p>
+</li>
+<li>
+<p>OSTree Operating Systems, which are a great fit to the Edge computing use cases since they are image-based and that simplifies a lot the consistency at scale and the day-2 management operations.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Following the LAB steps, you have been able to:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Install and configure the servers needed to provide an FDO solution based on RHEL.</p>
+</li>
+<li>
+<p>Create an OSTree RHEL image (RHEL "for Edge") prepared to work with FDO.</p>
+</li>
+<li>
+<p>Onboard a new edge device with a custom automation using the RHEL for Edge image and the FDO services, being sure that you don&#8217;t distribute any sensitive information such as passwords in the installation method (ISO), and with an easy way to change/update the onboard automation without the need of changing the distributed Operating System images.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Now that you know what you are doing, you might find interesting to use my <a href="https://github.com/luisarizmendi/rhel-edge-quickstart">quickstart scripts to create RHEL for Edge images</a> so you can have (in few steps) any of the <a href="https://github.com/luisarizmendi/rhel-edge-quickstart/tree/master/demos">demos presented there</a> up and running.</p>
+</div>
+<div class="paragraph">
+<p>Thanks for following this guide. See you in the next one!</p>
 </div>
 <nav class="pagination">
   <span class="prev"><a href="03-onboarding.html">3. Edge device onboarding - Lab</a></span>

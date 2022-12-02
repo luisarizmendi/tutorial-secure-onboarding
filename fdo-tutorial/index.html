@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Welcome to Secure Edge device onboarding :: Secure Edge device onboarding with RHEL and FDO</title>
     <link rel="canonical" href="https://luisarizmendi.github.io/tutorial-secure-onboarding/fdo-tutorial/index.html">
-    <link rel="next" href="00-intro.html">
+    <link rel="next" href="00-prerequisites.html">
     <meta name="generator" content="Antora 3.0.0">
     <link rel="stylesheet" href="../_/css/site.css">
   </head>
@@ -52,6 +52,21 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="00-prerequisites.html">Lab prerequisites</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="00-prerequisites.html#virtualization">Prepare your virtualization environment</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="00-prerequisites.html#arch">Choose your lab architecture</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="00-prerequisites.html#usecase">Create your use case</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
     <a class="nav-link" href="00-intro.html">Introduction to secure edge device onboarding</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
@@ -62,21 +77,6 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="00-intro.html#intro-fdo">How FDO addresses these challenges</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="00-prerequisites.html">0. Lab prerequisites</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="00-prerequisites.html#virtualization">Prepare your virtualization environment</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="00-prerequisites.html#arch">Choose your lab architecture</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="00-prerequisites.html#usecase">Create your use case</a>
   </li>
 </ul>
   </li>
@@ -150,6 +150,9 @@
   </li>
 </ul>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-fdo-lab.html#fdo-summary">FDO Lab summary</a>
+  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
@@ -179,6 +182,12 @@
     <a class="nav-link" href="02-rfe-lab.html#rfe-ostreeimage">Generating the repo image</a>
   </li>
   <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="02-rfe-lab.html#rfe-ostreeimage-optiona">Option A: Using your own FDO onboarding automation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="02-rfe-lab.html#rfe-ostreeimage-optionb">Option B: Using the provided FDO automation example</a>
+  </li>
+  <li class="nav-item" data-depth="3">
     <a class="nav-link" href="02-rfe-lab.html#rfe-publish">Publishing the repo image</a>
   </li>
 </ul>
@@ -203,6 +212,9 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="03-onboarding.html#onboard-checks">Checking the edge device onboard</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="03-onboarding.html#onboard-change">Updating the onboard automation</a>
   </li>
 </ul>
   </li>
@@ -245,7 +257,7 @@
 <p>In this tutorial, you have the opportunity to learn more about FDO by installing and configuring the FDO servers, creating your own device onboarding use case (including the automation needed), and deploying RHEL for Edge following the FDO workflow.</p>
 </div>
 <div class="paragraph">
-<p>Although FDO can be used with "standard" Red Hat Enterprise Linux, this tutorial will use a variant of RHEL based on <a href="https://ostreedev.github.io/ostree/">OSTree</a> images, since these systems are more suitable for edge computing use cases. OSTree based RHEL will be included in Red Hat Device Edge product.</p>
+<p>Although FDO can be used with "standard" Red Hat Enterprise Linux, this tutorial will use a variant of RHEL based on <a href="https://ostreedev.github.io/ostree/">OSTree</a> images, since these systems are more suitable for edge computing use cases. OSTree based RHEL will be also included in Red Hat Device Edge product.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -277,6 +289,20 @@
 <h2>Browse modules</h2>
 <div class="sectionbody">
 <div class="ulist tile">
+<div class="title"><a href="00-prerequisites.html" class="xref page">Lab prerequisites</a></div>
+<ul>
+<li>
+<p><a href="00-prerequisites.html#virtualization" class="xref page">Prepare your virtualization environment</a></p>
+</li>
+<li>
+<p><a href="00-prerequisites.html#arch" class="xref page">Choose your lab architecture</a></p>
+</li>
+<li>
+<p><a href="00-prerequisites.html#usecase" class="xref page">Create your use case</a></p>
+</li>
+</ul>
+</div>
+<div class="ulist tile">
 <div class="title"><a href="00-intro.html" class="xref page">Introduction to secure edge device onboarding</a></div>
 <ul>
 <li>
@@ -287,20 +313,6 @@
 </li>
 <li>
 <p><a href="00-intro.html#intro-fdo" class="xref page">How FDO addresses these challenges</a></p>
-</li>
-</ul>
-</div>
-<div class="ulist tile">
-<div class="title"><a href="00-prerequisites.html" class="xref page">0. Lab prerequisites</a></div>
-<ul>
-<li>
-<p><a href="00-prerequisites.html#virtualization" class="xref page">Prepare your virtualization environment</a></p>
-</li>
-<li>
-<p><a href="00-prerequisites.html#arch" class="xref page">Choose your lab architecture</a></p>
-</li>
-<li>
-<p><a href="00-prerequisites.html#usecase" class="xref page">Create your use case</a></p>
 </li>
 </ul>
 </div>
@@ -348,7 +360,7 @@
 </div>
 </li>
 <li>
-<p><a href="01-fdo-lab.html#fdo-config" class="xref page">FDO Service API config</a></p>
+<p><a href="01-fdo-lab.html#fdo-config" class="xref page">FDO Service API configuration</a></p>
 <div class="ulist">
 <ul>
 <li>
@@ -375,6 +387,9 @@
 </li>
 </ul>
 </div>
+</li>
+<li>
+<p><a href="01-fdo-lab.html#fdo-summary" class="xref page">FDO Lab summary</a></p>
 </li>
 </ul>
 </div>
@@ -403,6 +418,12 @@
 <p><a href="02-rfe-lab.html#rfe-ostreeimage" class="xref page">Generating the repo image</a></p>
 </li>
 <li>
+<p><a href="02-rfe-lab.html#rfe-ostreeimage-optiona" class="xref page">Option A: Using your own FDO onboarding automation</a></p>
+</li>
+<li>
+<p><a href="02-rfe-lab.html#rfe-ostreeimage-optionb" class="xref page">Option B: Using the provided FDO automation example</a></p>
+</li>
+<li>
 <p><a href="02-rfe-lab.html#rfe-publish" class="xref page">Publishing the repo image</a></p>
 </li>
 </ul>
@@ -428,12 +449,15 @@
 <li>
 <p><a href="03-onboarding.html#onboard-checks" class="xref page">Checking the edge device onboard</a></p>
 </li>
+<li>
+<p><a href="03-onboarding.html#onboard-change" class="xref page">Updating the onboard automation</a></p>
+</li>
 </ul>
 </div>
 </div>
 </div>
 <nav class="pagination">
-  <span class="next"><a href="00-intro.html">Introduction to secure edge device onboarding</a></span>
+  <span class="next"><a href="00-prerequisites.html">Lab prerequisites</a></span>
 </nav>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">

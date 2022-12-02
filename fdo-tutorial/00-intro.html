@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Introduction to secure edge device onboarding :: Secure Edge device onboarding with RHEL and FDO</title>
     <link rel="canonical" href="https://luisarizmendi.github.io/tutorial-secure-onboarding/fdo-tutorial/00-intro.html">
-    <link rel="prev" href="index.html">
-    <link rel="next" href="00-prerequisites.html">
+    <link rel="prev" href="00-prerequisites.html">
+    <link rel="next" href="01-fdo-intro.html">
     <meta name="generator" content="Antora 3.0.0">
     <link rel="stylesheet" href="../_/css/site.css">
   </head>
@@ -51,6 +51,21 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="00-prerequisites.html">Lab prerequisites</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="00-prerequisites.html#virtualization">Prepare your virtualization environment</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="00-prerequisites.html#arch">Choose your lab architecture</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="00-prerequisites.html#usecase">Create your use case</a>
+  </li>
+</ul>
+  </li>
   <li class="nav-item is-current-page" data-depth="1">
     <button class="nav-item-toggle"></button>
     <a class="nav-link" href="00-intro.html">Introduction to secure edge device onboarding</a>
@@ -63,21 +78,6 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="#intro-fdo">How FDO addresses these challenges</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="00-prerequisites.html">0. Lab prerequisites</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="00-prerequisites.html#virtualization">Prepare your virtualization environment</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="00-prerequisites.html#arch">Choose your lab architecture</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="00-prerequisites.html#usecase">Create your use case</a>
   </li>
 </ul>
   </li>
@@ -151,6 +151,9 @@
   </li>
 </ul>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-fdo-lab.html#fdo-summary">FDO Lab summary</a>
+  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
@@ -180,6 +183,12 @@
     <a class="nav-link" href="02-rfe-lab.html#rfe-ostreeimage">Generating the repo image</a>
   </li>
   <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="02-rfe-lab.html#rfe-ostreeimage-optiona">Option A: Using your own FDO onboarding automation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="02-rfe-lab.html#rfe-ostreeimage-optionb">Option B: Using the provided FDO automation example</a>
+  </li>
+  <li class="nav-item" data-depth="3">
     <a class="nav-link" href="02-rfe-lab.html#rfe-publish">Publishing the repo image</a>
   </li>
 </ul>
@@ -204,6 +213,9 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="03-onboarding.html#onboard-checks">Checking the edge device onboard</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="03-onboarding.html#onboard-change">Updating the onboard automation</a>
   </li>
 </ul>
   </li>
@@ -293,10 +305,10 @@
 <p>If you want to take this approach, you have a couple of options. You could build specific images for each device. Or you might create an image template that can be easily customized by a nontechnical person or automatically using zero-touch provisioning. Customizations might include specific variables for the site, device purpose, and so forth.</p>
 </div>
 <div class="paragraph">
-<p>If you don&#8217;t want to end up with a sea of device images, which could be complex to manage at scale, you will probably use an image template. You must still figure out how to automate the customizations that must be made at boot time.</p>
+<p>If you don&#8217;t want to end up with a sea of device images, which could be complex to manage at scale, you will probably use an image template. You must still figure out how to automate the customizations that must be made at boot time and even in that case change management could be complex (think that every customization change would imply to rebuild the images).</p>
 </div>
 <div class="paragraph">
-<p>You could embed all the intelligence and options in the image template. Or you could build something more flexible and scalable by including the intelligence and options in a remote, centralized piece of the solution that will decide, depending on the device type, which components and configurations to apply.</p>
+<p>You could embed all the intelligence and options in the image template as explained, or you could build something more flexible and scalable by including the intelligence and options in a remote, centralized piece of the solution that will decide, depending on the device type, which components and configurations to apply.</p>
 </div>
 </div>
 </div>
@@ -350,8 +362,8 @@
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="index.html">Secure Edge device onboarding with RHEL and FDO</a></span>
-  <span class="next"><a href="00-prerequisites.html">0. Lab prerequisites</a></span>
+  <span class="prev"><a href="00-prerequisites.html">Lab prerequisites</a></span>
+  <span class="next"><a href="01-fdo-intro.html">1.a FDO - Intro</a></span>
 </nav>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
