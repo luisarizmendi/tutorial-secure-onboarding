@@ -1,15 +1,12 @@
+* xref:00-prerequisites.adoc[Lab prerequisites]
+** xref:00-prerequisites.adoc#virtualization[Prepare your virtualization environment]
+** xref:00-prerequisites.adoc#arch[Choose your lab architecture]
+** xref:00-prerequisites.adoc#usecase[Create your use case]
 
 * xref:00-intro.adoc[Introduction to secure edge device onboarding]
 ** xref:00-intro.adoc#intro-scaling[Scaling device deployment for the edge]
 ** xref:00-intro.adoc#intro-security[An additional concern: Device security]
 ** xref:00-intro.adoc#intro-fdo[How FDO addresses these challenges]
-
-
-* xref:00-prerequisites.adoc[0. Lab prerequisites]
-** xref:00-prerequisites.adoc#virtualization[Prepare your virtualization environment]
-** xref:00-prerequisites.adoc#arch[Choose your lab architecture]
-** xref:00-prerequisites.adoc#usecase[Create your use case]
-
 
 
 * xref:01-fdo-intro.adoc[1.a FDO - Intro]
@@ -33,7 +30,7 @@
 **** xref:01-fdo-lab.adoc#fdo-optiona-commands[commands]
 **** xref:01-fdo-lab.adoc#fdo-optiona-encrypt[diskencryption_clevis]
 *** xref:01-fdo-lab.adoc#fdo-optionb[Option B: Using the example use case]
-
+** xref:01-fdo-lab.adoc#fdo-summary[FDO Lab summary]
 
 * xref:02-rfe-intro.adoc[2.a RHEL OSTree images - Intro]
 ** xref:02-rfe-intro.adoc#rfe-intro-benefits[OSTree RHEL benefits for edge computing]
@@ -44,6 +41,8 @@
 ** xref:02-rfe-lab.adoc#rfe-imagebuilder[Install Image builder]
 ** xref:02-rfe-lab.adoc#rfe-image[Create the RHEL OSTree image]
 *** xref:02-rfe-lab.adoc#rfe-ostreeimage[Generating the repo image]
+*** xref:02-rfe-lab.adoc#rfe-ostreeimage-optiona[Option A: Using your own FDO onboarding automation]
+*** xref:02-rfe-lab.adoc#rfe-ostreeimage-optionb[Option B: Using the provided FDO automation example]
 *** xref:02-rfe-lab.adoc#rfe-publish[Publishing the repo image]
 ** xref:02-rfe-lab.adoc#rfe-iso[Create the RHEL ISO]
 
@@ -53,6 +52,6 @@
 ** xref:03-onboarding.adoc#onboard-fdoclient[FDO client in action]
 ** xref:03-onboarding.adoc#onboard-fdoservers[FDO server side]
 ** xref:03-onboarding.adoc#onboard-checks[Checking the edge device onboard]
-
+** xref:03-onboarding.adoc#onboard-change[Updating the onboard automation]
 
 * xref:99-summary.adoc[Summary]

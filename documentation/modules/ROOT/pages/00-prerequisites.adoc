@@ -8,7 +8,7 @@ This lab has been created trying to minimize the pre-requisites. You should be a
 
 Summary of minimal system pre-requisites:
 
-* Virtualization hypervisor with at least 6 vCPUs (threads), 8 GB memory and 100 GB disk.
+* Virtualization hypervisor with at least 6 vCPUs (threads), 6 GB memory and 100 GB disk *free*.
 * Internet connection from VMs.
 * Valid RHEL subscriptions and account.
 

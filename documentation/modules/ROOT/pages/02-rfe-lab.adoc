@@ -1,9 +1,22 @@
 = RHEL OSTree images - Lab
 include::_attributes.adoc[]
 
+As explained in the xref:02-rfe-intro.adoc[RHEL for Edge introduction], in order to use an OSTree RHEL you need to create an image. You have two options while creating these images, you can use the https://console.redhat.com/edge/manage-images[Red Hat Hybrid Console] on the cloud or install and use Image Builder in a RHEL system.
+
+In this lab we are going to use the second option, since at this moment the FDO integration is not yet ready in the Red Hat Hybrid Console.
+
+Once Image builder is installed, you will need to create a RHEL "edge" image. In this lab we will perform the steps manually, so you understand better the procedure, but Red Hat is developing an https://github.com/redhat-cop/infra.osbuild[Ansible collection] to automate the RHEL for Edge image creation and life-cycle management.
 
 
-Jump to lab steps 
+
+
+
+las dos opciones
+
+
+
+
+
 
 
 
@@ -11,7 +24,7 @@ Jump to lab steps
 [#rfe-imagebuilder]
 == Install Image builder
 
-
+The first step is to install the Image Builder in one of the RHEL VMs that you prepared.
 
 
 [.console-input]
@@ -20,8 +33,7 @@ Jump to lab steps
 sudo dnf install -y osbuild-composer composer-cli  bash-completion
 ----
 
-
-
+Remember to enable the service:
 
 [.console-input]
 [source,bash,subs="+macros,+attributes"]
@@ -29,12 +41,7 @@ sudo dnf install -y osbuild-composer composer-cli  bash-completion
 sudo systemctl enable osbuild-composer.socket --now
 ----
 
-
-
-
-
 Load the shell configuration script so that the autocomplete feature for the composer-cli command starts working immediately without reboot:
-
 
 [.console-input]
 [source,bash,subs="+macros,+attributes"]
@@ -42,65 +49,88 @@ Load the shell configuration script so that the autocomplete feature for the com
 source /etc/bash_completion.d/composer-cli
 ----
 
-
-
-
-
-
-
-
-
-
-
-
-
+We will be using the CLI to create and manage the RHEL images, but you can also use https://www.redhat.com/sysadmin/intro-cockpit[Cockpit]. You can install it and enable it by running these commands (including opening the TCP ports if you have a Firewall installed in your system) 
 
 
 [.console-input]
 [source,bash,subs="+macros,+attributes"]
 ----
 sudo dnf install -y cockpit-composer
-----
 
-
-[.console-input]
-[source,bash,subs="+macros,+attributes"]
-----
 sudo systemctl enable cockpit.socket --now
-----
 
-
-
-[.console-input]
-[source,bash,subs="+macros,+attributes"]
-----
 sudo firewall-cmd --add-service=cockpit && firewall-cmd --add-service=cockpit --permanent
 sudo firewall-cmd --reload 
 ----
 
-
-
-
-
-
-
-
-https://<image builder ip>:9090/
-
-
-
-
-
-
-
+If you want to take a look at Cockpit just go to `http://<image-builder IP>:9090`
 
 [#rfe-image]
 == Create the RHEL OSTree image
+
+You are going to follow three steps:
+
+. Generate a new OSTree RHEL repository
+. Download the repository and publish it in a Web server
+. Use Image Builder to create an ISO image using the repository published on the Web server
+
+Let's beging with the first step.
 
 
 
 [#rfe-ostreeimage]
 === Generating the repo image
+
+
+
+
+
+
+
+
+
+
+[#rfe-ostreeimage-optiona]
+==== Option A: Using your own FDO onboarding automation
+
+
+[#rfe-ostreeimage-optionb]
+==== Option B: Using the provided FDO automation example
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

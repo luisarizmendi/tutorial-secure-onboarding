@@ -32,9 +32,9 @@ You can minimize costs by preparing the devices in a central place before shippi
 
 If you want to take this approach, you have a couple of options. You could build specific images for each device. Or you might create an image template that can be easily customized by a nontechnical person or automatically using zero-touch provisioning. Customizations might include specific variables for the site, device purpose, and so forth.
 
-If you don't want to end up with a sea of device images, which could be complex to manage at scale, you will probably use an image template. You must still figure out how to automate the customizations that must be made at boot time.
+If you don't want to end up with a sea of device images, which could be complex to manage at scale, you will probably use an image template. You must still figure out how to automate the customizations that must be made at boot time and even in that case change management could be complex (think that every customization change would imply to rebuild the images).
 
-You could embed all the intelligence and options in the image template. Or you could build something more flexible and scalable by including the intelligence and options in a remote, centralized piece of the solution that will decide, depending on the device type, which components and configurations to apply.
+You could embed all the intelligence and options in the image template as explained, or you could build something more flexible and scalable by including the intelligence and options in a remote, centralized piece of the solution that will decide, depending on the device type, which components and configurations to apply.
 
 
 [#intro-security]

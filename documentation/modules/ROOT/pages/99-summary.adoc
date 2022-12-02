@@ -1,7 +1,18 @@
 = Summary
 include::_attributes.adoc[]
 
+During these tutorial we have reviewed the following main topics:
 
+* The edge device onboarding challange, where we find different problems if we compate it with the Data Center server onboarding, including the scale, lack of specialized people onsite or connectivity requirements.
+* FIDO Device Onboarding Specification (FDO), which is the specification selected by the industry to try to overcome the edge device onboarding challanges.
+* OSTree Operating Systems, which are a great fit to the Edge computing use cases since they are image-based and that simplifies a lot the consistency at scale and the day-2 management operations.
 
+Following the LAB steps, you have been able to:
 
-== TEST
+* Install and configure the servers needed to provide an FDO solution based on RHEL.
+* Create an OSTree RHEL image (RHEL "for Edge") prepared to work with FDO.
+* Onboard a new edge device with a custom automation using the RHEL for Edge image and the FDO services, being sure that you don't distribute any sensitive information such as passwords in the installation method (ISO), and with an easy way to change/update the onboard automation without the need of changing the distributed Operating System images.
+
+Now that you know what you are doing, you might find interesting to use my https://github.com/luisarizmendi/rhel-edge-quickstart[quickstart scripts to create RHEL for Edge images] so you can have (in few steps) any of the https://github.com/luisarizmendi/rhel-edge-quickstart/tree/master/demos[demos presented there] up and running.
+
+Thanks for following this guide. See you in the next one!

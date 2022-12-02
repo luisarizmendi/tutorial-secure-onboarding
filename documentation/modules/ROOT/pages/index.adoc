@@ -11,7 +11,7 @@ Red Hat is developing an implementation of this new industry specification, and 
 
 In this tutorial, you have the opportunity to learn more about FDO by installing and configuring the FDO servers, creating your own device onboarding use case (including the automation needed), and deploying RHEL for Edge following the FDO workflow.  
 
-Although FDO can be used with "standard" Red Hat Enterprise Linux, this tutorial will use a variant of RHEL based on https://ostreedev.github.io/ostree/[OSTree] images, since these systems are more suitable for edge computing use cases. OSTree based RHEL will be included in Red Hat Device Edge product.
+Although FDO can be used with "standard" Red Hat Enterprise Linux, this tutorial will use a variant of RHEL based on https://ostreedev.github.io/ostree/[OSTree] images, since these systems are more suitable for edge computing use cases. OSTree based RHEL will be also included in Red Hat Device Edge product.
 
 
 image::Device-Edge-logo.png[Red Hat Device Edge logo]
@@ -29,18 +29,19 @@ Let's start!
 == Browse modules
 
 
+
+[.tile]
+.xref:00-prerequisites.adoc[Lab prerequisites]
+* xref:00-prerequisites.adoc#virtualization[Prepare your virtualization environment]
+* xref:00-prerequisites.adoc#arch[Choose your lab architecture]
+* xref:00-prerequisites.adoc#usecase[Create your use case]
+
 [.tile]
 .xref:00-intro.adoc[Introduction to secure edge device onboarding]
 * xref:00-intro.adoc#intro-scaling[Scaling device deployment for the edge]
 * xref:00-intro.adoc#intro-security[An additional concern: Device security]
 * xref:00-intro.adoc#intro-fdo[How FDO addresses these challenges]
 
-
-[.tile]
-.xref:00-prerequisites.adoc[0. Lab prerequisites]
-* xref:00-prerequisites.adoc#virtualization[Prepare your virtualization environment]
-* xref:00-prerequisites.adoc#arch[Choose your lab architecture]
-* xref:00-prerequisites.adoc#usecase[Create your use case]
 
 [.tile]
 .xref:01-fdo-intro.adoc[1.a FDO - Intro]
@@ -58,13 +59,14 @@ Let's start!
 * xref:01-fdo-lab.adoc#fdo-services[FDO services]
 ** xref:01-fdo-lab.adoc#fdo-services-aio[Option 1: All-in-one FDO server installation]
 ** xref:01-fdo-lab.adoc#fdo-services-dedicated[Option 2: Dedicated FDO servers]
-* xref:01-fdo-lab.adoc#fdo-config[FDO Service API config]
+* xref:01-fdo-lab.adoc#fdo-config[FDO Service API configuration]
 ** xref:01-fdo-lab.adoc#fdo-optiona[Option A: Creating your own use case]
 *** xref:01-fdo-lab.adoc#fdo-optiona-user[initial_user]
 *** xref:01-fdo-lab.adoc#fdo-optiona-files[files]
 *** xref:01-fdo-lab.adoc#fdo-optiona-commands[commands]
 *** xref:01-fdo-lab.adoc#fdo-optiona-encrypt[diskencryption_clevis]
 ** xref:01-fdo-lab.adoc#fdo-optionb[Option B: Using the example use case]
+* xref:01-fdo-lab.adoc#fdo-summary[FDO Lab summary]
 
 
 [.tile]
@@ -81,6 +83,8 @@ Let's start!
 * xref:02-rfe-lab.adoc#rfe-imagebuilder[Install Image builder]
 * xref:02-rfe-lab.adoc#rfe-image[Create the RHEL OSTree image]
 ** xref:02-rfe-lab.adoc#rfe-ostreeimage[Generating the repo image]
+** xref:02-rfe-lab.adoc#rfe-ostreeimage-optiona[Option A: Using your own FDO onboarding automation]
+** xref:02-rfe-lab.adoc#rfe-ostreeimage-optionb[Option B: Using the provided FDO automation example]
 ** xref:02-rfe-lab.adoc#rfe-publish[Publishing the repo image]
 * xref:02-rfe-lab.adoc#rfe-iso[Create the RHEL ISO]
 
@@ -91,6 +95,7 @@ Let's start!
 * xref:03-onboarding.adoc#onboard-fdoclient[FDO client in action]
 * xref:03-onboarding.adoc#onboard-fdoservers[FDO server side]
 * xref:03-onboarding.adoc#onboard-checks[Checking the edge device onboard]
+* xref:03-onboarding.adoc#onboard-change[Updating the onboard automation]
 
 
 [.tile]
