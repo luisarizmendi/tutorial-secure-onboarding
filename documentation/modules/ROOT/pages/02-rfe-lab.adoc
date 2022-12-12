@@ -65,7 +65,7 @@ sudo dnf install -y cockpit-composer
 
 sudo systemctl enable cockpit.socket --now
 
-sudo firewall-cmd --add-service=cockpit && firewall-cmd --add-service=cockpit --permanent
+sudo firewall-cmd --add-service=cockpit && sudo firewall-cmd --add-service=cockpit --permanent
 sudo firewall-cmd --reload 
 ----
 
@@ -94,7 +94,7 @@ When it comes to create the blueprint file for this lab, you need to follow the 
 
 
 [#rfe-ostreeimage-optiona]
-==== Option A: Blueprint file for your own FDO onboarding automation
+*Option A: Blueprint file for your own FDO onboarding automation*
 
 You can customize the image created by the Image Builder through a `blueprint.toml` file. You can check https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/composing_a_customized_rhel_system_image/index[how to use blueprint in Image Builder] but take into account that not all variables are applied to create OSTree images, so it's better to review the https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html-single/composing_installing_and_managing_rhel_for_edge_images/index#image-customizations_composing-a-rhel-for-edge-image-using-image-builder-command-line[supported blueprint configurations for RHEL for Edge] documentation.  
 
@@ -297,7 +297,7 @@ After completing the Blueprint file preparation, move to the xref:02-rfe-lab.ado
 
 
 [#rfe-ostreeimage-optionb]
-==== Option B: Blueprint file for the provided FDO automation example
+*Option B: Blueprint file for the provided FDO automation example*
 
 If you plan to use the provided example, you just need to download the Blueprint template and adapt it to your environment by changing certain values on it.
 
@@ -341,7 +341,7 @@ sed -i "s|<ADMIN PASSW>|${ADMIN_PASSW}|g" blueprint-insights.toml
 
 
 [#rfe-ostreeimage-createrepo]
-==== Creating the OSTree repository
+=== Creating the OSTree repository
 
 Once you have your Blueprint, you are ready to create the OSTree repository/image with Image Builder.
 
@@ -420,9 +420,9 @@ You will need to wait until the status for your image changes to 'FINISHED` (whi
 [#rfe-publish]
 === Publishing the repo image
 
-There are multiple ways of distributing the RHEL OSTree images. If you take a look at this https://github.com/luisarizmendi/rhel-edge-quickstart[RHEL for Edge quickstart GitHub repository] or at the https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/composing_installing_and_managing_rhel_for_edge_images/introducing-rhel-for-edge-images_composing-installing-managing-rhel-for-edge-images[Red Hat official documentation] you will learn more about the network and non-network based deployments, but you will find that both have something in common, you need to have the OSTree image/repo that you downloaded in the previous step, "published" into a HTTP server.
+There are multiple ways of distributing the RHEL OSTree images. If you take a look at this https://github.com/luisarizmendi/rhel-edge-quickstart[RHEL for Edge quickstart GitHub repository] or at the https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/composing_installing_and_managing_rhel_for_edge_images/introducing-rhel-for-edge-images_composing-installing-managing-rhel-for-edge-images[Red Hat official documentation] you will learn more about the network and non-network based deployments, but you will find that both have something in common, you need to have the OSTree image/repo "published" into a HTTP server.
 
-When you created the image in the previous section, you used the `edge-commit` image type, which means that Image Builder create the OSTree image contents and put them into a `TAR` file. There is another image type that you might use here, the `edge-container` type, which creates the OSTree image contents and directly creates a container image that publishes them using `HTTPD`. In this lab we used the first approach (although as you will see it requires some additional steps) because this procedure can be used for either network and non-network based deployments, since you can include additional information into the container image (ie. a `kickstart` file) and because you will be able to manage the lifecycle of this container image (ie. image patching) which is convenient for production environments.
+When you created the image in the previous section, you used the `edge-commit` image type, which means that Image Builder create the OSTree image contents and put them into a `TAR` file. There is another image type that you might use here, the `edge-container` type, which creates the OSTree image contents and directly creates a container image that publishes them using `HTTPD`. In this lab we are going to use the first approach (although as you will see it requires some additional steps) because this procedure can be used for either network and non-network based deployments, since you can include additional information into the container image (ie. a `kickstart` file) and because you will be able to manage the lifecycle of this container image (ie. image patching) which is convenient for production environments.
 
 Since we used the `edge-commit` image type, you have your OSTree image in Image Builder as a `TAR` file but in order to use it you will need to "download" it using the following command, where the `IMAGE ID` is the ID generated by the Image Builder and that you can find using the command `sudo composer-cli compose status`.
 
@@ -434,7 +434,6 @@ sudo composer-cli compose image <IMAGE ID>
 
 This command will download a `TAR` file with all the OSTree image contents. If you are not using the `root` user, remember to change the file owner:
 
-[.console-input]
 [source,bash,subs="+macros,+attributes"]
 ----
 sudo chown $(whoami) <IMAGE TAR FILE>
@@ -489,6 +488,8 @@ EOF
 
 Now you can create your container image using this Dockerfile. If you used an argument for the OSTree iamge you need to include the full path to your OSTree repo `TAR` file:
 
+*NOTE:* Do not forget the last `.`
+
 [source,bash,subs="+macros,+attributes"]
 ----
 sudo podman build -t <CONTAINER IMAGE NAME> --build-arg commit=<IMAGE TAR FILE> .
@@ -498,6 +499,12 @@ An idea for the container image could be a mix of the Blueprint name and the OST
 
 ```
 <blueprint_name>:<image id>
+```
+
+For example:
+
+```
+sudo podman build -t kvm-insights:ebcfe8b5-5aed-4d9b-a948-d7ddb9b51150 --build-arg commit=ebcfe8b5-5aed-4d9b-a948-d7ddb9b51150-commit.tar .
 ```
 
 Also a good idea is to tag the last container image as "latest":
