@@ -1,6 +1,11 @@
 = FIDO Device Onboarding (FDO) - Lab
 include::_attributes.adoc[]
 
+In this lab you are going to:
+
+. Deploy and configured the FDO servers in one (Option 1) or multiple nodes (Option 2).
+. Customize the FDO onboarding automation with your own use case (Option A) or with the example automation provided in the lab (Option B).
+
 
 [#fdo-services]
 == FDO services

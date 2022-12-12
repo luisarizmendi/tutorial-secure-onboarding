@@ -85,8 +85,10 @@ Let's start!
 ** xref:02-rfe-lab.adoc#rfe-ostreeimage[Generating the repo image]
 ** xref:02-rfe-lab.adoc#rfe-ostreeimage-optiona[Option A: Using your own FDO onboarding automation]
 ** xref:02-rfe-lab.adoc#rfe-ostreeimage-optionb[Option B: Using the provided FDO automation example]
+** xref:02-rfe-lab.adoc#rfe-ostreeimage-createrepo[Creating the OSTree repository]
 ** xref:02-rfe-lab.adoc#rfe-publish[Publishing the repo image]
 * xref:02-rfe-lab.adoc#rfe-iso[Create the RHEL ISO]
+* xref:02-rfe-lab.adoc#rfe-summary[RHEL OSTree images Lab summary]
 
 
 [.tile]

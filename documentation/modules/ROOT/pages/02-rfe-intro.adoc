@@ -28,7 +28,7 @@ Working with an OSTree based Operating System has multiple benefits when they ar
 * *Unattended resilience*: Application specific health checks detect conflicts and automatically rollback an OS update, preventing downtime
 
 
-If you want to know more about OSTree RHEL you can read the article attached below originally https://luis-javier-arizmendi-alonso.medium.com/a-git-like-linux-operating-system-d84211e97933[published in Medium].
+If you want to know more about OSTree RHEL you can read the article attached below originally https://luis-javier-arizmendi-alonso.medium.com/a-git-like-linux-operating-system-d84211e97933[published in Medium], otherwise jump directly into the xref:02-rfe-lab.adoc[RHEL OSTree images Lab].
 
 
 
