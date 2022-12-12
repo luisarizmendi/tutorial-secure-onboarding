@@ -294,8 +294,9 @@
 <div class="paragraph">
 <p>As part of the FDO development in Fedora/RHEL, a Systemd (<code>fdo-aio</code>) service that manages all the FDO servers has been created for lab proposes so it&#8217;s easy to deploy and manage the all-in-one option for the FDO services.</p>
 </div>
-<div class="sect3">
-<h4 id="_preparing_the_fdo_services"><a class="anchor" href="#_preparing_the_fdo_services"></a>Preparing the FDO services</h4>
+<div class="paragraph">
+<p><strong>Preparing the FDO services</strong></p>
+</div>
 <div class="paragraph">
 <p>FDO is distributed as RPM packages, you can double check the names running this command in your RHEL VM:</p>
 </div>
@@ -428,14 +429,14 @@ serviceinfo_api_admin_token: XWNzbEwQ6EWF+PWZrqa7d68mQFHG1NtGX9yklCNtMa8=</code>
 <p>You can now proceed with the <a href="#fdo-config">FDO Service API configuration</a>.</p>
 </div>
 </div>
-</div>
 <div class="sect2">
 <h3 id="fdo-services-dedicated"><a class="anchor" href="#fdo-services-dedicated"></a>Option 2: Dedicated FDO servers</h3>
 <div class="paragraph">
 <p>In this option, you will have the Image Builder server and 3 additional FDO VMs (Manufacturing, Rendezvous and Owner). If you find that architecture requires too many resources but you still want to test the FDO split into different servers, you could install one of those (maybe the manufacturing server) in the same VM as the Image Builder in order to save some CPU and Memory.</p>
 </div>
-<div class="sect3">
-<h4 id="_manufacturing_server"><a class="anchor" href="#_manufacturing_server"></a>Manufacturing server</h4>
+<div class="paragraph">
+<p><strong>Manufacturing server</strong></p>
+</div>
 <div class="paragraph">
 <p>Start by installing the required RPMs:</p>
 </div>
@@ -445,7 +446,7 @@ serviceinfo_api_admin_token: XWNzbEwQ6EWF+PWZrqa7d68mQFHG1NtGX9yklCNtMa8=</code>
 </div>
 </div>
 <div class="paragraph">
-<p>If you remember, during the manufacturing phase you have to “inject” certain certificates and keys into your device. When using the <code>fdo-aio</code> service those are generated automatically, but now you are going to create them manually.</p>
+<p>If you remember, during the manufacturing phase you have to “inject” certain certificates and keys into your device. When using the All-in-One FDO server model those are generated automatically, but if you split the services you need to create them manually.</p>
 </div>
 <div class="paragraph">
 <p>Create a directory where to place the certs and keys:</p>
@@ -460,9 +461,9 @@ serviceinfo_api_admin_token: XWNzbEwQ6EWF+PWZrqa7d68mQFHG1NtGX9yklCNtMa8=</code>
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo for i in manufacturer owner device-ca diun ; do
-fdo-admin-tool generate-key-and-cert \
---destination-dir /etc/fdo/keys $i
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">for i in manufacturer owner device-ca diun
+do
+  sudo fdo-admin-tool generate-key-and-cert --destination-dir /etc/fdo/keys $i
 done</code></pre>
 </div>
 </div>
@@ -508,10 +509,10 @@ sudo mkdir -p /etc/fdo/stores/owner_vouchers</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>It&#8217;s time to configure the Manufacturing server. You can find an example configuration in <code>/usr/share/doc/fdo/manufacturing-server.yml</code>.</p>
+<p>It&#8217;s time to configure the Manufacturing server. You can find an example configuration in <code>/usr/share/doc/fdo/manufacturing-server.yml</code>. Create your own configuration in the <code>/etc/fdo/manufacturing-server.yml</code> file using that template.</p>
 </div>
 <div class="paragraph">
-<p>Create your own configuration in the <code>/etc/fdo</code> directory using that file as a template. Here you can find another configuration example:</p>
+<p>Here you can find another configuration example, changing the Manufacturing IP address would be everything that you need to do if you use this file and follow the lab steps:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -594,13 +595,39 @@ manufacturing:
 <div class="paragraph">
 <p>And check that the service is listening on port 8080 (default)</p>
 </div>
+<div class="tabset is-loading">
+<div class="ulist tabs">
+<ul>
+<li>
+<p><a id="tabset5_input"></a>input</p>
+</li>
+<li>
+<p><a id="tabset5_output"></a>output</p>
+</li>
+</ul>
+</div>
+<div class="content">
+<div class="tab-pane" aria-labelledby="tabset5_input">
 <div class="listingblock console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo ss -ltn</code></pre>
 </div>
 </div>
+</div>
+<div class="tab-pane" aria-labelledby="tabset5_output">
+<div class="listingblock console-output">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">State                       Recv-Q                      Send-Q                                           Local Address:Port                                            Peer Address:Port                      Process
+LISTEN                      0                           128                                                    0.0.0.0:8080                                                 0.0.0.0:*
+LISTEN                      0                           128                                                    0.0.0.0:22                                                   0.0.0.0:*
+LISTEN                      0                           128                                                       [::]:22                                                      [::]:*</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
 <div class="paragraph">
-<p>Remember to open the required ports in your firewall:</p>
+<p>Remember to open the required ports in your firewall (if you are using any):</p>
 </div>
 <div class="listingblock console-input">
 <div class="content">
@@ -611,9 +638,9 @@ sudo systemctl restart firewalld</code></pre>
 <div class="paragraph">
 <p>Let’s move to the next server, the Rendezvous server.</p>
 </div>
+<div class="paragraph">
+<p><strong>Rendezvous server</strong></p>
 </div>
-<div class="sect3">
-<h4 id="_rendezvous_server"><a class="anchor" href="#_rendezvous_server"></a>Rendezvous server</h4>
 <div class="paragraph">
 <p>Connect to the RHEL VM where you want to install the Rendezvous server and, as you did with the Manufacturing server, install the required RPM packages:</p>
 </div>
@@ -633,6 +660,11 @@ sudo systemctl restart firewalld</code></pre>
 <div class="paragraph">
 <p>The Rendezvous server needs the <code>manufacturer_cert.pem</code> certificate you created in the Manufacturing server, so copy it from the Manufacturing server into the <code>/etc/fdo/keys</code> directory in this Rendezvous server.</p>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo scp &lt;user&gt;@&lt;manufacturing IP&gt;:/etc/fdo/keys/manufacturer_cert.pem /etc/fdo/keys</code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p>As you did with the Manufacturing server, create the directories needed by the Rendezvous server, including the registered directory (where the registered device owner vouchers will be hosted) and the sessions directory:</p>
 </div>
@@ -643,7 +675,7 @@ sudo mkdir -p /etc/fdo/stores/rendezvous_sessions</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Next, create the configuration file where you include the path to the manufacturer certificate (if you followed the steps shown above, it should be in the <code>/etc/fdo/keys directory). I created this file (located in `/etc/fdo/rendezvous-server.yml</code>) from the example that you can find in <code>/usr/share/doc/fdo/rendezvous-server.yml</code>:</p>
+<p>Next, create the configuration file in <code>/etc/fdo/rendezvous-server.yml</code>. You can find an example in <code>/usr/share/doc/fdo/rendezvous-server.yml</code>. If you followed the steps shown above,  the path to the <code>manufacturer_cert.pem</code> certificate should be in the <code>/etc/fdo/keys</code> directory, as shown in below.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -666,22 +698,22 @@ bind: "0.0.0.0:8082"</code></pre>
 <div class="ulist tabs">
 <ul>
 <li>
-<p><a id="tabset5_input"></a>input</p>
+<p><a id="tabset6_input"></a>input</p>
 </li>
 <li>
-<p><a id="tabset5_output"></a>output</p>
+<p><a id="tabset6_output"></a>output</p>
 </li>
 </ul>
 </div>
 <div class="content">
-<div class="tab-pane" aria-labelledby="tabset5_input">
+<div class="tab-pane" aria-labelledby="tabset6_input">
 <div class="listingblock console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo systemctl list-unit-files | grep fdo | grep rende</code></pre>
 </div>
 </div>
 </div>
-<div class="tab-pane" aria-labelledby="tabset5_output">
+<div class="tab-pane" aria-labelledby="tabset6_output">
 <div class="listingblock console-output">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">fdo-rendezvous-server.service disabled disabled</code></pre>
@@ -701,9 +733,35 @@ bind: "0.0.0.0:8082"</code></pre>
 <div class="paragraph">
 <p>Check that the server is listening on the configured port (default 8082):</p>
 </div>
+<div class="tabset is-loading">
+<div class="ulist tabs">
+<ul>
+<li>
+<p><a id="tabset7_input"></a>input</p>
+</li>
+<li>
+<p><a id="tabset7_output"></a>output</p>
+</li>
+</ul>
+</div>
+<div class="content">
+<div class="tab-pane" aria-labelledby="tabset7_input">
 <div class="listingblock console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo ss -ltn</code></pre>
+</div>
+</div>
+</div>
+<div class="tab-pane" aria-labelledby="tabset7_output">
+<div class="listingblock console-output">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">State                       Recv-Q                      Send-Q                                           Local Address:Port                                            Peer Address:Port                      Process
+LISTEN                      0                           128                                                    0.0.0.0:8082                                                 0.0.0.0:*
+LISTEN                      0                           128                                                    0.0.0.0:22                                                   0.0.0.0:*
+LISTEN                      0                           128                                                       [::]:22                                                      [::]:*</code></pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="paragraph">
@@ -718,9 +776,9 @@ sudo systemctl restart firewalld</code></pre>
 <div class="paragraph">
 <p>Move to the third and last FDO server: the Owner server.</p>
 </div>
+<div class="paragraph">
+<p><strong>Owner server</strong></p>
 </div>
-<div class="sect3">
-<h4 id="_owner_server"><a class="anchor" href="#_owner_server"></a>Owner server</h4>
 <div class="paragraph">
 <p>Connect to the dedicated RHEL VM and install the required RPMs in this server:</p>
 </div>
@@ -740,6 +798,14 @@ sudo systemctl restart firewalld</code></pre>
 <div class="paragraph">
 <p>Copy the <code>device_ca_cert.pem</code>, <code>owner_key.der</code>, and <code>owner_cert.pem</code> certificates from the Manufacturing server into that new directory.</p>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">for i in device_ca_cert.pem owner_key.der owner_cert.pem
+do
+  sudo scp &lt;user&gt;@&lt;manufacturing IP&gt;:/etc/fdo/keys/$i /etc/fdo/keys
+done</code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p>Create the additional directories needed by the owner service:</p>
 </div>
@@ -750,7 +816,7 @@ sudo mkdir -p /etc/fdo/stores/owner_onboarding_sessions</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Prepare a configuration file in <code>/etc/fdo/owner-onboarding-server.yml</code> based on the example found in <code>/usr/share/doc/fdo/owner-onboarding-server.yml</code>:</p>
+<p>Prepare a configuration file in <code>/etc/fdo/owner-onboarding-server.yml</code> based on the example found in <code>/usr/share/doc/fdo/owner-onboarding-server.yml</code>. If you are following the lab steps, changing the Owner IP address would be enough:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -784,11 +850,38 @@ report_to_rendezvous_endpoint_enabled: true</code></pre>
 <p>This service will be configured in the Owner sever, but since that&#8217;s a step that is needed also when you install all FDO services on the same node, it will be explained more in detail in the next section.</p>
 </div>
 <div class="paragraph">
+<p>Also, as you can see, we have configured the Serviceinfo API authentication by providing a Bearer Token. This Token will be needed in the Serviceinfo API configuration below.</p>
+</div>
+<div class="paragraph">
 <p>Before moving into the FDO Serviceinfo API configuration, check the status of the Owner server and the serviceinfo API service:</p>
 </div>
+<div class="tabset is-loading">
+<div class="ulist tabs">
+<ul>
+<li>
+<p><a id="tabset8_input"></a>input</p>
+</li>
+<li>
+<p><a id="tabset8_output"></a>output</p>
+</li>
+</ul>
+</div>
+<div class="content">
+<div class="tab-pane" aria-labelledby="tabset8_input">
 <div class="listingblock console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo systemctl list-unit-files | grep fdo</code></pre>
+</div>
+</div>
+</div>
+<div class="tab-pane" aria-labelledby="tabset8_output">
+<div class="listingblock console-output">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">fdo-owner-onboarding-server.service        disabled        disabled
+fdo-serviceinfo-api-server.service         disabled        disabled</code></pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="paragraph">
@@ -811,9 +904,35 @@ sudo systemctl enable fdo-serviceinfo-api-server.service</code></pre>
 <div class="paragraph">
 <p>Check that the Owner server is listening in the configured port (TCP/8081 is the default port for the Owner server):</p>
 </div>
+<div class="tabset is-loading">
+<div class="ulist tabs">
+<ul>
+<li>
+<p><a id="tabset9_input"></a>input</p>
+</li>
+<li>
+<p><a id="tabset9_output"></a>output</p>
+</li>
+</ul>
+</div>
+<div class="content">
+<div class="tab-pane" aria-labelledby="tabset9_input">
 <div class="listingblock console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo ss -ltn</code></pre>
+</div>
+</div>
+</div>
+<div class="tab-pane" aria-labelledby="tabset9_output">
+<div class="listingblock console-output">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">State                       Recv-Q                      Send-Q                                           Local Address:Port                                            Peer Address:Port                      Process
+LISTEN                      0                           128                                                    0.0.0.0:22                                                   0.0.0.0:*
+LISTEN                      0                           128                                                    0.0.0.0:8081                                                 0.0.0.0:*
+LISTEN                      0                           128                                                       [::]:22                                                      [::]:*</code></pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="paragraph">
@@ -828,7 +947,6 @@ sudo systemctl restart firewalld</code></pre>
 </div>
 <div class="paragraph">
 <p>Now it&#8217;s time for the Serviceinfo API configuration.</p>
-</div>
 </div>
 </div>
 </div>
@@ -866,15 +984,16 @@ device_specific_store_driver:
 </div>
 </div>
 <div class="paragraph">
-<p>It&#8217;s time to configure your own automation use case, so prepare your files and scripts before moving on! &#8230;&#8203; or <a href="#fdo-optionb">jump into the section</a> where it is explained how to use the onboarding automation example.</p>
+<p>It&#8217;s time to configure your own automation use case, so prepare your files and scripts before moving on! &#8230;&#8203; or <a href="#fdo-optionb">jump into the section</a> where it is explained how to use the provided onboarding automation example.</p>
 </div>
 <div class="sect2">
 <h3 id="fdo-optiona"><a class="anchor" href="#fdo-optiona"></a>Option A: Creating your own use case</h3>
 <div class="paragraph">
 <p>In the <code>serviceinfo_api_server.yml</code> file you find the following sections that you can use to build your own onboarding experience.</p>
 </div>
-<div class="sect3">
-<h4 id="fdo-optiona-user"><a class="anchor" href="#fdo-optiona-user"></a>initial_user</h4>
+<div id="fdo-optiona-user" class="paragraph">
+<p><strong>initial_user</strong></p>
+</div>
 <div class="paragraph">
 <p>We start with the initial user. The RHEL image only has configured the root user, and it has no password by default so you need to include an additional user that you can use to access the device by using a public SSH key.</p>
 </div>
@@ -895,9 +1014,9 @@ device_specific_store_driver:
     - "ssh-rsa AAAA...."</code></pre>
 </div>
 </div>
+<div id="fdo-optiona-files" class="paragraph">
+<p><strong>files</strong></p>
 </div>
-<div class="sect3">
-<h4 id="fdo-optiona-files"><a class="anchor" href="#fdo-optiona-files"></a>files</h4>
 <div class="paragraph">
 <p>The next section in the configuration is <code>files</code>, which can be used to transfer files to the devices. You need to include the source and destination paths along with the permissions to be setup in the device.</p>
 </div>
@@ -917,9 +1036,9 @@ device_specific_store_driver:
     source_path: /etc/fdo-configs/device0/etc/greenboot/check/required.d/01_check_demo_file.sh</code></pre>
 </div>
 </div>
+<div id="fdo-optiona-commands" class="paragraph">
+<p><strong>commands</strong></p>
 </div>
-<div class="sect3">
-<h4 id="fdo-optiona-commands"><a class="anchor" href="#fdo-optiona-commands"></a>commands</h4>
 <div class="paragraph">
 <p>Thanks to the <code>commands</code> section you can configure commands that will be run as part of the onboarding process (after copying the files of the previous section).</p>
 </div>
@@ -957,9 +1076,9 @@ device_specific_store_driver:
     return_stderr: true</code></pre>
 </div>
 </div>
+<div id="fdo-optiona-encrypt" class="paragraph">
+<p><strong>diskencryption_clevis</strong></p>
 </div>
-<div class="sect3">
-<h4 id="fdo-optiona-encrypt"><a class="anchor" href="#fdo-optiona-encrypt"></a>diskencryption_clevis</h4>
 <div class="paragraph">
 <p>If configured, it will perform a disk encryption using <a href="https://wiki.archlinux.org/title/Clevis">Clevis</a>.</p>
 </div>
@@ -1000,7 +1119,6 @@ Caused by:
 </div>
 </div>
 </div>
-</div>
 <div class="sect2">
 <h3 id="fdo-optionb"><a class="anchor" href="#fdo-optionb"></a>Option B: Using the example use case</h3>
 <div class="paragraph">
@@ -1021,7 +1139,7 @@ tar xvf fdo-configs.tar.gz</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>If you don&#8217;t want to use your home directory, copy the files into another definitive location, for example <code>/etc</code>:</p>
+<p>Probably you don&#8217;t want to use your home directory, so copy the files into another definitive location, for example <code>/etc</code>:</p>
 </div>
 <div class="listingblock console-input">
 <div class="content">
@@ -1029,9 +1147,9 @@ tar xvf fdo-configs.tar.gz</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>IF you don&#8217;t want to type that directory, create a variable that you can use in the commands proposed below in this section (do not include the last <code>/</code>)</p>
+<p>If you don&#8217;t want to type that directory, create a variable that you can use in the commands proposed below in this section (do not include the last <code>/</code>)</p>
 </div>
-<div class="listingblock">
+<div class="listingblock console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">PATH_FILES="/etc/fdo-configs"</code></pre>
 </div>
@@ -1057,21 +1175,24 @@ RED_HAT_PASSWORD="myrhpassword"</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The example Serviceinfo API file doesn&#8217;t have the right tokens, so update it with the ones on your system. Be sure that you use the commands for the FDO deployment option that you selected (all-in-one versus dedicated servers) since the directory where you find <code>serviceinfo_api_server.yml</code> file is different</p>
+<p>The example Serviceinfo API file doesn&#8217;t have the right tokens, so update it with the ones on your system. There are two tokens, <code>service_info_auth_token</code> is the authorization token configured in the Owner server (you can use <code>None</code> if no authentication is needed) and the <code>admin_auth_token</code> that is the admins authorization token (this variable is optional but since it&#8217;s configured when following the All-in-One approach, here we also configure it for the distributed method for consistency.)</p>
+</div>
+<div class="paragraph">
+<p><strong>NOTE:</strong> Be sure that you use the commands for the FDO deployment option that you selected (all-in-one versus dedicated servers) since the directory where you find <code>serviceinfo_api_server.yml</code> file is different</p>
 </div>
 <div class="tabset is-loading">
 <div class="ulist tabs">
 <ul>
 <li>
-<p><a id="tabset6_all-in-one-server"></a>All-in-one server</p>
+<p><a id="tabset10_all-in-one-server"></a>All-in-one server</p>
 </li>
 <li>
-<p><a id="tabset6_dedicated-servers"></a>Dedicated servers</p>
+<p><a id="tabset10_dedicated-servers"></a>Dedicated servers</p>
 </li>
 </ul>
 </div>
 <div class="content">
-<div class="tab-pane" aria-labelledby="tabset6_all-in-one-server">
+<div class="tab-pane" aria-labelledby="tabset10_all-in-one-server">
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">SERVICE_TOKEN=$(grep service_info_auth_token /etc/fdo/aio/configs/serviceinfo_api_server.yml | awk '{print $2}')
@@ -1079,11 +1200,11 @@ ADMIN_TOKEN=$(grep admin_auth_token /etc/fdo/aio/configs/serviceinfo_api_server.
 </div>
 </div>
 </div>
-<div class="tab-pane" aria-labelledby="tabset6_dedicated-servers">
+<div class="tab-pane" aria-labelledby="tabset10_dedicated-servers">
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">SERVICE_TOKEN=$(grep service_info_auth_token /etc/fdo/serviceinfo-api-server.yml | awk '{print $2}')
-ADMIN_TOKEN=$(grep admin_auth_token /etc/fdo/serviceinfo-api-server.yml | awk '{print $2}')</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">SERVICE_TOKEN=$(grep token /etc/fdo/owner-onboarding-server.yml  | awk '{print $2}')
+ADMIN_TOKEN=$(grep token /etc/fdo/owner-onboarding-server.yml  | awk '{print $2}')</code></pre>
 </div>
 </div>
 </div>
@@ -1109,25 +1230,25 @@ sed -i "s|&lt;ADMIN TOKEN&gt;|${ADMIN_TOKEN}|g" serviceinfo_api_server.yml</code
 <div class="ulist tabs">
 <ul>
 <li>
-<p><a id="tabset7_all-in-one-server"></a>All-in-one server</p>
+<p><a id="tabset11_all-in-one-server"></a>All-in-one server</p>
 </li>
 <li>
-<p><a id="tabset7_dedicated-servers"></a>Dedicated servers</p>
+<p><a id="tabset11_dedicated-servers"></a>Dedicated servers</p>
 </li>
 </ul>
 </div>
 <div class="content">
-<div class="tab-pane" aria-labelledby="tabset7_all-in-one-server">
+<div class="tab-pane" aria-labelledby="tabset11_all-in-one-server">
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo cp -f serviceinfo_api_server.yml  /etc/fdo/aio/configs/serviceinfo_api_server.yml</code></pre>
 </div>
 </div>
 </div>
-<div class="tab-pane" aria-labelledby="tabset7_dedicated-servers">
+<div class="tab-pane" aria-labelledby="tabset11_dedicated-servers">
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo cp -f serviceinfo_api_server.yml serviceinfo-api-server.yml</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo cp -f serviceinfo_api_server.yml /etc/fdo/serviceinfo-api-server.yml</code></pre>
 </div>
 </div>
 </div>
@@ -1143,22 +1264,22 @@ sed -i "s|&lt;ADMIN TOKEN&gt;|${ADMIN_TOKEN}|g" serviceinfo_api_server.yml</code
 <div class="ulist tabs">
 <ul>
 <li>
-<p><a id="tabset8_all-in-one-server"></a>All-in-one server</p>
+<p><a id="tabset12_all-in-one-server"></a>All-in-one server</p>
 </li>
 <li>
-<p><a id="tabset8_dedicated-servers"></a>Dedicated servers</p>
+<p><a id="tabset12_dedicated-servers"></a>Dedicated servers</p>
 </li>
 </ul>
 </div>
 <div class="content">
-<div class="tab-pane" aria-labelledby="tabset8_all-in-one-server">
+<div class="tab-pane" aria-labelledby="tabset12_all-in-one-server">
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo systemctl restart fdo-aio</code></pre>
 </div>
 </div>
 </div>
-<div class="tab-pane" aria-labelledby="tabset8_dedicated-servers">
+<div class="tab-pane" aria-labelledby="tabset12_dedicated-servers">
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo systemctl restart fdo-serviceinfo-api-server.service</code></pre>
@@ -1174,22 +1295,25 @@ sed -i "s|&lt;ADMIN TOKEN&gt;|${ADMIN_TOKEN}|g" serviceinfo_api_server.yml</code
 <div class="ulist tabs">
 <ul>
 <li>
-<p><a id="tabset9_input"></a>input</p>
+<p><a id="tabset13_input"></a>input</p>
 </li>
 <li>
-<p><a id="tabset9_output-in-all-in-one"></a>output (in All-in-one)</p>
+<p><a id="tabset13_output-in-all-in-one"></a>output (in All-in-one)</p>
+</li>
+<li>
+<p><a id="tabset13_output-dedicated-servers"></a>output (Dedicated servers)</p>
 </li>
 </ul>
 </div>
 <div class="content">
-<div class="tab-pane" aria-labelledby="tabset9_input">
+<div class="tab-pane" aria-labelledby="tabset13_input">
 <div class="listingblock console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">ss -ltn</code></pre>
 </div>
 </div>
 </div>
-<div class="tab-pane" aria-labelledby="tabset9_output-in-all-in-one">
+<div class="tab-pane" aria-labelledby="tabset13_output-in-all-in-one">
 <div class="listingblock console-output">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">State                 Recv-Q                Send-Q                               Local Address:Port                               Peer Address:Port               Process
@@ -1199,6 +1323,17 @@ LISTEN                0                     128                                 
 LISTEN                0                     128                                        0.0.0.0:8083                                    0.0.0.0:*
 LISTEN                0                     128                                        0.0.0.0:22                                      0.0.0.0:*
 LISTEN                0                     128                                           [::]:22                                         [::]:*</code></pre>
+</div>
+</div>
+</div>
+<div class="tab-pane" aria-labelledby="tabset13_output-dedicated-servers">
+<div class="listingblock console-output">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">State                       Recv-Q                      Send-Q                                           Local Address:Port                                            Peer Address:Port                      Process
+LISTEN                      0                           128                                                    0.0.0.0:22                                                   0.0.0.0:*
+LISTEN                      0                           128                                                    0.0.0.0:8081                                                 0.0.0.0:*
+LISTEN                      0                           128                                                    0.0.0.0:8083                                                 0.0.0.0:*
+LISTEN                      0                           128                                                       [::]:22                                                      [::]:*</code></pre>
 </div>
 </div>
 </div>
