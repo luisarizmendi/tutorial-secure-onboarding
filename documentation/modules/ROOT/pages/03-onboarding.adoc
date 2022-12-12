@@ -16,6 +16,23 @@ In this lab you are going to:
 
 
 
+Create
+
+image::vm_create.gif[Create VM GIF]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 use the ISO
 
