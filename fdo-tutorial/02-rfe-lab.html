@@ -338,7 +338,7 @@
 
 sudo systemctl enable cockpit.socket --now
 
-sudo firewall-cmd --add-service=cockpit &amp;&amp; firewall-cmd --add-service=cockpit --permanent
+sudo firewall-cmd --add-service=cockpit &amp;&amp; sudo firewall-cmd --add-service=cockpit --permanent
 sudo firewall-cmd --reload</code></pre>
 </div>
 </div>
@@ -377,8 +377,9 @@ sudo firewall-cmd --reload</code></pre>
 <div class="paragraph">
 <p>When it comes to create the blueprint file for this lab, you need to follow the same option that you selected during the FDO lab: are you going to <a href="#rfe-ostreeimage-optiona">use your own automation</a>, or you didn&#8217;t prepare anything and would like to <a href="#rfe-ostreeimage-optionb">use the proposed example</a>?.</p>
 </div>
-<div class="sect3">
-<h4 id="rfe-ostreeimage-optiona"><a class="anchor" href="#rfe-ostreeimage-optiona"></a>Option A: Blueprint file for your own FDO onboarding automation</h4>
+<div id="rfe-ostreeimage-optiona" class="paragraph">
+<p><strong>Option A: Blueprint file for your own FDO onboarding automation</strong></p>
+</div>
 <div class="paragraph">
 <p>You can customize the image created by the Image Builder through a <code>blueprint.toml</code> file. You can check <a href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/composing_a_customized_rhel_system_image/index">how to use blueprint in Image Builder</a> but take into account that not all variables are applied to create OSTree images, so it&#8217;s better to review the <a href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html-single/composing_installing_and_managing_rhel_for_edge_images/index#image-customizations_composing-a-rhel-for-edge-image-using-image-builder-command-line">supported blueprint configurations for RHEL for Edge</a> documentation.</p>
 </div>
@@ -610,9 +611,9 @@ size = "20 GiB"</code></pre>
 <div class="paragraph">
 <p>After completing the Blueprint file preparation, move to the <a href="#rfe-ostreeimage-createrepo">creating the OSTree repository</a> section.</p>
 </div>
+<div id="rfe-ostreeimage-optionb" class="paragraph">
+<p><strong>Option B: Blueprint file for the provided FDO automation example</strong></p>
 </div>
-<div class="sect3">
-<h4 id="rfe-ostreeimage-optionb"><a class="anchor" href="#rfe-ostreeimage-optionb"></a>Option B: Blueprint file for the provided FDO automation example</h4>
 <div class="paragraph">
 <p>If you plan to use the provided example, you just need to download the Blueprint template and adapt it to your environment by changing certain values on it.</p>
 </div>
@@ -657,8 +658,8 @@ sed -i "s|&lt;ADMIN PASSW&gt;|${ADMIN_PASSW}|g" blueprint-insights.toml</code></
 </ol>
 </div>
 </div>
-<div class="sect3">
-<h4 id="rfe-ostreeimage-createrepo"><a class="anchor" href="#rfe-ostreeimage-createrepo"></a>Creating the OSTree repository</h4>
+<div class="sect2">
+<h3 id="rfe-ostreeimage-createrepo"><a class="anchor" href="#rfe-ostreeimage-createrepo"></a>Creating the OSTree repository</h3>
 <div class="paragraph">
 <p>Once you have your Blueprint, you are ready to create the OSTree repository/image with Image Builder.</p>
 </div>
@@ -740,14 +741,13 @@ sed -i "s|&lt;ADMIN PASSW&gt;|${ADMIN_PASSW}|g" blueprint-insights.toml</code></
 <p>You will need to wait until the status for your image changes to 'FINISHED` (which it takes more or less 10 min in my VM with 2 cores and 4 GB memory), then the image will ready in Image Builder.</p>
 </div>
 </div>
-</div>
 <div class="sect2">
 <h3 id="rfe-publish"><a class="anchor" href="#rfe-publish"></a>Publishing the repo image</h3>
 <div class="paragraph">
-<p>There are multiple ways of distributing the RHEL OSTree images. If you take a look at this <a href="https://github.com/luisarizmendi/rhel-edge-quickstart">RHEL for Edge quickstart GitHub repository</a> or at the <a href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/composing_installing_and_managing_rhel_for_edge_images/introducing-rhel-for-edge-images_composing-installing-managing-rhel-for-edge-images">Red Hat official documentation</a> you will learn more about the network and non-network based deployments, but you will find that both have something in common, you need to have the OSTree image/repo that you downloaded in the previous step, "published" into a HTTP server.</p>
+<p>There are multiple ways of distributing the RHEL OSTree images. If you take a look at this <a href="https://github.com/luisarizmendi/rhel-edge-quickstart">RHEL for Edge quickstart GitHub repository</a> or at the <a href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/composing_installing_and_managing_rhel_for_edge_images/introducing-rhel-for-edge-images_composing-installing-managing-rhel-for-edge-images">Red Hat official documentation</a> you will learn more about the network and non-network based deployments, but you will find that both have something in common, you need to have the OSTree image/repo "published" into a HTTP server.</p>
 </div>
 <div class="paragraph">
-<p>When you created the image in the previous section, you used the <code>edge-commit</code> image type, which means that Image Builder create the OSTree image contents and put them into a <code>TAR</code> file. There is another image type that you might use here, the <code>edge-container</code> type, which creates the OSTree image contents and directly creates a container image that publishes them using <code>HTTPD</code>. In this lab we used the first approach (although as you will see it requires some additional steps) because this procedure can be used for either network and non-network based deployments, since you can include additional information into the container image (ie. a <code>kickstart</code> file) and because you will be able to manage the lifecycle of this container image (ie. image patching) which is convenient for production environments.</p>
+<p>When you created the image in the previous section, you used the <code>edge-commit</code> image type, which means that Image Builder create the OSTree image contents and put them into a <code>TAR</code> file. There is another image type that you might use here, the <code>edge-container</code> type, which creates the OSTree image contents and directly creates a container image that publishes them using <code>HTTPD</code>. In this lab we are going to use the first approach (although as you will see it requires some additional steps) because this procedure can be used for either network and non-network based deployments, since you can include additional information into the container image (ie. a <code>kickstart</code> file) and because you will be able to manage the lifecycle of this container image (ie. image patching) which is convenient for production environments.</p>
 </div>
 <div class="paragraph">
 <p>Since we used the <code>edge-commit</code> image type, you have your OSTree image in Image Builder as a <code>TAR</code> file but in order to use it you will need to "download" it using the following command, where the <code>IMAGE ID</code> is the ID generated by the Image Builder and that you can find using the command <code>sudo composer-cli compose status</code>.</p>
@@ -760,7 +760,7 @@ sed -i "s|&lt;ADMIN PASSW&gt;|${ADMIN_PASSW}|g" blueprint-insights.toml</code></
 <div class="paragraph">
 <p>This command will download a <code>TAR</code> file with all the OSTree image contents. If you are not using the <code>root</code> user, remember to change the file owner:</p>
 </div>
-<div class="listingblock console-input">
+<div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo chown $(whoami) &lt;IMAGE TAR FILE&gt;</code></pre>
 </div>
@@ -814,6 +814,9 @@ EOF</code></pre>
 <div class="paragraph">
 <p>Now you can create your container image using this Dockerfile. If you used an argument for the OSTree iamge you need to include the full path to your OSTree repo <code>TAR</code> file:</p>
 </div>
+<div class="paragraph">
+<p><strong>NOTE:</strong> Do not forget the last <code>.</code></p>
+</div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo podman build -t &lt;CONTAINER IMAGE NAME&gt; --build-arg commit=&lt;IMAGE TAR FILE&gt; .</code></pre>
@@ -825,6 +828,14 @@ EOF</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-none hljs">&lt;blueprint_name&gt;:&lt;image id&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">sudo podman build -t kvm-insights:ebcfe8b5-5aed-4d9b-a948-d7ddb9b51150 --build-arg commit=ebcfe8b5-5aed-4d9b-a948-d7ddb9b51150-commit.tar .</code></pre>
 </div>
 </div>
 <div class="paragraph">
