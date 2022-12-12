@@ -2,11 +2,12 @@
 = Edge device onboarding
 include::_attributes.adoc[]
 
+In this lab you are going to:
 
-
-Jump to lab steps 
-
-
+. Create a VM that will act as edge device
+. Use the FDO enabled RHEL OSTree ISO image to install the edge device 
+. Review the onboarding process and completion
+. Include changes into the device onboarding automation
 
 
 [#onboard-vm]
@@ -237,7 +238,7 @@ greenboot script
 
 blah blah
 
-
+image and automation
 
 
 

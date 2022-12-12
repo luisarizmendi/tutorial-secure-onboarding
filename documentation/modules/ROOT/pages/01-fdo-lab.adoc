@@ -29,7 +29,7 @@ In order to minimize the number of servers used, you can install the FDO service
 As part of the FDO development in Fedora/RHEL, a Systemd (`fdo-aio`) service that manages all the FDO servers has been created for lab proposes so it's easy to deploy and manage the all-in-one option for the FDO services.
 
 
-==== Preparing the FDO services
+*Preparing the FDO services*
 
 FDO is distributed as RPM packages, you can double check the names running this command in your RHEL VM:
 
@@ -158,7 +158,7 @@ You can now proceed with the xref:01-fdo-lab.adoc#fdo-config[FDO Service API con
 In this option, you will have the Image Builder server and 3 additional FDO VMs (Manufacturing, Rendezvous and Owner). If you find that architecture requires too many resources but you still want to test the FDO split into different servers, you could install one of those (maybe the manufacturing server) in the same VM as the Image Builder in order to save some CPU and Memory.
 
 
-==== Manufacturing server
+*Manufacturing server*
 
 Start by installing the required RPMs:
 
@@ -168,7 +168,7 @@ Start by installing the required RPMs:
 sudo dnf install -y fdo-admin-cli fdo-manufacturing-server
 ----
 
-If you remember, during the manufacturing phase you have to “inject” certain certificates and keys into your device. When using the `fdo-aio` service those are generated automatically, but now you are going to create them manually.
+If you remember, during the manufacturing phase you have to “inject” certain certificates and keys into your device. When using the All-in-One FDO server model those are generated automatically, but if you split the services you need to create them manually.
 
 Create a directory where to place the certs and keys:
 
@@ -183,9 +183,9 @@ You can use the `fdo-admin-tool` that you have installed to create those secrets
 [.console-input]
 [source,bash,subs="+macros,+attributes"]
 ----
-sudo for i in manufacturer owner device-ca diun ; do
-fdo-admin-tool generate-key-and-cert \
---destination-dir /etc/fdo/keys $i
+for i in manufacturer owner device-ca diun
+do
+  sudo fdo-admin-tool generate-key-and-cert --destination-dir /etc/fdo/keys $i
 done
 ----
 
@@ -224,9 +224,9 @@ sudo mkdir -p /etc/fdo/stores/manufacturing_sessions
 sudo mkdir -p /etc/fdo/stores/owner_vouchers
 ----
 
-It's time to configure the Manufacturing server. You can find an example configuration in `/usr/share/doc/fdo/manufacturing-server.yml`. 
+It's time to configure the Manufacturing server. You can find an example configuration in `/usr/share/doc/fdo/manufacturing-server.yml`. Create your own configuration in the `/etc/fdo/manufacturing-server.yml` file using that template. 
 
-Create your own configuration in the `/etc/fdo` directory using that file as a template. Here you can find another configuration example:
+Here you can find another configuration example, changing the Manufacturing IP address would be everything that you need to do if you use this file and follow the lab steps:
 
 [source,yaml,subs="+macros,+attributes"]
 ----
@@ -302,13 +302,44 @@ sudo systemctl enable --now fdo-manufacturing-server.service
 
 And check that the service is listening on port 8080 (default)
 
+
+
+[tabs]
+====
+input::
++
+--
 [.console-input]
 [source,bash,subs="+macros,+attributes"]
 ----
 sudo ss -ltn
 ----
 
-Remember to open the required ports in your firewall:
+--
+output::
++
+--
+[.console-output]
+[source,bash,subs="+macros,+attributes"]
+----
+State                       Recv-Q                      Send-Q                                           Local Address:Port                                            Peer Address:Port                      Process                      
+LISTEN                      0                           128                                                    0.0.0.0:8080                                                 0.0.0.0:*                                                      
+LISTEN                      0                           128                                                    0.0.0.0:22                                                   0.0.0.0:*                                                      
+LISTEN                      0                           128                                                       [::]:22                                                      [::]:*                                                      
+----
+--
+====
+
+
+
+
+
+
+
+
+
+
+Remember to open the required ports in your firewall (if you are using any):
 
 [.console-input]
 [source,bash,subs="+macros,+attributes"]
@@ -319,7 +350,7 @@ sudo systemctl restart firewalld
 
 Let’s move to the next server, the Rendezvous server.
 
-==== Rendezvous server
+*Rendezvous server*
 
 Connect to the RHEL VM where you want to install the Rendezvous server and, as you did with the Manufacturing server, install the required RPM packages:
 
@@ -339,6 +370,21 @@ sudo mkdir -p /etc/fdo/keys
 
 The Rendezvous server needs the `manufacturer_cert.pem` certificate you created in the Manufacturing server, so copy it from the Manufacturing server into the `/etc/fdo/keys` directory in this Rendezvous server.
 
+
+
+
+
+
+[source,bash,subs="+macros,+attributes"]
+----
+sudo scp <user>@<manufacturing IP>:/etc/fdo/keys/manufacturer_cert.pem /etc/fdo/keys
+----
+
+
+
+
+
+
 As you did with the Manufacturing server, create the directories needed by the Rendezvous server, including the registered directory (where the registered device owner vouchers will be hosted) and the sessions directory:
 
 [.console-input]
@@ -348,7 +394,8 @@ sudo mkdir -p /etc/fdo/stores/rendezvous_registered
 sudo mkdir -p /etc/fdo/stores/rendezvous_sessions
 ----
 
-Next, create the configuration file where you include the path to the manufacturer certificate (if you followed the steps shown above, it should be in the `/etc/fdo/keys directory). I created this file (located in `/etc/fdo/rendezvous-server.yml`) from the example that you can find in `/usr/share/doc/fdo/rendezvous-server.yml`:
+Next, create the configuration file in `/etc/fdo/rendezvous-server.yml`. You can find an example in `/usr/share/doc/fdo/rendezvous-server.yml`. If you followed the steps shown above,  the path to the `manufacturer_cert.pem` certificate should be in the `/etc/fdo/keys` directory, as shown in below. 
+
 
 
 [source,yaml,subs="+macros,+attributes"]
@@ -399,11 +446,34 @@ sudo systemctl enable --now fdo-rendezvous-server.service
 
 Check that the server is listening on the configured port (default 8082):
 
+
+
+[tabs]
+====
+input::
++
+--
 [.console-input]
 [source,bash,subs="+macros,+attributes"]
 ----
 sudo ss -ltn
 ----
+
+--
+output::
++
+--
+[.console-output]
+[source,bash,subs="+macros,+attributes"]
+----
+State                       Recv-Q                      Send-Q                                           Local Address:Port                                            Peer Address:Port                      Process                      
+LISTEN                      0                           128                                                    0.0.0.0:8082                                                 0.0.0.0:*                                                      
+LISTEN                      0                           128                                                    0.0.0.0:22                                                   0.0.0.0:*                                                      
+LISTEN                      0                           128                                                       [::]:22                                                      [::]:*                                                                                                
+----
+--
+====
+
 
 And remember to open the port if you have a firewall configured on this server:
 
@@ -416,7 +486,7 @@ sudo systemctl restart firewalld
 
 Move to the third and last FDO server: the Owner server.
 
-==== Owner server
+*Owner server*
 
 Connect to the dedicated RHEL VM and install the required RPMs in this server:
 
@@ -436,6 +506,29 @@ sudo mkdir -p /etc/fdo/keys/
 
 Copy the `device_ca_cert.pem`, `owner_key.der`, and `owner_cert.pem` certificates from the Manufacturing server into that new directory.
 
+
+
+
+
+
+
+
+[source,bash,subs="+macros,+attributes"]
+----
+for i in device_ca_cert.pem owner_key.der owner_cert.pem
+do
+  sudo scp <user>@<manufacturing IP>:/etc/fdo/keys/$i /etc/fdo/keys
+done
+----
+
+
+
+
+
+
+
+
+
 Create the additional directories needed by the owner service:
 
 [.console-input]
@@ -445,7 +538,7 @@ sudo mkdir -p /etc/fdo/stores/owner_vouchers
 sudo mkdir -p /etc/fdo/stores/owner_onboarding_sessions
 ----
 
-Prepare a configuration file in `/etc/fdo/owner-onboarding-server.yml` based on the example found in `/usr/share/doc/fdo/owner-onboarding-server.yml`:
+Prepare a configuration file in `/etc/fdo/owner-onboarding-server.yml` based on the example found in `/usr/share/doc/fdo/owner-onboarding-server.yml`. If you are following the lab steps, changing the Owner IP address would be enough:
 
 [source,yaml,subs="+macros,+attributes"]
 ----
@@ -472,19 +565,50 @@ owner_addresses:
 report_to_rendezvous_endpoint_enabled: true
 ----
 
-
 In this file, we include the path to the certificates that we already copied, along with information about where to publish the owner server service, but you will also find references to “Info API Service”, such as the URL or the authentication token. 
 
 This service will be configured in the Owner sever, but since that's a step that is needed also when you install all FDO services on the same node, it will be explained more in detail in the next section.
 
+Also, as you can see, we have configured the Serviceinfo API authentication by providing a Bearer Token. This Token will be needed in the Serviceinfo API configuration below.
+
 Before moving into the FDO Serviceinfo API configuration, check the status of the Owner server and the serviceinfo API service:
 
 
+
+
+
+
+[tabs]
+====
+input::
++
+--
 [.console-input]
 [source,bash,subs="+macros,+attributes"]
 ----
 sudo systemctl list-unit-files | grep fdo
 ----
+
+--
+output::
++
+--
+[.console-output]
+[source,bash,subs="+macros,+attributes"]
+----
+fdo-owner-onboarding-server.service        disabled        disabled
+fdo-serviceinfo-api-server.service         disabled        disabled
+----
+--
+====
+
+
+
+
+
+
+
+
 
 Enable them if necessary:
 
@@ -505,11 +629,40 @@ sudo systemctl start fdo-owner-onboarding-server.service
 
 Check that the Owner server is listening in the configured port (TCP/8081 is the default port for the Owner server):
 
+
+
+[tabs]
+====
+input::
++
+--
 [.console-input]
 [source,bash,subs="+macros,+attributes"]
 ----
 sudo ss -ltn
 ----
+
+--
+output::
++
+--
+[.console-output]
+[source,bash,subs="+macros,+attributes"]
+----
+State                       Recv-Q                      Send-Q                                           Local Address:Port                                            Peer Address:Port                      Process                      
+LISTEN                      0                           128                                                    0.0.0.0:22                                                   0.0.0.0:*                                                      
+LISTEN                      0                           128                                                    0.0.0.0:8081                                                 0.0.0.0:*                                                      
+LISTEN                      0                           128                                                       [::]:22                                                      [::]:*                                                    
+----
+--
+====
+
+
+
+
+
+
+
 
 And remember to open the ports if you have a firewall configured in that server (both the TCP/8081 for the Owner server and the TCP/8083 for the Serviceinfo API):
 
@@ -553,7 +706,7 @@ device_specific_store_driver:
     path: /etc/fdo/aio/stores/serviceinfo_api_devices
 ----
 
-It's time to configure your own automation use case, so prepare your files and scripts before moving on! ... or xref:01-fdo-lab.adoc#fdo-optionb[jump into the section] where it is explained how to use the onboarding automation example.
+It's time to configure your own automation use case, so prepare your files and scripts before moving on! ... or xref:01-fdo-lab.adoc#fdo-optionb[jump into the section] where it is explained how to use the provided onboarding automation example.
 
 
 [#fdo-optiona]
@@ -563,7 +716,7 @@ In the `serviceinfo_api_server.yml` file you find the following sections that yo
 
 
 [#fdo-optiona-user]
-==== initial_user
+*initial_user*
 
 We start with the initial user. The RHEL image only has configured the root user, and it has no password by default so you need to include an additional user that you can use to access the device by using a public SSH key.
 
@@ -582,7 +735,7 @@ Here you can find a configuration example:
 ----
 
 [#fdo-optiona-files]
-==== files
+*files*
 
 The next section in the configuration is `files`, which can be used to transfer files to the devices. You need to include the source and destination paths along with the permissions to be setup in the device.
 
@@ -600,7 +753,7 @@ This is a configuration example:
 ----
 
 [#fdo-optiona-commands]
-==== commands
+*commands*
 
 Thanks to the `commands` section you can configure commands that will be run as part of the onboarding process (after copying the files of the previous section).
 
@@ -632,7 +785,7 @@ This would be an example with all the variables, including the optional:
 
 
 [#fdo-optiona-encrypt]
-==== diskencryption_clevis
+*diskencryption_clevis*
 
 If configured, it will perform a disk encryption using https://wiki.archlinux.org/title/Clevis[Clevis].
 
@@ -689,7 +842,7 @@ curl -O https://raw.githubusercontent.com/luisarizmendi/tutorial-secure-onboardi
 tar xvf fdo-configs.tar.gz
 ----
 
-If you don't want to use your home directory, copy the files into another definitive location, for example `/etc`:
+Probably you don't want to use your home directory, so copy the files into another definitive location, for example `/etc`:
 
 [.console-input]
 [source,bash,subs="+macros,+attributes"]
@@ -697,8 +850,10 @@ If you don't want to use your home directory, copy the files into another defini
 sudo cp -r fdo-configs/ /etc
 ----
 
-IF you don't want to type that directory, create a variable that you can use in the commands proposed below in this section (do not include the last `/`)
+If you don't want to type that directory, create a variable that you can use in the commands proposed below in this section (do not include the last `/`)
 
+
+[.console-input]
 [source,bash,subs="+macros,+attributes"]
 ----
 PATH_FILES="/etc/fdo-configs"
@@ -722,7 +877,11 @@ RED_HAT_USER="myrhuser"
 RED_HAT_PASSWORD="myrhpassword"
 ----
 
-The example Serviceinfo API file doesn't have the right tokens, so update it with the ones on your system. Be sure that you use the commands for the FDO deployment option that you selected (all-in-one versus dedicated servers) since the directory where you find `serviceinfo_api_server.yml` file is different
+
+
+The example Serviceinfo API file doesn't have the right tokens, so update it with the ones on your system. There are two tokens, `service_info_auth_token` is the authorization token configured in the Owner server (you can use `None` if no authentication is needed) and the `admin_auth_token` that is the admins authorization token (this variable is optional but since it's configured when following the All-in-One approach, here we also configure it for the distributed method for consistency.)
+
+*NOTE:* Be sure that you use the commands for the FDO deployment option that you selected (all-in-one versus dedicated servers) since the directory where you find `serviceinfo_api_server.yml` file is different
 
 [tabs]
 ====
@@ -740,8 +899,8 @@ Dedicated servers::
 --
 [source,bash,subs="+macros,+attributes"]
 ----
-SERVICE_TOKEN=$(grep service_info_auth_token /etc/fdo/serviceinfo-api-server.yml | awk '{print $2}')
-ADMIN_TOKEN=$(grep admin_auth_token /etc/fdo/serviceinfo-api-server.yml | awk '{print $2}')
+SERVICE_TOKEN=$(grep token /etc/fdo/owner-onboarding-server.yml  | awk '{print $2}')
+ADMIN_TOKEN=$(grep token /etc/fdo/owner-onboarding-server.yml  | awk '{print $2}')
 ----
 --
 ====
@@ -778,7 +937,7 @@ Dedicated servers::
 --
 [source,bash,subs="+macros,+attributes"]
 ----
-sudo cp -f serviceinfo_api_server.yml serviceinfo-api-server.yml
+sudo cp -f serviceinfo_api_server.yml /etc/fdo/serviceinfo-api-server.yml
 ----
 --
 ====
@@ -834,6 +993,19 @@ LISTEN                0                     128                                 
 LISTEN                0                     128                                        0.0.0.0:8083                                    0.0.0.0:*                                        
 LISTEN                0                     128                                        0.0.0.0:22                                      0.0.0.0:*                                        
 LISTEN                0                     128                                           [::]:22                                         [::]:*                
+----
+--
+output (Dedicated servers)::
++
+--
+[.console-output]
+[source,bash,subs="+macros,+attributes"]
+----
+State                       Recv-Q                      Send-Q                                           Local Address:Port                                            Peer Address:Port                      Process                      
+LISTEN                      0                           128                                                    0.0.0.0:22                                                   0.0.0.0:*                                                      
+LISTEN                      0                           128                                                    0.0.0.0:8081                                                 0.0.0.0:*                                                      
+LISTEN                      0                           128                                                    0.0.0.0:8083                                                 0.0.0.0:*                                                      
+LISTEN                      0                           128                                                       [::]:22                                                      [::]:*                                                   
 ----
 --
 ====
