@@ -71,13 +71,13 @@
     <a class="nav-link" href="00-intro.html">Introduction to secure edge device onboarding</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="00-intro.html#intro-scaling">Scaling device deployment for the edge</a>
+    <a class="nav-link" href="00-intro.html#intro-scaling">Scaling traditional device deployment for the edge environments</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="00-intro.html#intro-security">An additional concern: Device security</a>
+    <a class="nav-link" href="00-intro.html#intro-security">Device onboarding security and image templates</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="00-intro.html#intro-fdo">How FDO addresses these challenges</a>
+    <a class="nav-link" href="00-intro.html#intro-fdo">Centralizing the device onboarding intelligence</a>
   </li>
 </ul>
   </li>
@@ -170,7 +170,7 @@
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="02-rfe-lab.html">2.b RHEL OSTree images - Lab</a>
+    <a class="nav-link" href="02-rfe-lab.html">2.b RHEL OSTree image - Lab</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="02-rfe-lab.html#rfe-imagebuilder">Install Image builder</a>
@@ -200,7 +200,7 @@
     <a class="nav-link" href="02-rfe-lab.html#rfe-iso">Create the RHEL ISO</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="02-rfe-lab.html#rfe-summary">RHEL OSTree images Lab summary</a>
+    <a class="nav-link" href="02-rfe-lab.html#rfe-summary">RHEL OSTree image Lab summary</a>
   </li>
 </ul>
   </li>
@@ -263,7 +263,7 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Virtualization hypervisor with at least 6 vCPUs (threads), 6 GB memory and 100 GB disk <strong>free</strong>.</p>
+<p>Virtualization hypervisor with at least 6 vCPUs (threads), 6 GB memory, and 100 GB disk <strong>free</strong>.</p>
 </li>
 <li>
 <p>Internet connection from VMs.</p>
@@ -295,7 +295,7 @@ sudo systemctl enable --now libvirtd</code></pre>
 <p>Depending on the use case or configuration that you want to follow during this lab, you could need to add "special" devices to your edge VM, for example, you probably would like to use a virtual TPM to manage keys as you will be doing it with physical devices on real edge environments.</p>
 </div>
 <div class="paragraph">
-<p>This lab could be run completly offline, but in order to avoid creating local repositories we will be connecting to the public ones, so you will need Internet access from your VMs.</p>
+<p>This lab could be run completely offline, but in order to avoid creating local repositories we will be connecting to the public ones, so you will need Internet access from your VMs.</p>
 </div>
 </div>
 </div>
@@ -303,12 +303,12 @@ sudo systemctl enable --now libvirtd</code></pre>
 <h2 id="arch"><a class="anchor" href="#arch"></a>Choose your lab architecture</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The lab environment will be composed by an edge device and one or multiple servers (image-builder and FDO services). You can deploy all servers in a single VM (Option 1) if you are short in CPU/MEM resources in your hypervisor (laptop?) or you can split services in dedicated VMs (Option 2) to try a more "realistic" architecture.</p>
+<p>The lab environment will be composed of an edge device and one or multiple servers (image-builder and FDO services). You can deploy all servers in a single VM (Option 1) if you are short in CPU/MEM resources in your hypervisor (laptop?) or you can split services in dedicated VMs (Option 2) to try a more "realistic" architecture.</p>
 </div>
 <div class="sect2">
 <h3 id="_option_1_all_in_one_server"><a class="anchor" href="#_option_1_all_in_one_server"></a>Option 1: All-in-one server</h3>
 <div class="paragraph">
-<p>For this option you just need the minimial system requirements described in <a href="#tldr">TL/DR section</a>.</p>
+<p>For this option, you just need the minimum system requirements described in <a href="#tldr">TL/DR section</a>.</p>
 </div>
 <div class="paragraph">
 <p>You will also need to <a href="https://access.redhat.com/downloads/content/479/ver=/rhel---9/9.1/x86_64/product-software">download a RHEL ISO</a> (At this moment, the latest one is RHEL 9.1).</p>
@@ -317,13 +317,13 @@ sudo systemctl enable --now libvirtd</code></pre>
 <p>Once you have <code>libvirt</code> or any other hypervisor installed, and your RHEL ISO downloaded, you can create a VM (I recommend using`virt-manager` in case of <code>libvirt</code>) with <strong>2 vCPUs, 4 GB memory and 50 GB disk</strong> using the "Local install media" option selecting the RHEL ISO.</p>
 </div>
 <div class="paragraph">
-<p>During the RHEL 9 install wizard you can introduce your Red Hat account to register your system, so when the installation finishs your RHEL will be already subscribed. If you decide to use RHEL 8, you will need to subscribe your VM using <code>subscription-manager</code> manually after the first install.</p>
+<p>During the RHEL 9 install wizard you can introduce your Red Hat account to register your system, so when the installation finishes your RHEL will be already subscribed. If you decide to use RHEL 8, you will need to subscribe your VM using <code>subscription-manager</code> manually after the first install.</p>
 </div>
 <div class="paragraph">
 <p>Select the minimal install to save some disk space.</p>
 </div>
 <div class="paragraph">
-<p>If you want to be sure that you VM has access to Internet, check if you get a <code>HTML code 200</code> when you ask for a web page, for example running this command in your RHEL VM:</p>
+<p>If you want to be sure that your VM has access to Internet, check if you get a <code>HTML code 200</code> when you ask for a web page, for example running this command in your RHEL VM:</p>
 </div>
 <div class="listingblock console-input">
 <div class="content">
@@ -331,7 +331,7 @@ sudo systemctl enable --now libvirtd</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>In addition to that RHEL VM, you will need to create an additional VM (min <strong>2 vCPUs, 1.5 GB memory, 20GB disk</strong>) during the lab steps (please, do not create it yet, just take into account that you will need those system resources).</p>
+<p>In addition to that RHEL VM, you will need to create one more VM (min <strong>2 vCPUs, 1.5 GB memory, 20GB disk</strong>) during the lab steps (please, do not create it yet, you will do it as part of the lab steps, just take into account that you will need those system resources).</p>
 </div>
 <div class="paragraph">
 <p>In summary, for Option 1 you will need to have this VM installed and prepared:</p>
@@ -357,7 +357,7 @@ sudo systemctl enable --now libvirtd</code></pre>
 <div class="sect2">
 <h3 id="_option_2_dedicated_server_vms"><a class="anchor" href="#_option_2_dedicated_server_vms"></a>Option 2: Dedicated server VMs</h3>
 <div class="paragraph">
-<p>If your hypervisor system has enough CPU and RAM, you probably would like to use a more realistic architecture, where the FDO services are running in dedicated servers. In this case, you will still need the VMs shown in "Option 1", but you will need to run three additional VMs.</p>
+<p>If your hypervisor system has enough CPU and RAM, you probably would like to use a more realistic architecture, where the FDO services are running in dedicated servers. In this case, you will still need the VMs shown in "Option 1", but you will need to run three additional VMs for FDO servers.</p>
 </div>
 <div class="paragraph">
 <p>For Option 2 you will need to have this VM installed and prepared:</p>
@@ -382,6 +382,9 @@ sudo systemctl enable --now libvirtd</code></pre>
 </li>
 </ul>
 </div>
+<div class="paragraph">
+<p><strong>NOTE:</strong> If you want to save some resources, you might combine one of the FDO servers (manufacturing server?) with the Image Builder VM, so you can remove one of the three additional FDO servers.</p>
+</div>
 </div>
 </div>
 </div>
@@ -389,16 +392,16 @@ sudo systemctl enable --now libvirtd</code></pre>
 <h2 id="usecase"><a class="anchor" href="#usecase"></a>Create your use case</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>During the Edge device onboarding, you will be able to run an associated automation as part of that first boot. Although in this lab we present an example where the VM will be configured with a random hostname, registered in Insights and configured with several custom scripts, the idea is that you don&#8217;t use that example.</p>
+<p>During the Edge device onboarding, you will be able to run associated automation as part of that first boot. Although in this lab we present an example where the VM will be configured with a random hostname, registered in Insights and configured with several custom scripts, the idea is that you don&#8217;t use that example.</p>
 </div>
 <div class="paragraph">
-<p>This tutorial shouldn&#8217;t be a copy/paste lab. <strong>The idea is to enable you to create your own device onboarding use case</strong>, so you will need to have one already prepared and that you will use to "inject" it as part of the onboarding process (thanks to FDO).</p>
+<p>This tutorial shouldn&#8217;t be a copy/paste lab. <strong>The idea is to enable you to create your own device onboarding use case</strong>, so you will need to have an onboarding automation (bash scripts, Ansible playbooks, etc) already prepared and that you will use to "inject" it as part of the onboarding process (thanks to FDO).</p>
 </div>
 <div class="paragraph">
-<p>Proably you will need to addapt your automation to the way that FDO is working and that&#8217;s <strong>the main goal of this tuturial, that you can get any automation and know how to addapt it in order to "process" it during device onboarding when using FDO</strong>.</p>
+<p>Probably you will need to adapt your automation to the way that FDO is working and that&#8217;s <strong>the main goal of this tutorial, that you can get any automation and know how to adapt it in order to "process" it during device onboarding when using FDO</strong>.</p>
 </div>
 <div class="paragraph">
-<p>If you don&#8217;t have already any automation that you would like to use, you could think in advance an automation that you would like to test during the edge device onboarding. Some examples could be:</p>
+<p>If you don&#8217;t have already any automation that you would like to use, you could think in advance any automation that you would like to test during the edge device onboarding (much better if it involves certificates, keys or password configuration). Some examples could be:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -409,7 +412,7 @@ sudo systemctl enable --now libvirtd</code></pre>
 <p>Install Microshift and import it into ACM</p>
 </li>
 <li>
-<p>Run OpenScap automatically or taks associated to system hardening</p>
+<p>Run OpenScap automatically or tasks associated to system hardening</p>
 </li>
 <li>
 <p>Launch an ansible playbook locally to configure additional external systems</p>
@@ -420,10 +423,10 @@ sudo systemctl enable --now libvirtd</code></pre>
 </ul>
 </div>
 <div class="paragraph">
-<p><strong>Be creative! but please have your automation prepared before the lab, so you can focus on the FDO concepts instead of debugging Ansible or Bash scripts</strong>.</p>
+<p><strong>Be creative! but please prepare your automation before the lab, so you can focus on the FDO concepts instead of debugging Ansible or Bash scripts</strong>.</p>
 </div>
 <div class="paragraph">
-<p>In case that you don&#8217;t have enough imagination, you can proceed using the example that is presented during the lab steps.</p>
+<p>In case you don&#8217;t have enough imagination or time, you can proceed using the example that is presented during the lab steps, you won&#8217;t get all the fun but you will understand the steps and the moving parts involved in the onboarding process.</p>
 </div>
 </div>
 </div>

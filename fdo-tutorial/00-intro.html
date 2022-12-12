@@ -71,13 +71,13 @@
     <a class="nav-link" href="00-intro.html">Introduction to secure edge device onboarding</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#intro-scaling">Scaling device deployment for the edge</a>
+    <a class="nav-link" href="#intro-scaling">Scaling traditional device deployment for the edge environments</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#intro-security">An additional concern: Device security</a>
+    <a class="nav-link" href="#intro-security">Device onboarding security and image templates</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#intro-fdo">How FDO addresses these challenges</a>
+    <a class="nav-link" href="#intro-fdo">Centralizing the device onboarding intelligence</a>
   </li>
 </ul>
   </li>
@@ -170,7 +170,7 @@
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="02-rfe-lab.html">2.b RHEL OSTree images - Lab</a>
+    <a class="nav-link" href="02-rfe-lab.html">2.b RHEL OSTree image - Lab</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="02-rfe-lab.html#rfe-imagebuilder">Install Image builder</a>
@@ -200,7 +200,7 @@
     <a class="nav-link" href="02-rfe-lab.html#rfe-iso">Create the RHEL ISO</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="02-rfe-lab.html#rfe-summary">RHEL OSTree images Lab summary</a>
+    <a class="nav-link" href="02-rfe-lab.html#rfe-summary">RHEL OSTree image Lab summary</a>
   </li>
 </ul>
   </li>
@@ -285,18 +285,18 @@
 </ul>
 </div>
 <div class="paragraph">
-<p>Scale, security, and automation are the three points that are particularly relevant for edge and Internet of Things (IoT) device onboarding.</p>
+<p>Scale, security, and automation are the three points that are particularly relevant for edge and Internet of Things (IoT) device onboarding, so how to onboard an edge device in an effective and secure way?</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="intro-scaling"><a class="anchor" href="#intro-scaling"></a>Scaling device deployment for the edge</h2>
+<h2 id="intro-scaling"><a class="anchor" href="#intro-scaling"></a>Scaling traditional device deployment for the edge environments</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Think about the most common way devices are deployed in non-edge-computing architectures: You send the device to the place where it will be used, then you send (or give remote access to) a specialist who performs the installation, configures the device, and deploys the required applications on top of it.</p>
 </div>
 <div class="paragraph">
-<p>This model is valid if you don&#8217;t have a lot of devices to install. However, consider the scale of a typical edge computing solution, where you could have hundreds or thousands of devices to deploy. Sending specialized people to all locations could be slow, expensive (think about edge locations like windmills in a mountain range), and even insecure. You need new ways of deploying and performing the initial device configuration. What are the alternatives?</p>
+<p>This model is valid if you don&#8217;t have a lot of devices to install. However, <strong>consider the scale of a typical edge computing solution</strong>, where you could have hundreds or thousands of devices to deploy. Sending specialized people to all locations could be slow, expensive (think about edge locations like windmills in a mountain range), and even insecure. You need new ways of deploying and performing the initial device configuration. What are the alternatives?</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -305,27 +305,27 @@
 <div class="title">Figure 1. Device onboarding model 1</div>
 </div>
 <div class="paragraph">
-<p>You can minimize costs by preparing the devices in a central place before shipping them. You could deploy and install the device, probably using images you can flash to the device and then send the preinstalled device to where it is needed.</p>
+<p>You can minimize costs and reduce delays (avoid sending specialized people) by preparing the devices in a central place before shipping them instead using specialized people to install it on-site. You could deploy and install the device, probably using images you can flash to the device and then send the preinstalled device to where it is needed.</p>
 </div>
 <div class="paragraph">
 <p>If you want to take this approach, you have a couple of options. You could build specific images for each device. Or you might create an image template that can be easily customized by a nontechnical person or automatically using zero-touch provisioning. Customizations might include specific variables for the site, device purpose, and so forth.</p>
 </div>
 <div class="paragraph">
-<p>If you don&#8217;t want to end up with a sea of device images, which could be complex to manage at scale, you will probably use an image template. You must still figure out how to automate the customizations that must be made at boot time and even in that case change management could be complex (think that every customization change would imply to rebuild the images).</p>
-</div>
-<div class="paragraph">
-<p>You could embed all the intelligence and options in the image template as explained, or you could build something more flexible and scalable by including the intelligence and options in a remote, centralized piece of the solution that will decide, depending on the device type, which components and configurations to apply.</p>
+<p>If you don&#8217;t want to end up with a sea of device images, which <strong>could be complex to manage at scale</strong>, you will probably use an image template. But you must still figure out <strong>how to automate the customizations</strong> that must be made at boot time and even in that case change management could be complex (think that every customization change would imply rebuilding the images).</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="intro-security"><a class="anchor" href="#intro-security"></a>An additional concern: Device security</h2>
+<h2 id="intro-security"><a class="anchor" href="#intro-security"></a>Device onboarding security and image templates</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Your solution must also take device security into account. As part of every deployment, you will probably need to include sensitive data, such as passwords, certificates, tokens, or keys. How do you plan to distribute them?</p>
+<p>As explained, the tradictional way of onboarding devices does not scale for edge use cases and an possible solution has been discussed: creating customized device images that can be installed by any non-specialized people onsite, but in that case you find an additional concern: Security.</p>
 </div>
 <div class="paragraph">
-<p>If you decide to inject those items into the images or templates, you create risk, since someone could access the image and extract that sensitive information. It&#8217;s better to have the device download them at installation time using a secure channel.</p>
+<p>Your solution must also take device security into account. As part of every deployment, you will probably need to include in the device image sensitive data, such as passwords, certificates, tokens, or keys. How do you plan to distribute them?</p>
+</div>
+<div class="paragraph">
+<p>If you decide to inject those items directly into the images or templates, you create risk, since someone could access the image and extract that sensitive information.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -334,21 +334,24 @@
 <div class="title">Figure 2. Device onboarding model 2</div>
 </div>
 <div class="paragraph">
-<p>This means the edge device has to download these secrets from your central server. But how will you set up that secure channel? You could use encrypted communications or a virtual private network (VPN) tunnel, but that&#8217;s not enough. How can you be sure that the device is what it says it is and not a possible attacker trying to steal information or gain access to your network? You have another concern: authentication and authorization.</p>
+<p>An not only that, think that every time that you need to change those items (or any other customization) you will need to re-create again the device image, and probably re-distribute it to your edge locations, which at the end of the day, is a really complex model to manage.</p>
 </div>
 <div class="paragraph">
-<p>Authentication is even more important, especially for companies that use third-party providers to create the device images or add other value to the supply chain. You need to determine whether the device asking to be introduced into your network can be trusted or not, depending in part upon who provides the image.</p>
+<p>There is still a way to solve this problem, instead of embeding all the intelligence and options in the image template as explained, you could build something more flexible and scalable by including the intelligence and options in a remote, centralized piece of the solution that will decide, depending on the device type, which components and configurations to apply, and where you can perform any update or change in the customization without involving to re-create and re-distribute images.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="intro-fdo"><a class="anchor" href="#intro-fdo"></a>How FDO addresses these challenges</h2>
+<h2 id="intro-fdo"><a class="anchor" href="#intro-fdo"></a>Centralizing the device onboarding intelligence</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>It&#8217;s expensive to send specialized people out to deploy edge devices, so you need to automate device onboarding (system deployment and first configuration) as much as possible.</p>
+<p>Instead of including secrets on the images, it&#8217;s better to have the device download them at installation time using a secure channel while onboarding, so you don&#8217;t keep any sensitive data on the image.</p>
 </div>
 <div class="paragraph">
-<p>You could deploy an architecture where you provision template images (to avoid having one image per system) and store the configurations in an external system. When the device boots up, it starts an automation process that finishes provisioning it, including the specific settings and software it needs to do its job.</p>
+<p>You could deploy an architecture where you provision template images and store the configurations in an external system. When the device boots up, it starts an automation process that finishes provisioning it, including the specific settings and software it needs to do its job, but this means that the edge device has to download these secrets from your central server.</p>
+</div>
+<div class="paragraph">
+<p>How will you set up that secure channel? You could use encrypted communications or a virtual private network (VPN) tunnel, but that&#8217;s not enough. How can you be sure that the device is what it says it is and not a possible attacker trying to steal information or gain access to your network? You have another concern: authentication and authorization. Authentication is even more important, especially for companies that use third-party providers to create the device images or add other value to the supply chain. You need to determine whether the device asking to be introduced into your network can be trusted or not, depending in part upon who provides the image.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -357,13 +360,13 @@
 <div class="title">Figure 3. Device onboarding model 3</div>
 </div>
 <div class="paragraph">
-<p>This approach provides zero-touch provisioning that doesn&#8217;t need a specialized person at the edge location, but you still need to solve sensitive information provisioning and other security concerns. You need a system that creates secure channels and downloads the secrets from an external system after being authenticated and trusted by that system.</p>
+<p>This approach provides zero-touch provisioning that doesn&#8217;t need a specialized person at the edge location but it is too much to do on your own, so probably you will need something already developed.</p>
 </div>
 <div class="paragraph">
-<p>This is too much to do on your own, and the market has addressed these challenges with several solutions. Yet many of these solutions are proprietary and not based on an industry standard, which could lead to vendor lock-in issues.</p>
+<p>The market has addressed these challenges with several solutions. Yet many of these solutions are proprietary and not based on an industry standard, which could lead to vendor lock-in issues. It&#8217;s not their fault, as there wasn&#8217;t a clear industry standard for device onboarding&#8230;&#8203;until 2020.</p>
 </div>
 <div class="paragraph">
-<p>It&#8217;s not their fault, as there wasn&#8217;t a clear industry standard for device onboarding until 2020, when the FIDO Device Onboard (FDO) specification was released. FDO is an industry standard that solves the problem of trust and chain of ownership with the automation needed to onboard a device securely at scale.</p>
+<p>This year, the FIDO Device Onboard (FDO) specification was released. FDO is an industry standard that solves the problem of trust and chain of ownership with the automation needed to onboard a device securely at scale, and that is being adopted as the defacto standard for edge device onboarding.</p>
 </div>
 </div>
 </div>

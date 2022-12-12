@@ -71,13 +71,13 @@
     <a class="nav-link" href="00-intro.html">Introduction to secure edge device onboarding</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="00-intro.html#intro-scaling">Scaling device deployment for the edge</a>
+    <a class="nav-link" href="00-intro.html#intro-scaling">Scaling traditional device deployment for the edge environments</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="00-intro.html#intro-security">An additional concern: Device security</a>
+    <a class="nav-link" href="00-intro.html#intro-security">Device onboarding security and image templates</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="00-intro.html#intro-fdo">How FDO addresses these challenges</a>
+    <a class="nav-link" href="00-intro.html#intro-fdo">Centralizing the device onboarding intelligence</a>
   </li>
 </ul>
   </li>
@@ -170,7 +170,7 @@
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="02-rfe-lab.html">2.b RHEL OSTree images - Lab</a>
+    <a class="nav-link" href="02-rfe-lab.html">2.b RHEL OSTree image - Lab</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="02-rfe-lab.html#rfe-imagebuilder">Install Image builder</a>
@@ -200,7 +200,7 @@
     <a class="nav-link" href="02-rfe-lab.html#rfe-iso">Create the RHEL ISO</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="02-rfe-lab.html#rfe-summary">RHEL OSTree images Lab summary</a>
+    <a class="nav-link" href="02-rfe-lab.html#rfe-summary">RHEL OSTree image Lab summary</a>
   </li>
 </ul>
   </li>
@@ -254,13 +254,13 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>The FIDO Device Onboard (FDO) specification is the first widely accepted industry specification aimed at solving edge computing and Internet of Things (IoT) device onboarding challenges. In my previous article, I reviewed some of those challenges, and this article explains how FDO addresses edge device onboarding at scale.</p>
+<p>The FIDO Device Onboard (FDO) specification is the first widely accepted industry specification aimed at solving edge computing and Internet of Things (IoT) device onboarding challenges.</p>
 </div>
 <div class="paragraph">
 <p>The edge device onboarding problem is not new, and companies have developed solutions to cover the challenges. However, none was accepted as a standard because they were either lock-in solutions or had other issues.</p>
 </div>
 <div class="paragraph">
-<p>A common problem when creating device image templates is that the device manufacturer needs to know who the device owner or user will be and sometimes even the installation platform details to preconfigure the device. As you can probably imagine, that&#8217;s inconvenient and even more difficult if you rely on a third-party manufacturer to create the devices.</p>
+<p>A common problem when creating device image templates as was explained in the <a href="00-intro.html" class="xref page">introduction to secure edge device onboarding</a>, is that the device manufacturer needs to know details about who the device owner or user will be (think about certificates, passwords, etc) and sometimes even the installation platform details to preconfigure the device. As you can probably imagine, that&#8217;s inconvenient and even more difficult if you rely on a third-party manufacturer to create the devices.</p>
 </div>
 </div>
 </div>

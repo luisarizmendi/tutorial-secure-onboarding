@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>RHEL OSTree images - Lab :: Secure Edge device onboarding with RHEL and FDO</title>
+    <title>RHEL OSTree image - Lab :: Secure Edge device onboarding with RHEL and FDO</title>
     <link rel="canonical" href="https://luisarizmendi.github.io/tutorial-secure-onboarding/fdo-tutorial/02-rfe-lab.html">
     <link rel="prev" href="02-rfe-intro.html">
     <link rel="next" href="03-onboarding.html">
@@ -71,13 +71,13 @@
     <a class="nav-link" href="00-intro.html">Introduction to secure edge device onboarding</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="00-intro.html#intro-scaling">Scaling device deployment for the edge</a>
+    <a class="nav-link" href="00-intro.html#intro-scaling">Scaling traditional device deployment for the edge environments</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="00-intro.html#intro-security">An additional concern: Device security</a>
+    <a class="nav-link" href="00-intro.html#intro-security">Device onboarding security and image templates</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="00-intro.html#intro-fdo">How FDO addresses these challenges</a>
+    <a class="nav-link" href="00-intro.html#intro-fdo">Centralizing the device onboarding intelligence</a>
   </li>
 </ul>
   </li>
@@ -170,7 +170,7 @@
   </li>
   <li class="nav-item is-current-page" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="02-rfe-lab.html">2.b RHEL OSTree images - Lab</a>
+    <a class="nav-link" href="02-rfe-lab.html">2.b RHEL OSTree image - Lab</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="#rfe-imagebuilder">Install Image builder</a>
@@ -200,7 +200,7 @@
     <a class="nav-link" href="#rfe-iso">Create the RHEL ISO</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#rfe-summary">RHEL OSTree images Lab summary</a>
+    <a class="nav-link" href="#rfe-summary">RHEL OSTree image Lab summary</a>
   </li>
 </ul>
   </li>
@@ -243,14 +243,14 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="index.html">Secure Edge device onboarding with RHEL and FDO</a></li>
-    <li><a href="02-rfe-lab.html">2.b RHEL OSTree images - Lab</a></li>
+    <li><a href="02-rfe-lab.html">2.b RHEL OSTree image - Lab</a></li>
   </ul>
 </nav>
   <div class="edit-this-page"><a href="https://github.com/luisarizmendi/tutorial-secure-onboarding/edit/master/documentation/modules/ROOT/pages/02-rfe-lab.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <article class="doc">
-<h1 class="page">RHEL OSTree images - Lab</h1>
+<h1 class="page">RHEL OSTree image - Lab</h1>
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
@@ -283,13 +283,13 @@
 </ol>
 </div>
 <div class="paragraph">
-<p>As explained in the <a href="02-rfe-intro.html" class="xref page">RHEL for Edge introduction</a>, in order to use an OSTree RHEL you need to create an image. You have two options while creating these images, you can use the <a href="https://console.redhat.com/edge/manage-images">Red Hat Hybrid Console</a> on the cloud or install and use Image Builder in a RHEL system.</p>
+<p>As explained in the <a href="02-rfe-intro.html" class="xref page">RHEL for Edge introduction</a>, in order to use an OSTree RHEL you need to create an image. You have two options while creating these images, you can use the <a href="https://console.redhat.com/edge/manage-images">Red Hat Hybrid Console</a> on the cloud or install and use Image Builder in an RHEL system.</p>
 </div>
 <div class="paragraph">
 <p>In this lab we are going to use the second option, since at this moment the FDO integration is not yet ready in the Red Hat Hybrid Console.</p>
 </div>
 <div class="paragraph">
-<p>Once Image builder is installed, you will need to create a RHEL "edge" image. In this lab we will perform the steps manually, so you understand better the procedure, but Red Hat is developing an <a href="https://github.com/redhat-cop/infra.osbuild">Ansible collection</a> to automate the RHEL for Edge image creation and life-cycle management.</p>
+<p>Once Image builder is installed, you will need to create an RHEL "edge" image. In this lab we will perform the steps manually, so you understand better the procedure, but Red Hat is developing an <a href="https://github.com/redhat-cop/infra.osbuild">Ansible collection</a> to automate the RHEL for Edge image creation and life-cycle management.</p>
 </div>
 <div class="paragraph">
 <p>The image that you are going to create should include all RPMs needed by your onboarding automation. Since you had two options while creating the onboarding automation with FDO (using your own use case or the provided example) in this section you will also have to follow the same approach.</p>
@@ -298,7 +298,7 @@
 <p>If you prepared your own automation, you will need to be sure about the Software dependencies that your automation has, for example, in the example onboarding automation, the system will use the insights client which is not included by default in the RHEL for Edge OSTree image, so we need to specify that the image that we are going to create needs to include such RPM too (we will see that&#8217;s done with the <code>blueprint</code> file).</p>
 </div>
 <div class="paragraph">
-<p>Bur first, let&#8217;s start from the begening and let&#8217;s install the Image Builder.</p>
+<p>But first, let&#8217;s start from the beginning and let&#8217;s install the Image Builder.</p>
 </div>
 </div>
 </div>
@@ -330,7 +330,7 @@
 </div>
 </div>
 <div class="paragraph">
-<p>We will be using the CLI to create and manage the RHEL images, but you can also use <a href="https://www.redhat.com/sysadmin/intro-cockpit">Cockpit</a>. You can install it and enable it by running these commands (including opening the TCP ports if you have a Firewall installed in your system)</p>
+<p>We will be using the CLI to create and manage the RHEL images, but you can also use <a href="https://www.redhat.com/sysadmin/intro-cockpit">Cockpit</a>. You can install and enable it by running these commands (including opening the TCP ports if you have a Firewall installed in your system)</p>
 </div>
 <div class="listingblock console-input">
 <div class="content">
@@ -359,7 +359,7 @@ sudo firewall-cmd --reload</code></pre>
 <p>Generate a new OSTree RHEL repository</p>
 </li>
 <li>
-<p>Download the repository and publish it in a Web server</p>
+<p>Download the repository and publish it on a Web server</p>
 </li>
 <li>
 <p>Use Image Builder to create an ISO image using the repository published on the Web server</p>
@@ -367,12 +367,12 @@ sudo firewall-cmd --reload</code></pre>
 </ol>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s beging with the first step.</p>
+<p>Let&#8217;s begin with the first step.</p>
 </div>
 <div class="sect2">
 <h3 id="rfe-ostreeimage"><a class="anchor" href="#rfe-ostreeimage"></a>Generating the repo image</h3>
 <div class="paragraph">
-<p>You need first to create the blueprint file where you include the image customizations and the use that file to create the actual OSTree repository.</p>
+<p>You need first to create the blueprint file where you include the image customizations and then use that file to create the actual OSTree repository.</p>
 </div>
 <div class="paragraph">
 <p>When it comes to create the blueprint file for this lab, you need to follow the same option that you selected during the FDO lab: are you going to <a href="#rfe-ostreeimage-optiona">use your own automation</a>, or you didn&#8217;t prepare anything and would like to <a href="#rfe-ostreeimage-optionb">use the proposed example</a>?.</p>
@@ -380,7 +380,7 @@ sudo firewall-cmd --reload</code></pre>
 <div class="sect3">
 <h4 id="rfe-ostreeimage-optiona"><a class="anchor" href="#rfe-ostreeimage-optiona"></a>Option A: Blueprint file for your own FDO onboarding automation</h4>
 <div class="paragraph">
-<p>You can customize the image created by the Image Builder throught a <code>blueprint.toml</code> file. You can check <a href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/composing_a_customized_rhel_system_image/index">how to use blueprint in Image Builder</a> but take into account that not all variables are applied with creating OSTree images, so it&#8217;s better to review the <a href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html-single/composing_installing_and_managing_rhel_for_edge_images/index#image-customizations_composing-a-rhel-for-edge-image-using-image-builder-command-line">supported blueprint configurations for RHEL for Edge</a> documentation.</p>
+<p>You can customize the image created by the Image Builder through a <code>blueprint.toml</code> file. You can check <a href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/composing_a_customized_rhel_system_image/index">how to use blueprint in Image Builder</a> but take into account that not all variables are applied to create OSTree images, so it&#8217;s better to review the <a href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html-single/composing_installing_and_managing_rhel_for_edge_images/index#image-customizations_composing-a-rhel-for-edge-image-using-image-builder-command-line">supported blueprint configurations for RHEL for Edge</a> documentation.</p>
 </div>
 <div class="paragraph">
 <p>You can find a blueprint example below:</p>
@@ -445,7 +445,7 @@ name = "Desktop"</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>If you want to include individial packages you can use the <code><a id="packages"></a></code> section.</p>
+<p>If you want to include individual packages you can use the <code><a id="packages"></a></code> section.</p>
 </div>
 <div class="paragraph">
 <p>Then you can  use this section multiple times to include additional single RPM packages that are not included by default in the RHEL OSTree images (ie. <code>insights-client</code>) indicating which version you would like to install (or any/latest with <code>*</code>).</p>
@@ -458,7 +458,7 @@ version = "*"</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Bear in mind that in order to install those RPM packages in the image, the Image Builder needs to have access to them. There might be cases where the RPM is not present in the Image Builder repositories. In that case you could configure additional repositories that can be used by the Image Builder servers.</p>
+<p>Bear in mind that in order to install those RPM packages in the image, the Image Builder needs to have access to them. There might be cases where the RPM is not present in the Image Builder repositories. In that case, you could configure additional repositories that can be used by the Image Builder servers.</p>
 </div>
 <div class="paragraph">
 <p>You can find an example of including additional repositories in Image Builder in <a href="https://github.com/luisarizmendi/rhel-edge-quickstart/blob/master/scripts/add-microshift-repos.sh">this script that builds the Microshift RPMs and adds it as a local repository (along with an additional OpenShift repository) into the Image Builder</a>.</p>
@@ -492,7 +492,7 @@ disabled = ["SERVICES"]</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Regarding system users, by default the image only has the root user configured but with no password, so in order to have access to the system (with root user) you will need to include a Public SSH key that will be injected into the image:</p>
+<p>Regarding system users, by default, the image only has the root user configured but with no password, so in order to have access to the system (with root user) you will need to include a Public SSH key that will be injected into the image:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -534,7 +534,7 @@ groups = ["users", "wheel"]</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>An additional comment about the users in OSTree RHEL. If you went throught the <a href="02-rfe-intro.html#rfe-intro-article" class="xref page">OSTree-based Operating Systems article</a> shared in the previous module, you noticied that in OSTree RHEL you will have two "kinds" of users, the ones created on the first boot of the image, and the ones generated by day-2 operations.The users created by the Image Builder could be described these "initial" users that are created during the first boot of the device, and which target is to perform the onboarding configurations and as administrative access to the devices.</p>
+<p>Additional comment about the users in OSTree RHEL. If you went through the <a href="02-rfe-intro.html#rfe-intro-article" class="xref page">OSTree-based Operating Systems article</a> shared in the previous module, you noticed that in OSTree RHEL you will have two "kinds" of users, the ones created on the first boot of the image, and the ones generated by day-2 operations. The users created by the Image Builder could be described as these "initial" users that are created during the first boot of the device, and whose target is to perform the onboarding configurations and as administrative access to the devices.</p>
 </div>
 <div class="paragraph">
 <p>Besides these common sections, in the blueprints you can also configure other system parameters such as the timezone, NTP server or locale:</p>
@@ -614,7 +614,7 @@ size = "20 GiB"</code></pre>
 <div class="sect3">
 <h4 id="rfe-ostreeimage-optionb"><a class="anchor" href="#rfe-ostreeimage-optionb"></a>Option B: Blueprint file for the provided FDO automation example</h4>
 <div class="paragraph">
-<p>If you plan to use the provided example, you just need to download the Blueprint template and addapt it to your environment by changing certain values on it.</p>
+<p>If you plan to use the provided example, you just need to download the Blueprint template and adapt it to your environment by changing certain values on it.</p>
 </div>
 <div class="paragraph">
 <p>Start by downloading the blueprint:</p>
@@ -687,7 +687,7 @@ sed -i "s|&lt;ADMIN PASSW&gt;|${ADMIN_PASSW}|g" blueprint-insights.toml</code></
 </div>
 </div>
 <div class="paragraph">
-<p>Now is time to create the OSTree image. You will need point to the name that you gave to the Blueprint (the one that you used in the <code>name</code> parameter in the Blueprint file), not the file name as you did in the previous step:</p>
+<p>Now is time to create the OSTree image. You will need to point to the name that you gave to the Blueprint (the one that you used in the <code>name</code> parameter in the Blueprint file), not the file name as you did in the previous step:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -747,7 +747,7 @@ sed -i "s|&lt;ADMIN PASSW&gt;|${ADMIN_PASSW}|g" blueprint-insights.toml</code></
 <p>There are multiple ways of distributing the RHEL OSTree images. If you take a look at this <a href="https://github.com/luisarizmendi/rhel-edge-quickstart">RHEL for Edge quickstart GitHub repository</a> or at the <a href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/composing_installing_and_managing_rhel_for_edge_images/introducing-rhel-for-edge-images_composing-installing-managing-rhel-for-edge-images">Red Hat official documentation</a> you will learn more about the network and non-network based deployments, but you will find that both have something in common, you need to have the OSTree image/repo that you downloaded in the previous step, "published" into a HTTP server.</p>
 </div>
 <div class="paragraph">
-<p>When you created the image in the previous section, you used the <code>edge-commit</code> image type, which means that Image Builder create the OSTree image contents and put them into a <code>TAR</code> file. There is another image type that you might use here, the <code>edge-container</code> type, which create the OSTree image contents and directly creates a container image that publish them using <code>HTTPD</code>. In this lab we used the first approach (although as you will see it requires some additional steps) because this procedure can be used for either network and non-network based deployments, since you can include additional information into the conatiner image (ie. a <code>kickstart</code> file) and because you will be able to manage the lifecycle of this container image (ie. image patching) which is convenient for production environments.</p>
+<p>When you created the image in the previous section, you used the <code>edge-commit</code> image type, which means that Image Builder create the OSTree image contents and put them into a <code>TAR</code> file. There is another image type that you might use here, the <code>edge-container</code> type, which creates the OSTree image contents and directly creates a container image that publishes them using <code>HTTPD</code>. In this lab we used the first approach (although as you will see it requires some additional steps) because this procedure can be used for either network and non-network based deployments, since you can include additional information into the container image (ie. a <code>kickstart</code> file) and because you will be able to manage the lifecycle of this container image (ie. image patching) which is convenient for production environments.</p>
 </div>
 <div class="paragraph">
 <p>Since we used the <code>edge-commit</code> image type, you have your OSTree image in Image Builder as a <code>TAR</code> file but in order to use it you will need to "download" it using the following command, where the <code>IMAGE ID</code> is the ID generated by the Image Builder and that you can find using the command <code>sudo composer-cli compose status</code>.</p>
@@ -768,7 +768,7 @@ sed -i "s|&lt;ADMIN PASSW&gt;|${ADMIN_PASSW}|g" blueprint-insights.toml</code></
 <div class="paragraph">
 <p>You are going to use a container image to publish the OSTree image (as the <code>edge-container</code> image type does) so you need to have <code>podman</code> installed in your system (probably you want to use the same VM where the Image Builder is installed):</p>
 </div>
-<div class="listingblock console-output">
+<div class="listingblock console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo dnf install -y podman</code></pre>
 </div>
@@ -776,7 +776,7 @@ sed -i "s|&lt;ADMIN PASSW&gt;|${ADMIN_PASSW}|g" blueprint-insights.toml</code></
 <div class="paragraph">
 <p>The idea is to create a container image with NGINX, so you can customize even the NGINX configuration as part of this procedure. Create the NGINX config file:</p>
 </div>
-<div class="listingblock console-output">
+<div class="listingblock console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cat &lt;&lt;EOF &gt; nginx.conf
 events {
@@ -798,7 +798,7 @@ EOF</code></pre>
 <div class="paragraph">
 <p>Create the Dockerfile including this configuration (and exposing the same port that you configured in your NGINX config file, 8080 in this example) file and the OSTree image TAR file. You could use a Dockerfile "argument" to point to the OSTree image file:</p>
 </div>
-<div class="listingblock console-output">
+<div class="listingblock console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cat &lt;&lt;EOF &gt; Dockerfile
 FROM registry.access.redhat.com/ubi8/ubi
@@ -828,7 +828,7 @@ EOF</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Also a good idea is to tag the last conatiner image as "latest":</p>
+<p>Also a good idea is to tag the last container image as "latest":</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -839,7 +839,7 @@ EOF</code></pre>
 <p>Once you have the container image ready you can run a container based on it, but before that, be sure that you opened the required port. You will need to bind a port in your VM to the port configured in your container image (tcp/8080 in this example).</p>
 </div>
 <div class="paragraph">
-<p>Remember that if you are using this VM to run other services, for example the FDO services, you need to be sure that you don&#8217;t use same ports (use tcp/8090 to be sure that it does not interfiere with FDO default ports)</p>
+<p>Remember that if you are using this VM to run other services, for example the FDO services, you need to be sure that you don&#8217;t use the same ports (use tcp/8090 to be sure that it does not interfiere with FDO default ports)</p>
 </div>
 <div class="listingblock console-input">
 <div class="content">
@@ -864,7 +864,7 @@ sudo firewall-cmd --reload</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>You can double check that your conatiner is running and publishing the contents by using <code>CURL</code>. If you execute this command from the same VM that is publishing the OSTree repo you could use <code>localhost</code> as the IP, but it is always better to specifify the actual IP address of the system:</p>
+<p>You can double check that your container is running and publishing the contents by using <code>CURL</code>. If you execute this command from the same VM that is publishing the OSTree repo you could use <code>localhost</code> as the IP, but it is always better to specify the actual IP address of the system:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -965,13 +965,13 @@ sudo firewall-cmd --reload</code></pre>
 <div class="paragraph">
 <p>Regarding the disk, if you plan to use physical devices for the edge systems, you probably want to use something like <code>sda</code>, but if you are going to use VMs also for the edge devices (as you are doing with the Image Builder and FDO servers), use <code>vda</code>:</p>
 </div>
-<div class="listingblock console-output">
+<div class="listingblock console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">DISK_DEVICE=vda</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>For the FDO manufacturing server URL, you will need the IP address and the port (if you used the defaults, for the manufacturing server is <code>8080</code>). Remember that the VM where the FDO manufacturing server will depend on the option that you choosed to deploy the FDO servers: All-in-one VS distributed services.</p>
+<p>For the FDO manufacturing server URL, you will need the IP address and the port (if you used the defaults, for the manufacturing server is <code>8080</code>). Remember that the VM where the FDO manufacturing server will depend on the option that you choose to deploy the FDO servers: All-in-one VS distributed services.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1040,10 +1040,10 @@ kvm-insights</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Same that you did while creating the OSTree image, you will need to use this Blueprint to create the new image, but in this case, you will also need to include information about where the OSTree repo is published.</p>
+<p>Same as you did while creating the OSTree image, you will need to use this Blueprint to create the new image, but in this case, you will also need to include information about where the OSTree repo is published.</p>
 </div>
 <div class="paragraph">
-<p>You should have already configured at this point two variables with the IP address and the TCP port where the repo is published: <code>${IMAGE_BUILDER_IP}</code> and <code>${IMAGE_PUBLISH_PORT}</code>, but you will also need to include the path (URL) to the right content which depend on the RHEL release and architecture used to generate the OSTRee image.</p>
+<p>You should have already configured at this point two variables with the IP address and the TCP port where the repo is published: <code>${IMAGE_BUILDER_IP}</code> and <code>${IMAGE_PUBLISH_PORT}</code>, but you will also need to include the path (URL) to the right content which depends on the RHEL release and architecture used to generate the OSTRee image.</p>
 </div>
 <div class="paragraph">
 <p>The release and the architecture should match with the ones of the Image Builder, so you can get those values running these commands into that VM:</p>
@@ -1055,7 +1055,7 @@ basearch=$(arch)</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Now that you have all required values, run the actual command in the Image Builder that will create the ISO file with the embed OSTree repository:</p>
+<p>Now that you have all the required values, run the actual command in the Image Builder that will create the ISO file with the embedded OSTree repository:</p>
 </div>
 <div class="listingblock console-input">
 <div class="content">
@@ -1121,7 +1121,44 @@ sudo chown $(whoami) ${FDO_ISO_IMAGE_ID}-simplified-installer.iso</code></pre>
 <p>At this point you should have an ISO file (downloaded in the Image Builder) that you can copy to your Laptop/KVM system to be used to deploy the Edge device in the next chapter.</p>
 </div>
 <div class="paragraph">
-<p>If you feel that using an ISO file don&#8217;t scale in production you might be right. There is also a solution for that, you could publish the ISO image into an additional HTTP server and use the UEFI HTTP boot in the end Edge device to boot the ISO using the network. This deployment is not part of the lab, so I let you do it as homework. If you need some hints, you can dig into <a href="https://github.com/luisarizmendi/rhel-edge-quickstart/blob/master/2-publish-image.sh#L389">this script</a> that creates the additional HTTP server, includes the ISO and also gives you some comments about how to configure the KVM network if you are using VMs, or the DHCP if you are using physical devices in order to use UEFI HTTP boot.</p>
+<p>If you feel that using an ISO file doesn&#8217;t scale in production you might be right. There is also a solution for that, you could publish the ISO image into an additional HTTP server and use the UEFI HTTP boot in the end Edge device to boot the ISO using the network. This deployment is not part of the lab, so I let you do it as homework. If you need some hints, you can dig into <a href="https://github.com/luisarizmendi/rhel-edge-quickstart/blob/master/2-publish-image.sh#L389">this script</a> that creates the additional HTTP server, includes the ISO and also gives you some comments about how to configure the KVM network if you are using VMs, or the DHCP if you are using physical devices in order to use UEFI HTTP boot.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="rfe-summary"><a class="anchor" href="#rfe-summary"></a>RHEL OSTree image Lab summary</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In this lab you have:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Install the Image Builder service in RHEL</p>
+</li>
+<li>
+<p>Create a OSTree RHEL image by:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Creating a blueprint file to customize the setup</p>
+</li>
+<li>
+<p>Create a new OSTree repo</p>
+</li>
+<li>
+<p>Publish the OStree repo</p>
+</li>
+<li>
+<p>Create an ISO where you inject that OSTree repository</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>You should have the created ISO image in your KVM host to use it as installation method for the edge device VM in the next lab.</p>
 </div>
 </div>
 </div>

@@ -71,13 +71,13 @@
     <a class="nav-link" href="00-intro.html">Introduction to secure edge device onboarding</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="00-intro.html#intro-scaling">Scaling device deployment for the edge</a>
+    <a class="nav-link" href="00-intro.html#intro-scaling">Scaling traditional device deployment for the edge environments</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="00-intro.html#intro-security">An additional concern: Device security</a>
+    <a class="nav-link" href="00-intro.html#intro-security">Device onboarding security and image templates</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="00-intro.html#intro-fdo">How FDO addresses these challenges</a>
+    <a class="nav-link" href="00-intro.html#intro-fdo">Centralizing the device onboarding intelligence</a>
   </li>
 </ul>
   </li>
@@ -170,7 +170,7 @@
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="02-rfe-lab.html">2.b RHEL OSTree images - Lab</a>
+    <a class="nav-link" href="02-rfe-lab.html">2.b RHEL OSTree image - Lab</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="02-rfe-lab.html#rfe-imagebuilder">Install Image builder</a>
@@ -200,7 +200,7 @@
     <a class="nav-link" href="02-rfe-lab.html#rfe-iso">Create the RHEL ISO</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="02-rfe-lab.html#rfe-summary">RHEL OSTree images Lab summary</a>
+    <a class="nav-link" href="02-rfe-lab.html#rfe-summary">RHEL OSTree image Lab summary</a>
   </li>
 </ul>
   </li>
@@ -272,16 +272,16 @@
 <h2 id="fdo-services"><a class="anchor" href="#fdo-services"></a>FDO services</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>FDO is an specification that has been implemented by multiple vendors. In this tutorial we are going to use Red Hat development which is published upstream in <a href="https://github.com/fedora-iot/fido-device-onboard-rs">this GitHub repository</a>.</p>
+<p>FDO is a specification that has been implemented by multiple vendors. In this tutorial, we are going to use Red Hat development which is published upstream in <a href="https://github.com/fedora-iot/fido-device-onboard-rs">this GitHub repository</a>.</p>
 </div>
 <div class="paragraph">
 <p>In this source code repository, you will find the implementation of the core FDO elements that we reviewed in the second article of the series along with the protocols that are used to exchange information between them.</p>
 </div>
 <div class="paragraph">
-<p>As explained in the <a href="01-fdo-intro.html" class="xref page">introduction to FDO</a>, you will need at least three different servers: Manufacturing, Rendezvous and Owner server, but as mentioned in the <a href="00-prerequisites.html" class="xref page">Lab prerequisites</a>, for lab proposes you can choose between deploying those servers in a single system, or split them into dedicated servers, depending on your system resources. If you have enough CPU and RAM I suggest to try to split the services. Remember that multiple people could be involved in FDO server preparation. Maybe there is someone that will prepare the manufacturing server, another one, who could be in charge of the platform (or a 3rd party public cloud), will configure the Rendezvous Server, and someone else who will configure the boot automation steps on the owner server, so following this architecture you will be closer to what you could find in production.</p>
+<p>As explained in the <a href="01-fdo-intro.html" class="xref page">introduction to FDO</a>, you will need at least three different servers: Manufacturing, Rendezvous and Owner server, but as mentioned in the <a href="00-prerequisites.html" class="xref page">Lab prerequisites</a>, for lab proposes you can choose between deploying those servers in a single system, or split them into dedicated servers, depending on your system resources. If you have enough CPU and RAM I suggest trying to split the services. Remember that multiple people could be involved in FDO server preparation. Maybe there is someone that will prepare the manufacturing server, another one, who could be in charge of the platform (or a 3rd party public cloud), will configure the Rendezvous Server, and someone else who will configure the boot automation steps on the owner server, so following this architecture you will be closer to what you could find in production.</p>
 </div>
 <div class="paragraph">
-<p>Once you deployed your FDO services, you will also need to configure them to provide the onboarding automation. You could use your own automation or you can just deploying the provided example.</p>
+<p>Once you deployed your FDO services, you will also need to configure them to provide the onboarding automation. You could use your own automation or you can just deploy the provided example.</p>
 </div>
 <div class="paragraph">
 <p>Choose your option ( <a href="#fdo-services-aio">Option 1</a> or <a href="#fdo-services-dedicated">Option 2</a>) and go ahead with the lab steps!</p>
@@ -432,7 +432,7 @@ serviceinfo_api_admin_token: XWNzbEwQ6EWF+PWZrqa7d68mQFHG1NtGX9yklCNtMa8=</code>
 <div class="sect2">
 <h3 id="fdo-services-dedicated"><a class="anchor" href="#fdo-services-dedicated"></a>Option 2: Dedicated FDO servers</h3>
 <div class="paragraph">
-<p>In this option you will have the Image Buider server and 3 additional FDO VMs (manufacturing, rendezvours and owner). If you find that architecture requires too much resources but you still want to test the FDO splited into different servers, you could install one of those (maybe the manufacturing server) in the same VM than the Image Builder in order to save some CPU and Memory.</p>
+<p>In this option, you will have the Image Builder server and 3 additional FDO VMs (Manufacturing, Rendezvous and Owner). If you find that architecture requires too many resources but you still want to test the FDO split into different servers, you could install one of those (maybe the manufacturing server) in the same VM as the Image Builder in order to save some CPU and Memory.</p>
 </div>
 <div class="sect3">
 <h4 id="_manufacturing_server"><a class="anchor" href="#_manufacturing_server"></a>Manufacturing server</h4>
@@ -643,7 +643,7 @@ sudo mkdir -p /etc/fdo/stores/rendezvous_sessions</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Next, create the configuration file where you include the path to the manufacturer certificate (if you followed the steps shown above, it shoudl be in the <code>/etc/fdo/keys directory). I created this file (located in `/etc/fdo/rendezvous-server.yml</code>) from the example that you can find in <code>/usr/share/doc/fdo/rendezvous-server.yml</code>:</p>
+<p>Next, create the configuration file where you include the path to the manufacturer certificate (if you followed the steps shown above, it should be in the <code>/etc/fdo/keys directory). I created this file (located in `/etc/fdo/rendezvous-server.yml</code>) from the example that you can find in <code>/usr/share/doc/fdo/rendezvous-server.yml</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -781,7 +781,7 @@ report_to_rendezvous_endpoint_enabled: true</code></pre>
 <p>In this file, we include the path to the certificates that we already copied, along with information about where to publish the owner server service, but you will also find references to “Info API Service”, such as the URL or the authentication token.</p>
 </div>
 <div class="paragraph">
-<p>This service will be configured in the Owner sever, but since that&#8217;s an step that is needed also when you install all FDO services on the same node, it will explained more in detail in the next section.</p>
+<p>This service will be configured in the Owner sever, but since that&#8217;s a step that is needed also when you install all FDO services on the same node, it will be explained more in detail in the next section.</p>
 </div>
 <div class="paragraph">
 <p>Before moving into the FDO Serviceinfo API configuration, check the status of the Owner server and the serviceinfo API service:</p>
@@ -846,7 +846,7 @@ sudo systemctl restart firewalld</code></pre>
 <p>The service is configured using a YAML file located under <code>/etc/fdo/serviceinfo-api-server.yml</code> if you splitted the FDO services or in <code>/etc/fdo/aio/configs/serviceinfo_api_server.yml</code> if you used the all-in-one approach.</p>
 </div>
 <div class="paragraph">
-<p>There is an example of this located in <code>/usr/share/doc/fdo/serviceinfo-api-server.yml</code> that can be used as a template to create your own configuration file. You can also review the default configuration (in this case is for the all-in-one setup, you can know it by taking a look to the stores path):</p>
+<p>There is an example of this located in <code>/usr/share/doc/fdo/serviceinfo-api-server.yml</code> that can be used as a template to create your own configuration file. You can also review the default configuration (in this case is for the all-in-one setup, you can know it by taking a look at the stores path):</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -876,7 +876,7 @@ device_specific_store_driver:
 <div class="sect3">
 <h4 id="fdo-optiona-user"><a class="anchor" href="#fdo-optiona-user"></a>initial_user</h4>
 <div class="paragraph">
-<p>We start with the initial user. The REHL image only has configure the root user, and it has no password by default so you need to include an additional user that you can use to access the device by using a public SSH key.</p>
+<p>We start with the initial user. The RHEL image only has configured the root user, and it has no password by default so you need to include an additional user that you can use to access the device by using a public SSH key.</p>
 </div>
 <div class="paragraph">
 <p>In our specific case, where we are using a combination of FDO and OSTree RHEL, there is something more that you should take into account. As you will see in the following modules, when you create an OSTree RHEL image, you use a blueprint file where you can also include a "initial user" so, what&#8217;s the one that should be used?</p>
@@ -899,7 +899,7 @@ device_specific_store_driver:
 <div class="sect3">
 <h4 id="fdo-optiona-files"><a class="anchor" href="#fdo-optiona-files"></a>files</h4>
 <div class="paragraph">
-<p>The next section in the configuration is <code>files</code>, which can be used to transfer file to the devices. You need to include the source and destination paths along with the permissions to be setup in the device.</p>
+<p>The next section in the configuration is <code>files</code>, which can be used to transfer files to the devices. You need to include the source and destination paths along with the permissions to be setup in the device.</p>
 </div>
 <div class="paragraph">
 <p>There is something more to bear in mind with this configuration. At this moment <a href="https://github.com/fedora-iot/fido-device-onboard-rs/issues/289">you cannot copy files to a destination path that is not already created in the destination image</a>, for example, you can not copy file example.txt to` /etc/newdir/other` since that destination directory is not present in the RHEL for Edge image.</p>
@@ -924,26 +924,26 @@ device_specific_store_driver:
 <p>Thanks to the <code>commands</code> section you can configure commands that will be run as part of the onboarding process (after copying the files of the previous section).</p>
 </div>
 <div class="paragraph">
-<p>Just remember that at this moment <a href="https://github.com/fedora-iot/fido-device-onboard-rs/issues/290">you cannot use constracts such as &gt;&gt; or &amp;&amp; in the commands</a>. If you "need" to use constructs you can create a bash script file, copy and make it executable using the <code>files</code> section and then run that script (<code>commands</code> section).</p>
+<p>Just remember that at this moment <a href="https://github.com/fedora-iot/fido-device-onboard-rs/issues/290">you cannot use constructs such as &gt;&gt; or &amp;&amp; in the commands</a>. If you "need" to use constructs you can create a bash script file, copy and make it executable using the <code>files</code> section and then run that script (<code>commands</code> section).</p>
 </div>
 <div class="paragraph">
-<p>In order to configure the section, you will need to include the <code>command</code> followed by the <code>args</code> each on one line. You can also include a optional boolean variables:</p>
+<p>In order to configure the section, you will need to include the <code>command</code> followed by the <code>args</code> each on one line. You can also include optional boolean variables:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><code>may_fail</code>: makes possible to continue with the onboarding even if this command fails (default is false)</p>
+<p><code>may_fail</code>: makes it possible to continue with the onboarding even if this command fails (default is false)</p>
 </li>
 <li>
 <p><code>return_stdout</code>: the command will return the standard output (default is false).</p>
 </li>
 <li>
-<p><code>return_stderr</code>: has the same effect than <code>return_stdout</code> but with the errors (default is false).</p>
+<p><code>return_stderr</code>: has the same effect as <code>return_stdout</code> but with the errors (default is false).</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>This would be an example with all the variables, including the optionals:</p>
+<p>This would be an example with all the variables, including the optional:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -961,10 +961,10 @@ device_specific_store_driver:
 <div class="sect3">
 <h4 id="fdo-optiona-encrypt"><a class="anchor" href="#fdo-optiona-encrypt"></a>diskencryption_clevis</h4>
 <div class="paragraph">
-<p>If configured, it eill perform a disk encryption using <a href="https://wiki.archlinux.org/title/Clevis">Clevis</a>.</p>
+<p>If configured, it will perform a disk encryption using <a href="https://wiki.archlinux.org/title/Clevis">Clevis</a>.</p>
 </div>
 <div class="paragraph">
-<p>You need to include at least which disk or patition you want to encrypt (<code>disk_label</code>), the encryption method (<code>pin</code>).</p>
+<p>You need to include at least which disk or partition you want to encrypt (<code>disk_label</code>), and the encryption method (<code>pin</code>).</p>
 </div>
 <div class="paragraph">
 <p>You can use either a file to save the encryption keys (which is not secure) or a Trusted Platform Module (TPM) in your device. Be sure that if you select TPM your device or virtual machine will need to have a TPM module, or you will get an error like this one when booting the edge device:</p>
