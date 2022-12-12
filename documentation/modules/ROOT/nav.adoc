@@ -4,9 +4,9 @@
 ** xref:00-prerequisites.adoc#usecase[Create your use case]
 
 * xref:00-intro.adoc[Introduction to secure edge device onboarding]
-** xref:00-intro.adoc#intro-scaling[Scaling device deployment for the edge]
-** xref:00-intro.adoc#intro-security[An additional concern: Device security]
-** xref:00-intro.adoc#intro-fdo[How FDO addresses these challenges]
+** xref:00-intro.adoc#intro-scaling[Scaling traditional device deployment for the edge environments]
+** xref:00-intro.adoc#intro-security[Device onboarding security and image templates]
+** xref:00-intro.adoc#intro-fdo[Centralizing the device onboarding intelligence]
 
 
 * xref:01-fdo-intro.adoc[1.a FDO - Intro]
@@ -37,7 +37,7 @@
 ** xref:02-rfe-intro.adoc#rfe-intro-article[OSTree-based Operating Systems article]
 
 
-* xref:02-rfe-lab.adoc[2.b RHEL OSTree images - Lab]
+* xref:02-rfe-lab.adoc[2.b RHEL OSTree image - Lab]
 ** xref:02-rfe-lab.adoc#rfe-imagebuilder[Install Image builder]
 ** xref:02-rfe-lab.adoc#rfe-image[Create the RHEL OSTree image]
 *** xref:02-rfe-lab.adoc#rfe-ostreeimage[Generating the repo image]
@@ -46,7 +46,7 @@
 *** xref:02-rfe-lab.adoc#rfe-ostreeimage-createrepo[Creating the OSTree repository]
 *** xref:02-rfe-lab.adoc#rfe-publish[Publishing the repo image]
 ** xref:02-rfe-lab.adoc#rfe-iso[Create the RHEL ISO]
-** xref:02-rfe-lab.adoc#rfe-summary[RHEL OSTree images Lab summary]
+** xref:02-rfe-lab.adoc#rfe-summary[RHEL OSTree image Lab summary]
 
 * xref:03-onboarding.adoc[3. Edge device onboarding - Lab]
 ** xref:03-onboarding.adoc#onboard-vm[Creating the edge device VM]

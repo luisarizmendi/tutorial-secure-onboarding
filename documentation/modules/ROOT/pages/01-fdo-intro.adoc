@@ -2,12 +2,12 @@
 include::_attributes.adoc[]
 
 
-The FIDO Device Onboard (FDO) specification is the first widely accepted industry specification aimed at solving edge computing and Internet of Things (IoT) device onboarding challenges. In my previous article, I reviewed some of those challenges, and this article explains how FDO addresses edge device onboarding at scale.
+The FIDO Device Onboard (FDO) specification is the first widely accepted industry specification aimed at solving edge computing and Internet of Things (IoT) device onboarding challenges. 
 
 
 The edge device onboarding problem is not new, and companies have developed solutions to cover the challenges. However, none was accepted as a standard because they were either lock-in solutions or had other issues.
 
-A common problem when creating device image templates is that the device manufacturer needs to know who the device owner or user will be and sometimes even the installation platform details to preconfigure the device. As you can probably imagine, that's inconvenient and even more difficult if you rely on a third-party manufacturer to create the devices.
+A common problem when creating device image templates as was explained in the xref:00-intro.adoc[introduction to secure edge device onboarding], is that the device manufacturer needs to know details about who the device owner or user will be (think about certificates, passwords, etc) and sometimes even the installation platform details to preconfigure the device. As you can probably imagine, that's inconvenient and even more difficult if you rely on a third-party manufacturer to create the devices.
 
 [#fdo-intro-origins]
 == FDO's origins

@@ -7,7 +7,7 @@
 
 Edge device onboarding could be your worst nightmare: security concerns, complexity, scalability, traceability, ... but there is a new helping hand: FIDO device onboarding (FDO) specification. 
 
-Red Hat is developing an implementation of this new industry specification, and included it as tech preview in RHEL 8.6+/9.x.
+Red Hat is developing an implementation of this new industry specification and included it as technology preview in RHEL 8.6+/9.x.
 
 In this tutorial, you have the opportunity to learn more about FDO by installing and configuring the FDO servers, creating your own device onboarding use case (including the automation needed), and deploying RHEL for Edge following the FDO workflow.  
 
@@ -19,7 +19,7 @@ image::Device-Edge-logo.png[Red Hat Device Edge logo]
 The lab will consist in three main steps:
 
 . Install and configure the required FDO servers
-. Create an OSTree RHEL image (OSTree Operating Systems are based on images which contain all required RPMs, in contrast with installing with an standard RHEL ISO and then start installing RPMs with DNF/YUM)
+. Create an OSTree RHEL image (OSTree Operating Systems are based on images that contain all required RPMs, in contrast with installing with a standard RHEL ISO and then start installing RPMs with DNF/YUM)
 . Use the generated OSTree RHEL image to deploy an edge device system which will use the configured FDO services to automate the device onboarding in a secure way.
 
 Let's start!
@@ -38,9 +38,9 @@ Let's start!
 
 [.tile]
 .xref:00-intro.adoc[Introduction to secure edge device onboarding]
-* xref:00-intro.adoc#intro-scaling[Scaling device deployment for the edge]
-* xref:00-intro.adoc#intro-security[An additional concern: Device security]
-* xref:00-intro.adoc#intro-fdo[How FDO addresses these challenges]
+* xref:00-intro.adoc#intro-scaling[Scaling traditional device deployment for the edge environments]
+* xref:00-intro.adoc#intro-security[Device onboarding security and image templates]
+* xref:00-intro.adoc#intro-fdo[Centralizing the device onboarding intelligence]
 
 
 [.tile]
@@ -79,7 +79,7 @@ Let's start!
 
 
 [.tile]
-.xref:02-rfe-lab.adoc[2.b RHEL OSTree images - Lab]
+.xref:02-rfe-lab.adoc[2.b RHEL OSTree image - Lab]
 * xref:02-rfe-lab.adoc#rfe-imagebuilder[Install Image builder]
 * xref:02-rfe-lab.adoc#rfe-image[Create the RHEL OSTree image]
 ** xref:02-rfe-lab.adoc#rfe-ostreeimage[Generating the repo image]
@@ -88,7 +88,7 @@ Let's start!
 ** xref:02-rfe-lab.adoc#rfe-ostreeimage-createrepo[Creating the OSTree repository]
 ** xref:02-rfe-lab.adoc#rfe-publish[Publishing the repo image]
 * xref:02-rfe-lab.adoc#rfe-iso[Create the RHEL ISO]
-* xref:02-rfe-lab.adoc#rfe-summary[RHEL OSTree images Lab summary]
+* xref:02-rfe-lab.adoc#rfe-summary[RHEL OSTree image Lab summary]
 
 
 [.tile]

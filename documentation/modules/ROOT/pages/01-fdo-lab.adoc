@@ -10,13 +10,13 @@ In this lab you are going to:
 [#fdo-services]
 == FDO services
 
-FDO is an specification that has been implemented by multiple vendors. In this tutorial we are going to use Red Hat development which is published upstream in https://github.com/fedora-iot/fido-device-onboard-rs[this GitHub repository]. 
+FDO is a specification that has been implemented by multiple vendors. In this tutorial, we are going to use Red Hat development which is published upstream in https://github.com/fedora-iot/fido-device-onboard-rs[this GitHub repository]. 
 
 In this source code repository, you will find the implementation of the core FDO elements that we reviewed in the second article of the series along with the protocols that are used to exchange information between them.
 
-As explained in the xref:01-fdo-intro.adoc[introduction to FDO], you will need at least three different servers: Manufacturing, Rendezvous and Owner server, but as mentioned in the xref:00-prerequisites.adoc[Lab prerequisites], for lab proposes you can choose between deploying those servers in a single system, or split them into dedicated servers, depending on your system resources. If you have enough CPU and RAM I suggest to try to split the services. Remember that multiple people could be involved in FDO server preparation. Maybe there is someone that will prepare the manufacturing server, another one, who could be in charge of the platform (or a 3rd party public cloud), will configure the Rendezvous Server, and someone else who will configure the boot automation steps on the owner server, so following this architecture you will be closer to what you could find in production.
+As explained in the xref:01-fdo-intro.adoc[introduction to FDO], you will need at least three different servers: Manufacturing, Rendezvous and Owner server, but as mentioned in the xref:00-prerequisites.adoc[Lab prerequisites], for lab proposes you can choose between deploying those servers in a single system, or split them into dedicated servers, depending on your system resources. If you have enough CPU and RAM I suggest trying to split the services. Remember that multiple people could be involved in FDO server preparation. Maybe there is someone that will prepare the manufacturing server, another one, who could be in charge of the platform (or a 3rd party public cloud), will configure the Rendezvous Server, and someone else who will configure the boot automation steps on the owner server, so following this architecture you will be closer to what you could find in production.
 
-Once you deployed your FDO services, you will also need to configure them to provide the onboarding automation. You could use your own automation or you can just deploying the provided example.
+Once you deployed your FDO services, you will also need to configure them to provide the onboarding automation. You could use your own automation or you can just deploy the provided example.
 
 Choose your option ( xref:01-fdo-lab.adoc#fdo-services-aio[Option 1] or xref:01-fdo-lab.adoc#fdo-services-dedicated[Option 2]) and go ahead with the lab steps!
 
@@ -155,7 +155,7 @@ You can now proceed with the xref:01-fdo-lab.adoc#fdo-config[FDO Service API con
 [#fdo-services-dedicated]
 === Option 2: Dedicated FDO servers
 
-In this option you will have the Image Buider server and 3 additional FDO VMs (manufacturing, rendezvours and owner). If you find that architecture requires too much resources but you still want to test the FDO splited into different servers, you could install one of those (maybe the manufacturing server) in the same VM than the Image Builder in order to save some CPU and Memory.
+In this option, you will have the Image Builder server and 3 additional FDO VMs (Manufacturing, Rendezvous and Owner). If you find that architecture requires too many resources but you still want to test the FDO split into different servers, you could install one of those (maybe the manufacturing server) in the same VM as the Image Builder in order to save some CPU and Memory.
 
 
 ==== Manufacturing server
@@ -348,7 +348,7 @@ sudo mkdir -p /etc/fdo/stores/rendezvous_registered
 sudo mkdir -p /etc/fdo/stores/rendezvous_sessions
 ----
 
-Next, create the configuration file where you include the path to the manufacturer certificate (if you followed the steps shown above, it shoudl be in the `/etc/fdo/keys directory). I created this file (located in `/etc/fdo/rendezvous-server.yml`) from the example that you can find in `/usr/share/doc/fdo/rendezvous-server.yml`:
+Next, create the configuration file where you include the path to the manufacturer certificate (if you followed the steps shown above, it should be in the `/etc/fdo/keys directory). I created this file (located in `/etc/fdo/rendezvous-server.yml`) from the example that you can find in `/usr/share/doc/fdo/rendezvous-server.yml`:
 
 
 [source,yaml,subs="+macros,+attributes"]
@@ -475,7 +475,7 @@ report_to_rendezvous_endpoint_enabled: true
 
 In this file, we include the path to the certificates that we already copied, along with information about where to publish the owner server service, but you will also find references to “Info API Service”, such as the URL or the authentication token. 
 
-This service will be configured in the Owner sever, but since that's an step that is needed also when you install all FDO services on the same node, it will explained more in detail in the next section.
+This service will be configured in the Owner sever, but since that's a step that is needed also when you install all FDO services on the same node, it will be explained more in detail in the next section.
 
 Before moving into the FDO Serviceinfo API configuration, check the status of the Owner server and the serviceinfo API service:
 
@@ -534,7 +534,7 @@ In the FDO RHEL implementation, you find this “Service Info API” which we wi
 
 The service is configured using a YAML file located under `/etc/fdo/serviceinfo-api-server.yml` if you splitted the FDO services or in `/etc/fdo/aio/configs/serviceinfo_api_server.yml` if you used the all-in-one approach.
 
-There is an example of this located in `/usr/share/doc/fdo/serviceinfo-api-server.yml` that can be used as a template to create your own configuration file. You can also review the default configuration (in this case is for the all-in-one setup, you can know it by taking a look to the stores path):
+There is an example of this located in `/usr/share/doc/fdo/serviceinfo-api-server.yml` that can be used as a template to create your own configuration file. You can also review the default configuration (in this case is for the all-in-one setup, you can know it by taking a look at the stores path):
 
 [source,yaml,subs="+macros,+attributes"]
 ----
@@ -565,7 +565,7 @@ In the `serviceinfo_api_server.yml` file you find the following sections that yo
 [#fdo-optiona-user]
 ==== initial_user
 
-We start with the initial user. The REHL image only has configure the root user, and it has no password by default so you need to include an additional user that you can use to access the device by using a public SSH key.
+We start with the initial user. The RHEL image only has configured the root user, and it has no password by default so you need to include an additional user that you can use to access the device by using a public SSH key.
 
 In our specific case, where we are using a combination of FDO and OSTree RHEL, there is something more that you should take into account. As you will see in the following modules, when you create an OSTree RHEL image, you use a blueprint file where you can also include a "initial user" so, what's the one that should be used?
 
@@ -584,7 +584,7 @@ Here you can find a configuration example:
 [#fdo-optiona-files]
 ==== files
 
-The next section in the configuration is `files`, which can be used to transfer file to the devices. You need to include the source and destination paths along with the permissions to be setup in the device.
+The next section in the configuration is `files`, which can be used to transfer files to the devices. You need to include the source and destination paths along with the permissions to be setup in the device.
 
 There is something more to bear in mind with this configuration. At this moment https://github.com/fedora-iot/fido-device-onboard-rs/issues/289[you cannot copy files to a destination path that is not already created in the destination image], for example, you can not copy file example.txt to` /etc/newdir/other` since that destination directory is not present in the RHEL for Edge image.
 
@@ -604,18 +604,18 @@ This is a configuration example:
 
 Thanks to the `commands` section you can configure commands that will be run as part of the onboarding process (after copying the files of the previous section).
 
-Just remember that at this moment https://github.com/fedora-iot/fido-device-onboard-rs/issues/290[you cannot use constracts such as >> or && in the commands]. If you "need" to use constructs you can create a bash script file, copy and make it executable using the `files` section and then run that script (`commands` section). 
+Just remember that at this moment https://github.com/fedora-iot/fido-device-onboard-rs/issues/290[you cannot use constructs such as >> or && in the commands]. If you "need" to use constructs you can create a bash script file, copy and make it executable using the `files` section and then run that script (`commands` section). 
 
-In order to configure the section, you will need to include the `command` followed by the `args` each on one line. You can also include a optional boolean variables:
+In order to configure the section, you will need to include the `command` followed by the `args` each on one line. You can also include optional boolean variables:
 
-* `may_fail`: makes possible to continue with the onboarding even if this command fails (default is false)
+* `may_fail`: makes it possible to continue with the onboarding even if this command fails (default is false)
 
 * `return_stdout`: the command will return the standard output (default is false).
 
-* `return_stderr`: has the same effect than `return_stdout` but with the errors (default is false).
+* `return_stderr`: has the same effect as `return_stdout` but with the errors (default is false).
 
 
-This would be an example with all the variables, including the optionals:
+This would be an example with all the variables, including the optional:
 
 
 [source,yaml,subs="+macros,+attributes"]
@@ -634,9 +634,9 @@ This would be an example with all the variables, including the optionals:
 [#fdo-optiona-encrypt]
 ==== diskencryption_clevis
 
-If configured, it eill perform a disk encryption using https://wiki.archlinux.org/title/Clevis[Clevis].
+If configured, it will perform a disk encryption using https://wiki.archlinux.org/title/Clevis[Clevis].
 
-You need to include at least which disk or patition you want to encrypt (`disk_label`), the encryption method (`pin`).
+You need to include at least which disk or partition you want to encrypt (`disk_label`), and the encryption method (`pin`).
 
 You can use either a file to save the encryption keys (which is not secure) or a Trusted Platform Module (TPM) in your device. Be sure that if you select TPM your device or virtual machine will need to have a TPM module, or you will get an error like this one when booting the edge device:
 

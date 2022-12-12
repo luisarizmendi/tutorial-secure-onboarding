@@ -8,7 +8,7 @@ This lab has been created trying to minimize the pre-requisites. You should be a
 
 Summary of minimal system pre-requisites:
 
-* Virtualization hypervisor with at least 6 vCPUs (threads), 6 GB memory and 100 GB disk *free*.
+* Virtualization hypervisor with at least 6 vCPUs (threads), 6 GB memory, and 100 GB disk *free*.
 * Internet connection from VMs.
 * Valid RHEL subscriptions and account.
 
@@ -30,26 +30,26 @@ sudo systemctl enable --now libvirtd
 
 Depending on the use case or configuration that you want to follow during this lab, you could need to add "special" devices to your edge VM, for example, you probably would like to use a virtual TPM to manage keys as you will be doing it with physical devices on real edge environments.
 
-This lab could be run completly offline, but in order to avoid creating local repositories we will be connecting to the public ones, so you will need Internet access from your VMs.
+This lab could be run completely offline, but in order to avoid creating local repositories we will be connecting to the public ones, so you will need Internet access from your VMs.
 
 [#arch]
 == Choose your lab architecture
 
-The lab environment will be composed by an edge device and one or multiple servers (image-builder and FDO services). You can deploy all servers in a single VM (Option 1) if you are short in CPU/MEM resources in your hypervisor (laptop?) or you can split services in dedicated VMs (Option 2) to try a more "realistic" architecture.
+The lab environment will be composed of an edge device and one or multiple servers (image-builder and FDO services). You can deploy all servers in a single VM (Option 1) if you are short in CPU/MEM resources in your hypervisor (laptop?) or you can split services in dedicated VMs (Option 2) to try a more "realistic" architecture.
 
 === Option 1: All-in-one server
 
-For this option you just need the minimial system requirements described in xref:00-prerequisites.adoc#tldr[TL/DR section].
+For this option, you just need the minimum system requirements described in xref:00-prerequisites.adoc#tldr[TL/DR section].
 
 You will also need to https://access.redhat.com/downloads/content/479/ver=/rhel---9/9.1/x86_64/product-software[download a RHEL ISO] (At this moment, the latest one is RHEL 9.1). 
 
 Once you have `libvirt` or any other hypervisor installed, and your RHEL ISO downloaded, you can create a VM (I recommend using`virt-manager` in case of `libvirt`) with *2 vCPUs, 4 GB memory and 50 GB disk* using the "Local install media" option selecting the RHEL ISO.
 
-During the RHEL 9 install wizard you can introduce your Red Hat account to register your system, so when the installation finishs your RHEL will be already subscribed. If you decide to use RHEL 8, you will need to subscribe your VM using `subscription-manager` manually after the first install. 
+During the RHEL 9 install wizard you can introduce your Red Hat account to register your system, so when the installation finishes your RHEL will be already subscribed. If you decide to use RHEL 8, you will need to subscribe your VM using `subscription-manager` manually after the first install. 
 
 Select the minimal install to save some disk space.
 
-If you want to be sure that you VM has access to Internet, check if you get a `HTML code 200` when you ask for a web page, for example running this command in your RHEL VM:
+If you want to be sure that your VM has access to Internet, check if you get a `HTML code 200` when you ask for a web page, for example running this command in your RHEL VM:
 
 [.console-input]
 [source,bash,subs="+macros,+attributes"]
@@ -57,7 +57,7 @@ If you want to be sure that you VM has access to Internet, check if you get a `H
 curl -LsI redhat.com | grep HTTP | tail -n 1
 ----
 
-In addition to that RHEL VM, you will need to create an additional VM (min *2 vCPUs, 1.5 GB memory, 20GB disk*) during the lab steps (please, do not create it yet, just take into account that you will need those system resources).
+In addition to that RHEL VM, you will need to create one more VM (min *2 vCPUs, 1.5 GB memory, 20GB disk*) during the lab steps (please, do not create it yet, you will do it as part of the lab steps, just take into account that you will need those system resources).
 
 In summary, for Option 1 you will need to have this VM installed and prepared:
 
@@ -69,7 +69,7 @@ and you will need enough resources to create the following VM during the lab ste
 
 === Option 2: Dedicated server VMs
 
-If your hypervisor system has enough CPU and RAM, you probably would like to use a more realistic architecture, where the FDO services are running in dedicated servers. In this case, you will still need the VMs shown in "Option 1", but you will need to run three additional VMs.
+If your hypervisor system has enough CPU and RAM, you probably would like to use a more realistic architecture, where the FDO services are running in dedicated servers. In this case, you will still need the VMs shown in "Option 1", but you will need to run three additional VMs for FDO servers.
 
 For Option 2 you will need to have this VM installed and prepared:
 
@@ -80,27 +80,29 @@ and you will need enough resources to create the following VM during the lab ste
 
 * 1x Empty VM with UEFI boot enabled (2 vCPUs, 1.5 GB memory, 20GB disk) 
 
+*NOTE:* If you want to save some resources, you might combine one of the FDO servers (manufacturing server?) with the Image Builder VM, so you can remove one of the three additional FDO servers.
+
 
 [#usecase]
 == Create your use case
 
-During the Edge device onboarding, you will be able to run an associated automation as part of that first boot. Although in this lab we present an example where the VM will be configured with a random hostname, registered in Insights and configured with several custom scripts, the idea is that you don't use that example.
+During the Edge device onboarding, you will be able to run associated automation as part of that first boot. Although in this lab we present an example where the VM will be configured with a random hostname, registered in Insights and configured with several custom scripts, the idea is that you don't use that example.
 
-This tutorial shouldn't be a copy/paste lab. *The idea is to enable you to create your own device onboarding use case*, so you will need to have one already prepared and that you will use to "inject" it as part of the onboarding process (thanks to FDO).
+This tutorial shouldn't be a copy/paste lab. *The idea is to enable you to create your own device onboarding use case*, so you will need to have an onboarding automation (bash scripts, Ansible playbooks, etc) already prepared and that you will use to "inject" it as part of the onboarding process (thanks to FDO).
 
-Proably you will need to addapt your automation to the way that FDO is working and that's *the main goal of this tuturial, that you can get any automation and know how to addapt it in order to "process" it during device onboarding when using FDO*.
+Probably you will need to adapt your automation to the way that FDO is working and that's *the main goal of this tutorial, that you can get any automation and know how to adapt it in order to "process" it during device onboarding when using FDO*.
 
-If you don't have already any automation that you would like to use, you could think in advance an automation that you would like to test during the edge device onboarding. Some examples could be:
+If you don't have already any automation that you would like to use, you could think in advance any automation that you would like to test during the edge device onboarding (much better if it involves certificates, keys or password configuration). Some examples could be:
 
 * Include the edge device in Ansible Automation Platform and run a job right after onboading
 * Install Microshift and import it into ACM
-* Run OpenScap automatically or taks associated to system hardening
+* Run OpenScap automatically or tasks associated to system hardening
 * Launch an ansible playbook locally to configure additional external systems
 * Run the first boot configuration (maybe in external systems?) of any service running on the edge system (ie. observability, monitoring, logging, ... )
 
-*Be creative! but please have your automation prepared before the lab, so you can focus on the FDO concepts instead of debugging Ansible or Bash scripts*.
+*Be creative! but please prepare your automation before the lab, so you can focus on the FDO concepts instead of debugging Ansible or Bash scripts*.
 
-In case that you don't have enough imagination, you can proceed using the example that is presented during the lab steps.
+In case you don't have enough imagination or time, you can proceed using the example that is presented during the lab steps, you won't get all the fun but you will understand the steps and the moving parts involved in the onboarding process.
 
 
 
