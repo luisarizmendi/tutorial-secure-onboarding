@@ -13,6 +13,6 @@ Following the LAB steps, you have been able to:
 * Create an OSTree RHEL image (RHEL "for Edge") prepared to work with FDO.
 * Onboard a new edge device with a custom automation using the RHEL for Edge image and the FDO services, being sure that you don't distribute any sensitive information such as passwords in the installation method (ISO), and with an easy way to change/update the onboard automation without the need of changing the distributed Operating System images.
 
-Now that you know what you are doing, you might find interesting to use my https://github.com/luisarizmendi/rhel-edge-quickstart[quickstart scripts to create RHEL for Edge images] so you can have (in few steps) any of the https://github.com/luisarizmendi/rhel-edge-quickstart/tree/master/demos[demos presented there] up and running.
+Now that you know what you are doing, you might find interesting to use my https://github.com/luisarizmendi/rhel-edge-quickstart[quickstart scripts to create RHEL for Edge images] so you can have any of the https://github.com/luisarizmendi/rhel-edge-quickstart/tree/master/demos[demos presented there] up and running in few steps.
 
 Thanks for following this guide. See you in the next one!
