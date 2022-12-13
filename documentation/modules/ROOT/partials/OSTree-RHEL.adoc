@@ -281,7 +281,7 @@ If you paid attention to the benefits stated about _libostree_, you probably can
 These are some of the points why the usage of _libostree_ Operating Systems as the base systems on Edge Computing devices is a good idea, and for example, https://docs.ota.here.com/ota-client/latest/comparing-full-filesystem-update-strategies.html[it is why some embedded systems manufacturers are moving away from old “dual-bank” architectures and providing _libostree_ devices.]
 
 
-== I’m convinced, how can I play with one libostree OS?
+== I’m convinced, how can I play with a libostree OS?
 
 Good!, I will give you two options here.
 
