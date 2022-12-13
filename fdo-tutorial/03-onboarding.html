@@ -212,7 +212,7 @@
     <a class="nav-link" href="#onboard-vm">Step 0 - Create the edge device VM</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#onboard-first">Step 1 - Edge device first boot</a>
+    <a class="nav-link" href="#onboard-first">Step 1 - Edge device&#8217;s first boot</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="#onboard-voucher">Step 2 - Distribute the Vouchers</a>
@@ -298,7 +298,7 @@
 </ol>
 </div>
 <div class="paragraph">
-<p>Those steps will be explained below, but you need to know that, if you are using the All-in-One FDO server, these three steps will be reduced to just one, where the device is preconfigured, the vouchers are automatically distributed (because it&#8217;s just a local copy of files inside the same server), and the onboarding happens just right after the device first boot. Comments about this will be included in each section but please, bear this in mind.</p>
+<p>Those steps will be explained below, but you need to know that, if you are using the All-in-One FDO server, these three steps will be reduced to just one, where the device is preconfigured, the vouchers are automatically distributed (because it&#8217;s just a local copy of files inside the same server), and the onboarding happens just right after the device&#8217;s first boot. Comments about this will be included in each section but please, bear this in mind.</p>
 </div>
 </div>
 </div>
@@ -358,7 +358,7 @@ Caused by:
 </div>
 </div>
 <div class="paragraph">
-<p>Take a look at the GIF below if you want to review the whole process when using <code>libvirt</code>.</p>
+<p>Take a look at the animated GIF below if you want to review the whole process when using <code>libvirt</code>.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -368,7 +368,7 @@ Caused by:
 </div>
 </div>
 <div class="sect1">
-<h2 id="onboard-first"><a class="anchor" href="#onboard-first"></a>Step 1 - Edge device first boot</h2>
+<h2 id="onboard-first"><a class="anchor" href="#onboard-first"></a>Step 1 - Edge device&#8217;s first boot</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Your OSTree RHEL installation ISO is ready for FDO onboarding. In production (remember, with the FDO distributed in multiple servers) you would have two options:</p>
@@ -451,7 +451,7 @@ Caused by:
 <p>After the installation, the system will reboot directly from the hard disk and will try to start the boot-time automation to complete the system installation.</p>
 </div>
 <div class="paragraph">
-<p>This won&#8217;t happen unless you have the All-in-One FDO server, because before being able to jump in to the actual onboarding, you need to distribute the Vouchers.</p>
+<p>This won&#8217;t happen unless you have the All-in-One FDO server, because before being able to jump into the actual onboarding, you need to distribute the Vouchers.</p>
 </div>
 <div class="paragraph">
 <p><strong>NOTE:</strong> If you installed the All-in-One server, you can jump into the <a href="#onboard-finalboot">Step 3 - Automatic onboarding</a>.</p>
@@ -471,7 +471,7 @@ Caused by:
 <p>You need to distribute the Voucher that has been created in the Manufacturing server during the edge device first boot, to both the Rendezvous and the Owner server.</p>
 </div>
 <div class="paragraph">
-<p><strong>NOTE:</strong> There is a setting (<code>report_to_rendezvous_endpoint_enabled</code>) in the Owner server that automatically copies the Voucher from the Owner server to the Rendezvous, so you would only need to to copy the Voucher to the Owner server, not to both. If you used the provided configuration files for the Owner server you will have this setting to <code>true</code>, so you could skip the copy to the Rendezvous server.</p>
+<p><strong>NOTE:</strong> There is a setting (<code>report_to_rendezvous_endpoint_enabled</code>) in the Owner server that automatically copies the Voucher from the Owner server to the Rendezvous, so you would only need to copy the Voucher to the Owner server, not to both. If you used the provided configuration files for the Owner server you will have this setting to <code>true</code>, so you could skip the copy to the Rendezvous server.</p>
 </div>
 <div class="paragraph">
 <p>Jump into the Manufacturing server and copy the Voucher to the Rendezvous server:</p>
@@ -504,7 +504,7 @@ Caused by:
 <p>During this phase, the FDO client will identify itself into the Rendezvous server with the keys that were provided during the device preinstallation phase, create a secure channel to the Owner server and perform the automation configured in the service API service configuration file.</p>
 </div>
 <div class="paragraph">
-<p>Before checking anything on the system you need to log in using the user that you configuerd in the RHEL OSTree image blueprint (<code>admin</code> if you used the defaults). If you configured your system&#8217;s SSH Public key it won&#8217;t ask for any password.</p>
+<p>Before checking anything on the system you need to log in using the user that you configured in the RHEL OSTree image blueprint (<code>admin</code> if you used the defaults). If you configured your system&#8217;s SSH Public key it won&#8217;t ask for any password.</p>
 </div>
 <div class="paragraph">
 <p>Once you are in the Edge Device, you can follow the FDO client logs until its completion (remember to break the command with <code>CTL-C</code>):</p>
@@ -550,7 +550,7 @@ Dec 13 05:06:45 edge-3e92db36 systemd[1]: fdo-client-linuxapp.service: Consumed 
 <p>You will get logs that will depend on your configured onboarding automation and it will indicate that everything when OK with a <code>Secure Device Onboarding DONE</code> message as shown above.</p>
 </div>
 <div class="paragraph">
-<p>If you just see <code>Starting FDO client&#8230;&#8203;</code> but nothing else happens, probably there is configuration issue somewhere. Start by checking the Owner server logs and Serviceinfo_API configuration and listening ports.</p>
+<p>If you just see <code>Starting FDO client&#8230;&#8203;</code> but nothing else happens, probably there is a configuration issue somewhere. Start by checking the Owner server logs and Serviceinfo_API configuration and listening ports.</p>
 </div>
 <div class="paragraph">
 <p>Disk encryption was one of the options that you could configured in the Serviceinfo_API service. If encryption/re-encryption was required, you could also check if that&#8217;s done now:</p>
@@ -595,7 +595,7 @@ vda                                           252:0    0   20G  0 disk
 </div>
 </div>
 <div class="paragraph">
-<p>At this moment you onboarding is done!, you can start reviewing if the automation that you configured actually worked as you expected.</p>
+<p>At this moment your onboarding is done!, you can start reviewing if the automation that you configured actually worked as you expected.</p>
 </div>
 </div>
 </div>
@@ -606,18 +606,18 @@ vda                                           252:0    0   20G  0 disk
 <p>If you prepared your own onboarding automation you will need to know how to check if it worked or not.</p>
 </div>
 <div class="paragraph">
-<p>In case that you used the provided onboarding automation example, in this section you can see how to check that everything went OK.</p>
+<p>In case you used the provided onboarding automation example, in this section you can see how to check that everything went OK.</p>
 </div>
 <div class="paragraph">
 <p>The example automation runs several scripts and copy multiple files, but mainly you can check:
 * That the system has been renamed with a random hostname
-* That the sysmte is subscribed to the <a href="https://console.redhat.com">Hybrid Cloud Console</a> and appears in Insights.
+* That the system is subscribed to the <a href="https://console.redhat.com">Hybrid Cloud Console</a> and appears in Insights.
 * That you can run an OpenSCAP compliance report
 * That you have Cockpit and KVM installed
 * That a Greenboot script has been configured</p>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s start checking the Edge device hostname (you hostname will be different):</p>
+<p>Let&#8217;s start checking the Edge device hostname (your hostname will be different):</p>
 </div>
 <div class="tabset is-loading">
 <div class="ulist tabs">
@@ -656,13 +656,13 @@ vda                                           252:0    0   20G  0 disk
 </div>
 </div>
 <div class="paragraph">
-<p>One remark, in oder to subscribe any RHEL system, you need the user and password, and what is important about FDO is that we provided such secrets <strong>whithout including them on the ISO image</strong>, they are present just in a managed and secured environment (Owner server) and they have been downloaded from there using a secure channel.</p>
+<p>One remark, in order to subscribe any RHEL system, you need the user and password, and what is important about FDO is that we provided such secrets <strong>without including them on the ISO image</strong>, they are present just in a managed and secured environment (Owner server) and they have been downloaded from there using a secure channel.</p>
 </div>
 <div class="paragraph">
-<p>In order to get the SCAP compliance report, you system needs to be part of a SCAP policy. You will need to first go to the Policy page and include the new edge system (if you don&#8217;t have any SCAP Policy pre-configured you need to create one):</p>
+<p>In order to get the SCAP compliance report, your system needs to be part of a SCAP policy. You will need to first go to the Policy page and include the new edge system (if you don&#8217;t have any SCAP Policy pre-configured you need to create one):</p>
 </div>
 <div class="paragraph">
-<p><strong>IDEA FOR IMPROVING THE ONBOARDING EXAMPLE:</strong> If you have time, you can create an Ansible playbook that add the system automatically to one pre-created SCAP policy in the Hybrid Console as part of the onboarding process, so we remove this manual step.</p>
+<p><strong>IDEA FOR IMPROVING THE ONBOARDING EXAMPLE:</strong> If you have time, you can create an Ansible playbook that adds the system automatically to one pre-created SCAP policy in the Hybrid Console as part of the onboarding process, so we remove this manual step.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -772,7 +772,7 @@ fi</code></pre>
 <h2 id="onboard-change"><a class="anchor" href="#onboard-change"></a>Updating the onboard automation</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>You completed the onboarding, everything is OK, but what happens if you realize that you need to include additional customizations or change anything on the configured automations for the upcomming device onboardings?</p>
+<p>You completed the onboarding, everything is OK, but what happens if you realize that you need to include additional customizations or change anything on the configured automations for the upcoming device onboardings?</p>
 </div>
 <div class="paragraph">
 <p>We find three different "kind" of changes here:</p>
@@ -791,13 +791,13 @@ fi</code></pre>
 </ul>
 </div>
 <div class="paragraph">
-<p>Taking a look at the provided onboarding automation, an example for the first type of change could be that the Greenboot file, instead of reviewing that a file exist in /root/mustfail (variable <code>FILE=/root/mustfail</code> in the <code>01_check_demo_file.sh</code> script), it checks a different path. For this kind of change, you only have to directly change that file in the Owner server (if you followed the lab steps you will find it in <code>/etc/fdo-configs/device0/etc/greenboot/check/required.d/01_check_demo_file.sh</code>) and the following devices that perform the FDO onboarding will get the new file</p>
+<p>Taking a look at the provided onboarding automation, an example for the first type of change could be that the Greenboot file, instead of reviewing that a file exists in /root/mustfail (variable <code>FILE=/root/mustfail</code> in the <code>01_check_demo_file.sh</code> script), it checks a different path. For this kind of change, you only have to directly change that file in the Owner server (if you followed the lab steps you will find it in <code>/etc/fdo-configs/device0/etc/greenboot/check/required.d/01_check_demo_file.sh</code>) and the following devices that perform the FDO onboarding will get the new file</p>
 </div>
 <div class="paragraph">
 <p><strong>NOTE:</strong> Remember that the already onboarded devices won&#8217;t get this change. FDO is managing the onboarding only, any day-2 operation must be covered but additional tooling (ie. Ansible)</p>
 </div>
 <div class="paragraph">
-<p>If you need to modify the commands or files copied during the onboarding (for example, you want to copy an additional file into your systems while onboarding them) you will need to change the <code>/etc/fdo/serviceinfo-api-server.yml</code> file in the Owner server including the required new lines pointing to the new file (and the file should be created in the path configured) and lastly, and very important, you need to <strong>restart the Serviceinfo_API server</strong> in order to make that change effective.</p>
+<p>If you need to modify the commands or files copied during the onboarding (for example, you want to copy additional file into your systems while onboarding them) you will need to change the <code>/etc/fdo/serviceinfo-api-server.yml</code> file in the Owner server including the required new lines pointing to the new file (and the file should be created in the path configured) and lastly, and very important, you need to <strong>restart the Serviceinfo_API server</strong> in order to make that change effective.</p>
 </div>
 <div class="paragraph">
 <p><strong>NOTE:</strong> The service is <code>fdo-aio.service</code> if you are using All-in-One FDO server or <code>fdo-serviceinfo-api-server.service</code> in dedicated Owner sever</p>
@@ -830,7 +830,7 @@ fi</code></pre>
 </ol>
 </div>
 <div class="paragraph">
-<p>CONGRATULATIONS!, you finished the last LAB, I hope that you enjoyed it.</p>
+<p>CONGRATULATIONS!, you finished the last LAB, and I hope that you enjoyed it.</p>
 </div>
 </div>
 </div>
