@@ -93,9 +93,10 @@ Let's start!
 
 [.tile]
 .xref:03-onboarding.adoc[3. Edge device onboarding - Lab]
-* xref:03-onboarding.adoc#onboard-vm[Creating the edge device VM]
-* xref:03-onboarding.adoc#onboard-fdoclient[FDO client in action]
-* xref:03-onboarding.adoc#onboard-fdoservers[FDO server side]
+* xref:03-onboarding.adoc#onboard-vm[Step 0 - Create the edge device VM]
+* xref:03-onboarding.adoc#onboard-first[Step 1 - Edge device first boot]
+* xref:03-onboarding.adoc#onboard-voucher[Step 2 - Distribute the Vouchers]
+* xref:03-onboarding.adoc#onboard-finalboot[Step 3 - Automatic onboarding]
 * xref:03-onboarding.adoc#onboard-checks[Checking the edge device onboard]
 * xref:03-onboarding.adoc#onboard-change[Updating the onboard automation]
 

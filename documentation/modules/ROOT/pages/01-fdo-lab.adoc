@@ -226,7 +226,7 @@ sudo mkdir -p /etc/fdo/stores/owner_vouchers
 
 It's time to configure the Manufacturing server. You can find an example configuration in `/usr/share/doc/fdo/manufacturing-server.yml`. Create your own configuration in the `/etc/fdo/manufacturing-server.yml` file using that template. 
 
-Here you can find another configuration example, changing the Manufacturing IP address would be everything that you need to do if you use this file and follow the lab steps:
+Here you can find another configuration example, changing the Rendezvous IP address (under `rendezvous_info`) would be everything that you need to do if you use this file and follow the lab steps:
 
 [source,yaml,subs="+macros,+attributes"]
 ----

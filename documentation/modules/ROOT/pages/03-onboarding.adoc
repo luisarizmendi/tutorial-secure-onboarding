@@ -5,52 +5,32 @@ include::_attributes.adoc[]
 In this lab you are going to:
 
 . Create a VM that will act as edge device
-. Use the FDO enabled RHEL OSTree ISO image to install the edge device 
+. Use the FDO enabled RHEL OSTree ISO image to install the edge device
 . Review the onboarding process and completion
 . Include changes into the device onboarding automation
 
 
+The first step for this lab will be creating a VM that will act as edge device. If you are using a physical device you can of course skip this step. 
+
+After that you run the onboarding process which differs a little bit if you are using the All-in-One FDO server approach. In production, where you have the FDO services split in multiple servers, you will find 3 steps during the onboarding:
+
+1. First boot and system preinstallation
+2. Voucher distribution 
+3. Device Onboarding
+
+Those steps will be explained below, but you need to know that, if you are using the All-in-One FDO server, these three steps will be reduced to just one, where the device is preconfigured, the vouchers are automatically distributed (because it's just a local copy of files inside the same server), and the onboarding happens just right after the device first boot. Comments about this will be included in each section but please, bear this in mind.
+
+
 [#onboard-vm]
-== Creating the edge device VM
+== Step 0 - Create the edge device VM
 
+You need to create a VM with at least 2 vCPUs, 1.5GB memory, 20GB of disk and a NIC in a network with DHCP and Internet access.
 
+Use the ISO installation method for the Operating System and point to the RHEL OSTree ISO that you created in the last LAB.
 
+*Before* booting the VM, be sure that it will use UEFI instead of legacy BOOT (since the created ISO is prepared to use UEFI by default), otherwise you will get a `code 0009` error while booting.
 
-Create
-
-image::vm_create.gif[Create VM GIF]
-
-
-
-
-
-
-
-
-
-
-image::onboarding-console.png[Onboarding console]
-
-
-
-
-
-use the ISO
-
-
-
-2 CPUs, 1.5 RAM 20GB
-
-
-
-
-
-BIOS -> UEFI
-
-
-
-
-TPM????
+Lastly, if you configured in the Serviceinfo_API configuration file that you want to use a TPM, be sure that you add a virtual TPM in your VM or you will get the following error that will prevent FDO onboarding to complete:
 
 
 [source,bash,subs="+macros,+attributes"]
@@ -93,69 +73,175 @@ Caused by:
        Error adding new binding to /dev/vda4
 ----
 
+Take a look at the GIF below if you want to review the whole process when using `libvirt`.
+
+
+image::vm_create.gif[Create VM GIF]
 
 
 
+[#onboard-first]
+== Step 1 - Edge device first boot
+
+Your OSTree RHEL installation ISO is ready for FDO onboarding. In production (remember, with the FDO distributed in multiple servers) you would have two options:
+
+* You can use that ISO at the manufacturing site (remember that the manufacturing location probably is different than the final edge location) to *preinstall* your systems and then distribute them to their final locations (at the owner's site).
+
+* You can directly distribute the ISO to preinstall the devices at the owner's site.
+
+The first option is probably the better one, since you will need access to the Manufacturing server while performing the preinstallation and can skip that step at the owner's site, where you might not have specialized people who, for example, know how to boot from ISO.
+
+
+In this lab we could say that the manufacturing site and the final edge site are the same, so...we do not need to worry about it. You just need to boot the VM that you created with the OSTree RHEL ISO that you created, this is what the console will show on the first boot:
+
+
+image::onboarding-console.png[Onboarding console]
+
+
+Once the device boots from that ISO, three main points are covered:
+
+* Include the required tools to “identify” the device such as the FDO client and a set of certificates and keys.
+* The Rendezvous server endpoint (URL) is included in the device
+* The Ownership Voucher is created.
+
+During this phase, a pre-installed device is created with the certificates (that will authenticate the system) and with the FDO client ready to contact the Rendezvous and Owner servers in order to start the onboarding customization.
+
+*NOTE:* Remember that when you create the RHEL image the FDO client is included along with the certificates and keys that have been generated during the FDO manufacturing service preparation.
+
+
+The Manufacturing server creates the owner voucher and store it in the /etc/fdo/stores/owner_vouchers directory (that you created during the Manufacturing server preparation). You can connect to the Manufacturing server and double-check that the voucher is created:
 
 
 
+[tabs]
+====
+input::
++
+--
+[.console-input]
+[source,bash,subs="+macros,+attributes"]
+----
+ls /etc/fdo/stores/owner_vouchers/
+----
+--
+output::
++
+--
+[.console-output]
+[source,bash,subs="+macros,+attributes"]
+----
+ccc1b09c-1a0d-8c47-bf42-3a18901c00a8
+----
+--
+====
+
+
+After the installation, the system will reboot directly from the hard disk and will try to start the boot-time automation to complete the system installation. 
+
+This won't happen unless you have the All-in-One FDO server, because before being able to jump in to the actual onboarding, you need to distribute the Vouchers.
+
+*NOTE:* If you installed the All-in-One server, you can jump into the xref:03-onboarding.adoc#onboard-finalboot[Step 3 - Automatic onboarding].
+
+
+In summary, after this step you have two different outputs: a preconfigured device and the Owner Voucher. Now you will have to physically send the device to the final destination (of course that's in the real world, not in this lab) and, at the same time, copy the Owner Voucher as is explained in the next point.
 
 
 
+[#onboard-voucher]
+== Step 2 - Distribute the Vouchers
 
-GIF con el boot
+When using the All-in-One FDO server, the manufacturing server, Rendezvous server and the Owner onboarding server do share the same vouchers store (same directory) and hence the Manufacturing server does “report” the voucher automatically as soon as it creates it, in the real world of course, that does not happen, so you need to copy the files to "register" the new device that you have created, otherwise the device will ask for its onboarding instructions but since it's not registered, it will get nothing. 
+
+You need to distribute the Voucher that has been created in the Manufacturing server during the edge device first boot, to both the Rendezvous and the Owner server.
+
+*NOTE:* There is a setting (`report_to_rendezvous_endpoint_enabled`) in the Owner server that automatically copies the Voucher from the Owner server to the Rendezvous, so you would only need to to copy the Voucher to the Owner server, not to both. If you used the provided configuration files for the Owner server you will have this setting to `true`, so you could skip the copy to the Rendezvous server.
+
+Jump into the Manufacturing server and copy the Voucher to the Rendezvous server:
+
+[source,bash,subs="+macros,+attributes"]
+----
+scp /etc/fdo/stores/owner_vouchers/ccc1b09c-1a0d-8c47-bf42-3a18901c00a8 root@<RENDEZVOUS SERVER IP>:/etc/fdo/stores/rendezvous_registered/
+----
+
+Again, from the Manufacturing server, copy the file to the Owner server:
+
+[source,bash,subs="+macros,+attributes"]
+----
+scp /etc/fdo/stores/owner_vouchers/ccc1b09c-1a0d-8c47-bf42-3a18901c00a8 root@<OWNER SERVER IP>:/etc/fdo/stores/owner_vouchers/
+----
+
+
+[#onboard-finalboot]
+== Step 3 - Automatic onboarding
+
+Now that everything is prepared, it's time to reboot again the edge device.
+
+*NOTE:* Remember that with All-in-One you don't have to do anything, the device will be rebooted after the first boot and the onboarding process will start automatically.
+
+During this phase, the FDO client will identify itself into the Rendezvous server with the keys that were provided during the device preinstallation phase, create a secure channel to the Owner server and perform the automation configured in the service API service configuration file.
+
+Before checking anything on the system you need to log in using the user that you configuerd in the RHEL OSTree image blueprint (`admin` if you used the defaults). If you configured your system's SSH Public key it won't ask for any password. 
+
+Once you are in the Edge Device, you can follow the FDO client logs until its completion (remember to break the command with `CTL-C`):
 
 
 
-
-
-
-
-
-[#onboard-fdoclient]
-== FDO client in action
-
-
-
-users -> al pricipio solo el del blueprint???
-
-
-
-
-
+[tabs]
+====
+input::
++
+--
+[.console-input]
+[source,bash,subs="+macros,+attributes"]
+----
 journalctl -u fdo-client-linuxapp -f
+----
+--
+output::
++
+--
+[.console-output]
+[source,bash,subs="+macros,+attributes"]
+----
+Dec 13 05:05:41 edge-3e92db36 subscription-manager[2233]: Added subscription for product 'Red Hat OpenStack Beta for IBM Power LE'
+Dec 13 05:05:41 edge-3e92db36 subscription-manager[2233]: Added subscription for product 'Red Hat JBoss Core Services'
+Dec 13 05:05:41 edge-3e92db36 subscription-manager[2233]: Added subscription for product 'Red Hat Gluster Storage Web Administration (for RHEL Server)'
+Dec 13 05:05:41 edge-3e92db36 subscription-manager[2233]: Added subscription for product 'Red Hat S-JIS Support (for RHEL Server) - AUS'
+Dec 13 05:06:22 edge-3e92db36 podman[3231]: 2022-12-13 05:06:22.523403789 -0500 EST m=+0.180416078 system refresh
+Dec 13 05:06:44 edge-3e92db36 fdo-client-linuxapp[1138]:  2022-12-13T10:06:44.873Z INFO  fdo_client_linuxapp::serviceinfo > Initiating disk re-encryption, disk-label: /dev/vda4, pin: tpm2, config: {}, reencrypt: true
+Dec 13 05:06:45 edge-3e92db36 fdo-client-linuxapp[1138]:  2022-12-13T10:06:45.819Z INFO  fdo_client_linuxapp              > Secure Device Onboarding DONE
+Dec 13 05:06:45 edge-3e92db36 systemd[1]: fdo-client-linuxapp.service: Deactivated successfully.
+Dec 13 05:06:45 edge-3e92db36 systemd[1]: Finished FDO client.
+Dec 13 05:06:45 edge-3e92db36 systemd[1]: fdo-client-linuxapp.service: Consumed 51.257s CPU time
+----
+--
+====
+
+You will get logs that will depend on your configured onboarding automation and it will indicate that everything when OK with a `Secure Device Onboarding DONE` message as shown above.
+
+If you just see `Starting FDO client...` but nothing else happens, probably there is configuration issue somewhere. Start by checking the Owner server logs and Serviceinfo_API configuration and listening ports.
+
+Disk encryption was one of the options that you could configured in the Serviceinfo_API service. If encryption/re-encryption was required, you could also check if that's done now:
 
 
 
-
-
-Starting FDO client...
-
-
-
-WAIT (it could take 1 or 2 min to start)
-
-
-
-
-
-
-fdo_client_linuxapp::serviceinfo > Initiating disk re-encryption, disk-label: /dev/vda4, pin: tpm2, config: {}, reencrypt: true
-fdo_client_linuxapp              > Secure Device Onboarding DONE
-fdo-client-linuxapp.service: Deactivated successfully.
-Finished FDO client.
-fdo-client-linuxapp.service: Consumed 48.954s CPU time.
-
-
-
-
-
-
-
-
-
-
-[administrator@localhost ~]$ lsblk
+[tabs]
+====
+input::
++
+--
+[.console-input]
+[source,bash,subs="+macros,+attributes"]
+----
+lsblk
+----
+--
+output::
++
+--
+[.console-output]
+[source,bash,subs="+macros,+attributes"]
+----
 NAME                                          MAJ:MIN RM  SIZE RO TYPE  MOUNTPOINTS
 sr0                                            11:0    1 1024M  0 rom   
 vda                                           252:0    0   20G  0 disk  
@@ -168,84 +254,148 @@ vda                                           252:0    0   20G  0 disk
                                                                         /usr
                                                                         /
                                                                         /sysroot
+----
+--
+====
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-[#onboard-fdoservers]
-== FDO server side
-
-
-
-
-
-[larizmen@rhte-image-builder aio]$ tree stores/
-stores/
-├── manufacturer_keys
-├── manufacturing_sessions
-├── mfg_sessions
-├── owner_onboarding_sessions
-├── owner_sessions
-├── owner_vouchers
-│   ├── ab98eaae-c820-0a1c-638f-bab833a01544
-│   ├── bac5b023-a5aa-1296-3e4a-82e4c84c6cf0
-│   ├── cc64cb34-5b95-809d-f60b-78b82cbc9f08
-│   └── f32977ce-1ff7-224f-7489-73d81b4f6702
-├── rendezvous_registered
-│   ├── ab98eaae-c820-0a1c-638f-bab833a01544
-│   ├── bac5b023-a5aa-1296-3e4a-82e4c84c6cf0
-│   └── cc64cb34-5b95-809d-f60b-78b82cbc9f08
-├── rendezvous_sessions
-│   ├── en_slash_5HqjQJrF5aqD9xd85+cvCX2QfEs7FTQtYXJMloc4=
-│   ├── JDKn0XIvlrBZD3kE9UCABstmoydxSjjU_slash_VanbsxSgc0=
-│   └── qGGJWI5wy96cTZ2kzEejfnHMGCrzA4NplcWlzFY_slash_KLw=
-├── serviceinfo_api_devices
-└── serviceinfo_api_per_device
-
-
-
-
-
+At this moment you onboarding is done!, you can start reviewing if the automation that you configured actually worked as you expected.
 
 
 [#onboard-checks]
 == Checking the edge device onboard
 
-depends on the use case
+If you prepared your own onboarding automation you will need to know how to check if it worked or not. 
+
+In case that you used the provided onboarding automation example, in this section you can see how to check that everything went OK.
+
+The example automation runs several scripts and copy multiple files, but mainly you can check:
+* That the system has been renamed with a random hostname
+* That the sysmte is subscribed to the https://console.redhat.com[Hybrid Cloud Console] and appears in Insights.
+* That you can run an OpenSCAP compliance report
+* That you have Cockpit and KVM installed
+* That a Greenboot script has been configured
+
+Let's start checking the Edge device hostname (you hostname will be different):
 
 
+[tabs]
+====
+input::
++
+--
+[.console-input]
+[source,bash,subs="+macros,+attributes"]
+----
+hostname
+----
+--
+output::
++
+--
+[.console-output]
+[source,bash,subs="+macros,+attributes"]
+----
+edge-3e92db36
+----
+--
+====
+
+Now you can also Check Insight inventory in the https://console.redhat.com[Hybrid Cloud Console] and also review if a `TAG` with the name `edge-factory` has been configured (in my case you can see that the FDO servers and the Image Builder are there as well)
+
+image::insights-inventory.png[Insights inventory]
+
+One remark, in oder to subscribe any RHEL system, you need the user and password, and what is important about FDO is that we provided such secrets *whithout including them on the ISO image*, they are present just in a managed and secured environment (Owner server) and they have been downloaded from there using a secure channel.
 
 
+In order to get the SCAP compliance report, you system needs to be part of a SCAP policy. You will need to first go to the Policy page and include the new edge system (if you don't have any SCAP Policy pre-configured you need to create one):
 
- Subscription and insights
-
-
-run openscap
+*IDEA FOR IMPROVING THE ONBOARDING EXAMPLE:* If you have time, you can create an Ansible playbook that add the system automatically to one pre-created SCAP policy in the Hybrid Console as part of the onboarding process, so we remove this manual step.
 
 
+image::scap-policy.png[Insights inventory]
 
 
-
-kvm with cockpit
-
+Once the system is added to a policy, you can wait until the SCAP client is executed... but that could be up to 24 hours, so it's better to force it by running this command on the Edge Device:
 
 
+[tabs]
+====
+input::
++
+--
+[.console-input]
+[source,bash,subs="+macros,+attributes"]
+----
+sudo insights-client --compliance
+----
+--
+output::
++
+--
+[.console-output]
+[source,bash,subs="+macros,+attributes"]
+----
+#System uses SSG version 0.1.63
+#Running scan for xccdf_org.ssgproject.content_profile_cis... this may take a while
+#Uploading Insights data.
+#Successfully uploaded report for edge-3e92db36
+----
+--
+====
 
-greenboot script
+When the command finishes, you have access to the report in the Hybrid Console:
+
+
+image::compliant-report.png[Compliant report]
+
+
+Another thing to be checked is if KVM and Cockpit (with VM management) was installed, so you have to visit `https://<EDGE DEVICE IP>:9090` and review the VM management
+
+*NOTE:* You are not supposed to run any VM. If you are using VMs as Edge Devices as we are doing in this lab, you need to enable nested virtualization to run VMs on top of VMs (and having enough resources in your Edge Device... probably 2 vCPUs and 1.5GB of memory is not enough)
+
+
+image::kvm-edge.png[KVM Edge]
+
+
+Lastly you can check if a Greenboot script has been created on the system. Greenboot is a cool feature on OSTree RHEL systems that is used to automatically rollback upgrades in case something fails, if this is new for you, https://www.redhat.com/en/blog/automating-rhel-edge-image-rollback-greenboot[you should learn more about it].
+
+[tabs]
+====
+input::
++
+--
+[.console-input]
+[source,bash,subs="+macros,+attributes"]
+----
+cat /etc/greenboot/check/required.d/01_check_demo_file.sh 
+----
+--
+output::
++
+--
+[.console-output]
+[source,bash,subs="+macros,+attributes"]
+----
+#!/bin/bash
+
+#
+# This test fails if /root/mustfail file exist
+#
+
+FILE=/root/mustfail
+if [ -f "$FILE" ]; then
+    echo "$FILE exists: Check FAILED!"
+    exit 1
+else
+    echo "$FILE does not exist: Check PASSED!"
+    exit 0
+fi
+
+----
+--
+====
+
 
 
 
@@ -253,12 +403,37 @@ greenboot script
 [#onboard-change]
 == Updating the onboard automation
 
+You completed the onboarding, everything is OK, but what happens if you realize that you need to include additional customizations or change anything on the configured automations for the upcomming device onboardings?
 
-blah blah
+We find three different "kind" of changes here:
 
-image and automation
+* Modify the content of an existing file that is copied to the systems during the onboarding
+* Modify the commands or files copied during the onboarding
+* Modify the base image (Software included by default in the Edge Device)
+
+
+Taking a look at the provided onboarding automation, an example for the first type of change could be that the Greenboot file, instead of reviewing that a file exist in /root/mustfail (variable `FILE=/root/mustfail` in the `01_check_demo_file.sh` script), it checks a different path. For this kind of change, you only have to directly change that file in the Owner server (if you followed the lab steps you will find it in `/etc/fdo-configs/device0/etc/greenboot/check/required.d/01_check_demo_file.sh`) and the following devices that perform the FDO onboarding will get the new file
+
+*NOTE:* Remember that the already onboarded devices won't get this change. FDO is managing the onboarding only, any day-2 operation must be covered but additional tooling (ie. Ansible)
+
+If you need to modify the commands or files copied during the onboarding (for example, you want to copy an additional file into your systems while onboarding them) you will need to change the `/etc/fdo/serviceinfo-api-server.yml` file in the Owner server including the required new lines pointing to the new file (and the file should be created in the path configured) and lastly, and very important, you need to *restart the Serviceinfo_API server* in order to make that change effective.
+
+*NOTE:* The service is `fdo-aio.service` if you are using All-in-One FDO server or `fdo-serviceinfo-api-server.service` in dedicated Owner sever
+
+
+The last kind of change is different. If you want to change the base OSTree RHEL image by adding (or removing) RPM packages, you will need to use the Image Builder to create a new Blueprint to generate an updated OSTree repo/image and a new ISO. The steps are similar... but not equal to the ones that you performed during the lab, since you want to update an existing OSTree repo, not create a new one. OSTree RHEL image management is out of the scope of this lab, so you can get this task as an additional homework, but if you want some hints, you can check the https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html-single/composing_installing_and_managing_rhel_for_edge_images/index#creating-a-rhel-for-edge-image-with-a-parent-commit-using-image-builder-command-line-interface_composing-a-rhel-for-edge-image-using-image-builder-command-line[official documentation] or https://github.com/luisarizmendi/rhel-edge-quickstart/blob/master/1-create-image.sh#L100[this script].
 
 
 
+[#onboard-summary]
+== Edge device onboarding Lab summary
 
 
+In this lab you have:
+
+. Created a VM that will act as edge device
+. Used the FDO enabled RHEL OSTree ISO image to install the edge device
+. Reviewed the onboarding process and completion
+. Included changes into the device onboarding automation
+
+CONGRATULATIONS!, you finished the last LAB, I hope that you enjoyed it.
