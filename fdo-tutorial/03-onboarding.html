@@ -431,8 +431,12 @@ Caused by:
 <div class="paragraph">
 <p>During this phase, a pre-installed device is created with the certificates (that will authenticate the system) and with the FDO client ready to contact the Rendezvous and Owner servers in order to start the onboarding customization.</p>
 </div>
+<div class="sidebarblock">
+<div class="content">
 <div class="paragraph">
 <p><strong>NOTE:</strong> Remember that when you create the RHEL image the FDO client is included along with the certificates and keys that have been generated during the FDO manufacturing service preparation.</p>
+</div>
+</div>
 </div>
 <div class="paragraph">
 <p>The Manufacturing server creates the owner voucher and store it in the /etc/fdo/stores/owner_vouchers directory (that you created during the Manufacturing server preparation). You can connect to the Manufacturing server and double-check that the voucher is created:</p>
@@ -471,8 +475,12 @@ Caused by:
 <div class="paragraph">
 <p>The configured onboarding automation steps won&#8217;t happen unless you have the All-in-One FDO server, because before being able to jump into the actual onboarding, you need to distribute the Vouchers.</p>
 </div>
+<div class="sidebarblock">
+<div class="content">
 <div class="paragraph">
 <p><strong>NOTE:</strong> If you installed the All-in-One server, you can jump into the <a href="#onboard-finalboot">Step 3 - Automatic onboarding</a>.</p>
+</div>
+</div>
 </div>
 <div class="paragraph">
 <p>In summary, after this step you have two different outputs: a preconfigured device and the Owner Voucher. Now you will have to physically send the device to the final destination (of course that&#8217;s in the real world, not in this lab) and, at the same time, copy the Owner Voucher as is explained in the next point.</p>
@@ -488,8 +496,12 @@ Caused by:
 <div class="paragraph">
 <p>You need to distribute the Voucher that has been created in the Manufacturing server during the edge device first boot, to both the Rendezvous and the Owner server.</p>
 </div>
+<div class="sidebarblock">
+<div class="content">
 <div class="paragraph">
 <p><strong>NOTE:</strong> There is a setting (<code>report_to_rendezvous_endpoint_enabled</code>) in the Owner server that automatically copies the Voucher from the Owner server to the Rendezvous, so you would only need to copy the Voucher to the Owner server, not to both. If you used the provided configuration files for the Owner server you will have this setting to <code>true</code>, so you could skip the copy to the Rendezvous server.</p>
+</div>
+</div>
 </div>
 <div class="paragraph">
 <p>Jump into the Manufacturing server and copy the Voucher to the Rendezvous server:</p>
@@ -515,8 +527,12 @@ Caused by:
 <div class="paragraph">
 <p>Now that everything is prepared, it&#8217;s time to reboot again the edge device.</p>
 </div>
+<div class="sidebarblock">
+<div class="content">
 <div class="paragraph">
 <p><strong>NOTE:</strong> Remember that with All-in-One you don&#8217;t have to reboot again, the device will be rebooted after the first boot and the onboarding process will start automatically.</p>
+</div>
+</div>
 </div>
 <div class="paragraph">
 <p>During this phase, the FDO client will identify itself into the Rendezvous server with the keys that were provided during the device preinstallation phase, create a secure channel to the Owner server and perform the automation configured in the service API service configuration file.</p>
@@ -527,8 +543,12 @@ Caused by:
 <div class="paragraph">
 <p>Once you are in the Edge Device, you can follow the FDO client logs until its completion (remember to break the command with <code>CTL-C</code>):</p>
 </div>
+<div class="sidebarblock">
+<div class="content">
 <div class="paragraph">
 <p><strong>NOTE:</strong> In the example below, you will need to scroll to the right in order see the whole output of the command.</p>
+</div>
+</div>
 </div>
 <div class="tabset is-loading">
 <div class="ulist tabs">
@@ -749,8 +769,12 @@ vda                                           252:0    0   20G  0 disk
 <div class="paragraph">
 <p>Another thing to be checked is if KVM and Cockpit (with VM management) was installed, so you have to visit <code><a href="https://&lt;EDGE" class="bare">https://&lt;EDGE</a> DEVICE IP&gt;:9090</code> and review the VM management</p>
 </div>
+<div class="sidebarblock">
+<div class="content">
 <div class="paragraph">
 <p><strong>NOTE:</strong> You are not supposed to run any VM. If you are using VMs as Edge Devices as we are doing in this lab, you need to enable nested virtualization to run VMs on top of VMs (and having enough resources in your Edge Device&#8230;&#8203; probably 2 vCPUs and 1.5GB of memory is not enough)</p>
+</div>
+</div>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -831,14 +855,22 @@ fi</code></pre>
 <div class="paragraph">
 <p>For this kind of change, you only have to directly modify the file in the Owner server (if you followed the lab steps you will find it in <code>/etc/fdo-configs/device0/etc/greenboot/check/required.d/01_check_demo_file.sh</code>) and the following devices that perform the FDO onboarding will get the new file. You don&#8217;t need to touch anything else, including the serviceinfo-api-server.yml because you are not modifying the name or the PATH to the Greenboot file, only its contents.</p>
 </div>
+<div class="sidebarblock">
+<div class="content">
 <div class="paragraph">
 <p><strong>NOTE:</strong> Remember that the already onboarded devices won&#8217;t get this change. FDO is managing the onboarding only, any day-2 operation must be covered but additional tooling (ie. Ansible)</p>
+</div>
+</div>
 </div>
 <div class="paragraph">
 <p>If you need to modify the commands or files copied during the onboarding (for example, you want to copy additional file into your systems while onboarding them) you will need to change the <code>/etc/fdo/serviceinfo-api-server.yml</code> file in the Owner server including the required new lines pointing to the new file (and the file should be created in the path configured) and lastly, and very important, you need to <strong>restart the Serviceinfo_API server</strong> in order to make that change effective.</p>
 </div>
+<div class="sidebarblock">
+<div class="content">
 <div class="paragraph">
 <p><strong>NOTE:</strong> The service is <code>fdo-aio.service</code> if you are using All-in-One FDO server or <code>fdo-serviceinfo-api-server.service</code> in dedicated Owner sever</p>
+</div>
+</div>
 </div>
 <div class="paragraph">
 <p>The last kind of change is different. If you want to change the base OSTree RHEL image by adding (or removing) RPM packages, you will need to use the Image Builder to create a new Blueprint to generate an updated OSTree repo/image and a new ISO. The steps are similar&#8230;&#8203; but not equal to the ones that you performed during the lab, since you want to update an existing OSTree repo, not create a new one.</p>

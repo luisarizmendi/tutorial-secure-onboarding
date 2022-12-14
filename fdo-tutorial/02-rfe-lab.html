@@ -709,8 +709,12 @@ sed -i "s|&lt;ADMIN PASSW&gt;|${ADMIN_PASSW}|g" blueprint-insights.toml</code></
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo composer-cli compose start-ostree kvm-insights edge-commit</code></pre>
 </div>
 </div>
+<div class="sidebarblock">
+<div class="content">
 <div class="paragraph">
 <p><strong>NOTE:</strong> In this lab we are using the <code>edge-commit</code> image type. You could use the <code>edge-container</code> type as well as it&#8217;s explained in the <a href="#rfe-publish">publishing the repo image</a> section.</p>
+</div>
+</div>
 </div>
 <div class="paragraph">
 <p>The command will start to create the repo. You can check the status of the build by running the following command (remember to use <code>CTL-C</code> to finish the <code>watch</code> process):</p>
@@ -820,8 +824,12 @@ EOF</code></pre>
 <div class="paragraph">
 <p>Now you can create your container image using this Dockerfile. If you used an argument for the OSTree iamge you need to include the full path to your OSTree repo <code>TAR</code> file:</p>
 </div>
+<div class="sidebarblock">
+<div class="content">
 <div class="paragraph">
 <p><strong>NOTE:</strong> Do not forget the last <code>.</code></p>
+</div>
+</div>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -888,8 +896,12 @@ sudo firewall-cmd --reload</code></pre>
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">IMAGE_BUILDER_IP=&lt;IP&gt;</code></pre>
 </div>
 </div>
+<div class="sidebarblock">
+<div class="content">
 <div class="paragraph">
 <p><strong>NOTE:</strong> If you didn&#8217;t use the Image Builder to run the container image publishing the OSTree repo, you will need to configure here the IP address of that system, not the Image Builder IP.</p>
+</div>
+</div>
 </div>
 <div class="tabset is-loading">
 <div class="ulist tabs">
@@ -1111,8 +1123,12 @@ basearch=$(arch)</code></pre>
 </div>
 </div>
 </div>
+<div class="sidebarblock">
+<div class="content">
 <div class="paragraph">
 <p><strong>NOTE:</strong> In my Image Builder VM with 2 vCPUs and 4 GB of memory this takes around 10 minutes.</p>
+</div>
+</div>
 </div>
 <div class="paragraph">
 <p>Once the status changes to <code>FINISHED</code>, the ISO image will be ready in the Image Builder, you just need to download it.</p>
