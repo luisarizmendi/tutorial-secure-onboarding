@@ -4,7 +4,7 @@ runtime:
 site:
   title: Secure Edge device onboarding with RHEL and FDO
   url: https://luisarizmendi.github.io/tutorial-secure-onboarding
-  start_page: tutorial-secure-onboarding::index.adoc
+  start_page: fdo-tutorial::index.adoc
 
 content:
   sources:
