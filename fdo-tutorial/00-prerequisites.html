@@ -298,6 +298,19 @@ sudo systemctl enable --now libvirtd</code></pre>
 </div>
 </div>
 <div class="paragraph">
+<p>After installing those packages you can create VMs using <code>virt-manager</code> or <code>virt-install</code> running a command similar to the one shown below:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">virt-install --name=image-builder-fdo \
+--vcpus=2 \
+--memory=4096 \
+--cdrom=&lt;PATH TO RHEL ISO&gt; \
+--disk size=50 \
+--os-variant=rhel9.1</code></pre>
+</div>
+</div>
+<div class="paragraph">
 <p>Depending on the use case or configuration that you want to follow during this lab, you could need to add "special" devices to your edge VM, for example, you probably would like to use a virtual TPM to manage keys as you will be doing it with physical devices on real edge environments.</p>
 </div>
 <div class="paragraph">
@@ -320,17 +333,7 @@ sudo systemctl enable --now libvirtd</code></pre>
 <p>You will also need to <a href="https://access.redhat.com/downloads/content/479/ver=/rhel---9/9.1/x86_64/product-software">download a RHEL ISO</a> (At this moment, the latest one is RHEL 9.1).</p>
 </div>
 <div class="paragraph">
-<p>Once you have <code>libvirt</code> or any other hypervisor installed, and your RHEL ISO downloaded, you can create a VM with <strong>2 vCPUs, 4 GB memory and 50 GB disk</strong> using the "Local install media" option selecting the RHEL ISO. You can use <code>virt-manager</code> in case of <code>libvirt</code> or running the following command to create the VM:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">virt-install --name=image-builder-fdo \
---vcpus=2 \
---memory=4096 \
---cdrom=&lt;PATH TO RHEL ISO&gt; \
---disk size=50 \
---os-variant=rhel9.1</code></pre>
-</div>
+<p>Once you have <code>libvirt</code> or any other hypervisor installed, and your RHEL ISO downloaded, you have to create a VM with <strong>2 vCPUs, 4 GB memory and 50 GB disk</strong> and install the Operating System using the RHEL ISO.</p>
 </div>
 <div class="paragraph">
 <p>During the RHEL 9 install wizard you can introduce your Red Hat account to register your system, so when the installation finishes your RHEL will be already subscribed. If you decide to use RHEL 8, you will need to subscribe your VM using <code>subscription-manager</code> manually after the first install.</p>
