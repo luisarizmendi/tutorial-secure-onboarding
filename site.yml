@@ -4,7 +4,7 @@ runtime:
 site:
   title: Secure Edge device onboarding with RHEL and FDO
   url: https://luisarizmendi.github.io/tutorial-secure-onboarding
-  start_page: fdo-tutorial::index.adoc
+  start_page: tutorial-secure-onboarding::index.adoc
 
 content:
   sources:
@@ -13,8 +13,11 @@ content:
 
 asciidoc:
   attributes:
-    release-version: master
+    #title: Secure Edge device onboarding with RHEL and FDO
+    experimental: true
     page-pagination: true
+    lab: java
+    lab-name: Java
   extensions:
     - ./lib/tab-block.js
     - ./lib/remote-include-processor.js
@@ -23,9 +26,7 @@ ui:
   bundle:
     url: https://github.com/redhat-scholars/course-ui/releases/download/v0.1.12/ui-bundle.zip
     snapshot: true
-  supplemental_files:
-    - path: ./supplemental-ui
-
+  supplemental_files: ./supplemental-ui
 
 output:
   dir: ./gh-pages
