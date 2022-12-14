@@ -125,8 +125,9 @@ Once the device boots from that ISO, three main points are covered:
 
 During this phase, a pre-installed device is created with the certificates (that will authenticate the system) and with the FDO client ready to contact the Rendezvous and Owner servers in order to start the onboarding customization.
 
+****
 *NOTE:* Remember that when you create the RHEL image the FDO client is included along with the certificates and keys that have been generated during the FDO manufacturing service preparation.
-
+****
 
 The Manufacturing server creates the owner voucher and store it in the /etc/fdo/stores/owner_vouchers directory (that you created during the Manufacturing server preparation). You can connect to the Manufacturing server and double-check that the voucher is created:
 
@@ -159,8 +160,9 @@ After the installation, the system will reboot directly from the hard disk and w
 
 The configured onboarding automation steps won't happen unless you have the All-in-One FDO server, because before being able to jump into the actual onboarding, you need to distribute the Vouchers.
 
+****
 *NOTE:* If you installed the All-in-One server, you can jump into the xref:03-onboarding.adoc#onboard-finalboot[Step 3 - Automatic onboarding].
-
+****
 
 In summary, after this step you have two different outputs: a preconfigured device and the Owner Voucher. Now you will have to physically send the device to the final destination (of course that's in the real world, not in this lab) and, at the same time, copy the Owner Voucher as is explained in the next point.
 
@@ -173,7 +175,9 @@ When using the All-in-One FDO server, the manufacturing server, Rendezvous serve
 
 You need to distribute the Voucher that has been created in the Manufacturing server during the edge device first boot, to both the Rendezvous and the Owner server.
 
+****
 *NOTE:* There is a setting (`report_to_rendezvous_endpoint_enabled`) in the Owner server that automatically copies the Voucher from the Owner server to the Rendezvous, so you would only need to copy the Voucher to the Owner server, not to both. If you used the provided configuration files for the Owner server you will have this setting to `true`, so you could skip the copy to the Rendezvous server.
+****
 
 Jump into the Manufacturing server and copy the Voucher to the Rendezvous server:
 
@@ -195,7 +199,9 @@ scp /etc/fdo/stores/owner_vouchers/<VOUCHER ID> root@<OWNER SERVER IP>:/etc/fdo/
 
 Now that everything is prepared, it's time to reboot again the edge device.
 
+****
 *NOTE:* Remember that with All-in-One you don't have to reboot again, the device will be rebooted after the first boot and the onboarding process will start automatically.
+****
 
 During this phase, the FDO client will identify itself into the Rendezvous server with the keys that were provided during the device preinstallation phase, create a secure channel to the Owner server and perform the automation configured in the service API service configuration file.
 
@@ -203,7 +209,9 @@ Before checking anything on the system you need to log in using the user that yo
 
 Once you are in the Edge Device, you can follow the FDO client logs until its completion (remember to break the command with `CTL-C`):
 
+****
 *NOTE:* In the example below, you will need to scroll to the right in order see the whole output of the command.
+****
 
 [tabs]
 ====
@@ -372,8 +380,9 @@ image::compliant-report.png[Compliant report]
 
 Another thing to be checked is if KVM and Cockpit (with VM management) was installed, so you have to visit `https://<EDGE DEVICE IP>:9090` and review the VM management
 
+****
 *NOTE:* You are not supposed to run any VM. If you are using VMs as Edge Devices as we are doing in this lab, you need to enable nested virtualization to run VMs on top of VMs (and having enough resources in your Edge Device... probably 2 vCPUs and 1.5GB of memory is not enough)
-
+****
 
 image::kvm-edge.png[KVM Edge]
 
@@ -436,11 +445,15 @@ Taking a look at the provided onboarding automation, an example for the first ty
 
 For this kind of change, you only have to directly modify the file in the Owner server (if you followed the lab steps you will find it in `/etc/fdo-configs/device0/etc/greenboot/check/required.d/01_check_demo_file.sh`) and the following devices that perform the FDO onboarding will get the new file. You don't need to touch anything else, including the serviceinfo-api-server.yml because you are not modifying the name or the PATH to the Greenboot file, only its contents.
 
+****
 *NOTE:* Remember that the already onboarded devices won't get this change. FDO is managing the onboarding only, any day-2 operation must be covered but additional tooling (ie. Ansible)
+****
 
 If you need to modify the commands or files copied during the onboarding (for example, you want to copy additional file into your systems while onboarding them) you will need to change the `/etc/fdo/serviceinfo-api-server.yml` file in the Owner server including the required new lines pointing to the new file (and the file should be created in the path configured) and lastly, and very important, you need to *restart the Serviceinfo_API server* in order to make that change effective.
 
+****
 *NOTE:* The service is `fdo-aio.service` if you are using All-in-One FDO server or `fdo-serviceinfo-api-server.service` in dedicated Owner sever
+****
 
 The last kind of change is different. If you want to change the base OSTree RHEL image by adding (or removing) RPM packages, you will need to use the Image Builder to create a new Blueprint to generate an updated OSTree repo/image and a new ISO. The steps are similar... but not equal to the ones that you performed during the lab, since you want to update an existing OSTree repo, not create a new one. 
 

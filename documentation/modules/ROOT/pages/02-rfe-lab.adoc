@@ -385,9 +385,9 @@ If you used the provided Blueprint, which name is `kvm-insights`, the command wi
 sudo composer-cli compose start-ostree kvm-insights edge-commit
 ----
 
-
+****
 *NOTE:* In this lab we are using the `edge-commit` image type. You could use the `edge-container` type as well as it's explained in the xref:02-rfe-lab.adoc#rfe-publish[publishing the repo image] section.
-
+****
 
 The command will start to create the repo. You can check the status of the build by running the following command (remember to use `CTL-C` to finish the `watch` process):
 
@@ -488,7 +488,9 @@ EOF
 
 Now you can create your container image using this Dockerfile. If you used an argument for the OSTree iamge you need to include the full path to your OSTree repo `TAR` file:
 
+****
 *NOTE:* Do not forget the last `.`
+****
 
 [source,bash,subs="+macros,+attributes"]
 ----
@@ -550,8 +552,9 @@ You can double check that your container is running and publishing the contents 
 IMAGE_BUILDER_IP=<IP>
 ----
 
+****
 *NOTE:* If you didn't use the Image Builder to run the container image publishing the OSTree repo, you will need to configure here the IP address of that system, not the Image Builder IP.
-
+****
 
 [tabs]
 ====
@@ -745,7 +748,9 @@ output::
 --
 ====
 
+****
 *NOTE:* In my Image Builder VM with 2 vCPUs and 4 GB of memory this takes around 10 minutes.
+****
 
 Once the status changes to `FINISHED`, the ISO image will be ready in the Image Builder, you just need to download it.
 

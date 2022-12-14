@@ -312,7 +312,9 @@ sudo systemctl enable --now fdo-manufacturing-server.service
 
 And check that the service is listening on port 8080 (default)
 
+****
 *NOTE:* In the example below, you will need to scroll to the right in order see the whole output of the command.
+****
 
 [tabs]
 ====
@@ -456,7 +458,9 @@ sudo systemctl enable --now fdo-rendezvous-server.service
 
 Check that the server is listening on the configured port (default 8082):
 
+****
 *NOTE:* In the example below, you will need to scroll to the right in order see the whole output of the command.
+****
 
 [tabs]
 ====
@@ -639,7 +643,9 @@ sudo systemctl start fdo-owner-onboarding-server.service
 
 Check that the Owner server is listening in the configured port (TCP/8081 is the default port for the Owner server):
 
+****
 *NOTE:* In the example below, you will need to scroll to the right in order see the whole output of the command.
+****
 
 [tabs]
 ====
@@ -891,7 +897,9 @@ RED_HAT_PASSWORD="myrhpassword"
 
 The example Serviceinfo API file doesn't have the right tokens, so update it with the ones on your system. There are two tokens, `service_info_auth_token` is the authorization token configured in the Owner server (you can use `None` if no authentication is needed) and the `admin_auth_token` that is the admins authorization token (this variable is optional but since it's configured when following the All-in-One approach, here we also configure it for the distributed method for consistency.)
 
+****
 *NOTE:* Be sure that you use the commands for the FDO deployment option that you selected (all-in-one versus dedicated servers) since the directory where you find `serviceinfo_api_server.yml` file is different
+****
 
 [tabs]
 ====
@@ -954,7 +962,9 @@ sudo cp -f serviceinfo_api_server.yml /etc/fdo/serviceinfo-api-server.yml
 
 Now that you have the configuration in plase, start or restart the service
 
-Note: Every time you change the configuration files, remember to restart the systemd services.
+****
+*NOTE:* Every time you change the configuration files, remember to restart the systemd services.
+****
 
 [tabs]
 ====
@@ -978,7 +988,9 @@ sudo systemctl restart fdo-serviceinfo-api-server.service
 
 If everything is ok, you will find that the FDO servers are up and running. Check if the services are listening in their ports, if the port 8083 is not up, probably there is something wrong in your serviceinfo_api_server configuration.
 
+****
 *NOTE:* In the example below, you will need to scroll to the right in order see the whole output of the command.
+****
 
 [tabs]
 ====
