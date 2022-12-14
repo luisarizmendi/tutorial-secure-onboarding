@@ -1,1 +1,1 @@
- https://luisarizmendi.github.io/tutorial-secure-onboarding/fdo-tutorial/index.html[Check the build courseware here].
+Check https://luisarizmendi.github.io/tutorial-secure-onboarding/fdo-tutorial/index.html[the build courseware here].
