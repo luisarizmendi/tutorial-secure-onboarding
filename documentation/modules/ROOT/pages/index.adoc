@@ -18,9 +18,13 @@ image::Device-Edge-logo.png[Red Hat Device Edge logo]
 
 The lab will consist in three main steps:
 
-. Install and configure the required FDO servers
-. Create an OSTree RHEL image (OSTree Operating Systems are based on images that contain all required RPMs, in contrast with installing with a standard RHEL ISO and then start installing RPMs with DNF/YUM)
-. Use the generated OSTree RHEL image to deploy an edge device system which will use the configured FDO services to automate the device onboarding in a secure way.
+. *FDO Lab*: Install and configure the required FDO servers
+. *RHEL OSTree Lab*: Create an OSTree RHEL image (OSTree Operating Systems are based on images that contain all required RPMs, in contrast with installing with a standard RHEL ISO and then start installing RPMs with DNF/YUM)
+. *Onboarding Lab*: Use the generated OSTree RHEL image to deploy an edge device system which will use the configured FDO services to automate the device onboarding in a secure way.
+
+
+Before the FDO and RHEL labs you will find an "Intro". That won't be related to the Labs, it is only an introduction to the xref:01-fdo-intro.adoc[FDO] and xref:02-rfe-intro.adoc[OSTree RHEL] concepts that you could skip, but that I encourage you to read to better understand what you are doing during the Labs. 
+
 
 Let's start!
 

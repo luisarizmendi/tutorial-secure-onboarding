@@ -75,10 +75,27 @@ Caused by:
        Error adding new binding to /dev/vda4
 ----
 
-Take a look at the animated GIF below if you want to review the whole VM creation process when using `libvirt`.
+
+You can adapt this `virt-install` command to install your VMs according to your needs:
+
+[source,bash,subs="+macros,+attributes"]
+----
+virt-install --name=edge-device \
+--vcpus=2 \
+--memory=1536 \
+--cdrom=<PATH TO RHEL OSTREE ISO> \
+--disk size=20 \
+--os-variant=rhel9.1 \
+--boot uefi \
+--tpm backend.type=emulator,backend.version=2.0,model=tpm-crb
+----
+
+
+Another options is `virt-manager`. Take a look at the animated GIF below if you want to review the whole VM creation process when using virt-manager.
 
 
 image::vm_create.gif[Create VM GIF]
+
 
 
 
@@ -186,7 +203,7 @@ Before checking anything on the system you need to log in using the user that yo
 
 Once you are in the Edge Device, you can follow the FDO client logs until its completion (remember to break the command with `CTL-C`):
 
-
+*NOTE:* In the example below, you will need to scroll to the right in order see the whole output of the command.
 
 [tabs]
 ====

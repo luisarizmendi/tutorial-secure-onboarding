@@ -62,7 +62,7 @@ Let's review the role of these components by reviewing the FDO workflow during d
 
 
 .FDO workflow
-image::fdo-workflow.webp[FDO workflow]
+image::fdo-workflow.png[FDO workflow]
 
 There are three stages in the FDO specification: Before, during, and after the device's first boot.
 

@@ -43,7 +43,17 @@ For this option, you just need the minimum system requirements described in xref
 
 You will also need to https://access.redhat.com/downloads/content/479/ver=/rhel---9/9.1/x86_64/product-software[download a RHEL ISO] (At this moment, the latest one is RHEL 9.1). 
 
-Once you have `libvirt` or any other hypervisor installed, and your RHEL ISO downloaded, you can create a VM (I recommend using`virt-manager` in case of `libvirt`) with *2 vCPUs, 4 GB memory and 50 GB disk* using the "Local install media" option selecting the RHEL ISO.
+Once you have `libvirt` or any other hypervisor installed, and your RHEL ISO downloaded, you can create a VM with *2 vCPUs, 4 GB memory and 50 GB disk* using the "Local install media" option selecting the RHEL ISO. You can use `virt-manager` in case of `libvirt` or running the following command to create the VM:
+
+[source,bash,subs="+macros,+attributes"]
+----
+virt-install --name=image-builder-fdo \
+--vcpus=2 \
+--memory=4096 \
+--cdrom=<PATH TO RHEL ISO> \
+--disk size=50 \
+--os-variant=rhel9.1
+----
 
 During the RHEL 9 install wizard you can introduce your Red Hat account to register your system, so when the installation finishes your RHEL will be already subscribed. If you decide to use RHEL 8, you will need to subscribe your VM using `subscription-manager` manually after the first install. 
 
