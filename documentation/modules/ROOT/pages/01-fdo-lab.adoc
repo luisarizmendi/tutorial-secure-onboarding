@@ -84,9 +84,8 @@ sudo systemctl enable --now fdo-aio
 
 Now you are using the default keys and configuration (that we will modify later in the next section) but your FDO services should be already running in your VM:
 
-.NOTE
 ****
-In the example below, you will need to scroll to the right in order see the whole output of the command.
+*NOTE:* In the example below, you will need to scroll to the right in order see the whole output of the command.
 ****
 
 
