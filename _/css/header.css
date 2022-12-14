@@ -36,22 +36,22 @@ html.is-clipped--navbar {
   @media screen and (min-width: 1024px) {
     .navbar-end > .navbar-item,
     .navbar-end .navbar-link {
-      color: var(--navbar-font-color);
+      color: var(--color-white);
     }
   
     .navbar-end > a.navbar-item:hover,
     .navbar-end .navbar-link:hover {
       background: var(--navbar_hover-background);
-      color: var(--navbar-font-color);
+      color: var(--color-white);
     }
   
     .navbar-end .navbar-link::after {
-      border-color: var(--navbar-font-color);
+      border-color: var(--color-white);
     }
   
     .navbar-item.has-dropdown:hover .navbar-link {
       background: var(--navbar_hover-background);
-      color: var(--navbar-font-color);
+      color: var(--color-white);
     }
   }
   
