@@ -320,7 +320,17 @@ sudo systemctl enable --now libvirtd</code></pre>
 <p>You will also need to <a href="https://access.redhat.com/downloads/content/479/ver=/rhel---9/9.1/x86_64/product-software">download a RHEL ISO</a> (At this moment, the latest one is RHEL 9.1).</p>
 </div>
 <div class="paragraph">
-<p>Once you have <code>libvirt</code> or any other hypervisor installed, and your RHEL ISO downloaded, you can create a VM (I recommend using`virt-manager` in case of <code>libvirt</code>) with <strong>2 vCPUs, 4 GB memory and 50 GB disk</strong> using the "Local install media" option selecting the RHEL ISO.</p>
+<p>Once you have <code>libvirt</code> or any other hypervisor installed, and your RHEL ISO downloaded, you can create a VM with <strong>2 vCPUs, 4 GB memory and 50 GB disk</strong> using the "Local install media" option selecting the RHEL ISO. You can use <code>virt-manager</code> in case of <code>libvirt</code> or running the following command to create the VM:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">virt-install --name=image-builder-fdo \
+--vcpus=2 \
+--memory=4096 \
+--cdrom=&lt;PATH TO RHEL ISO&gt; \
+--disk size=50 \
+--os-variant=rhel9.1</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>During the RHEL 9 install wizard you can introduce your Red Hat account to register your system, so when the installation finishes your RHEL will be already subscribed. If you decide to use RHEL 8, you will need to subscribe your VM using <code>subscription-manager</code> manually after the first install.</p>

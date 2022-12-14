@@ -361,7 +361,22 @@ Caused by:
 </div>
 </div>
 <div class="paragraph">
-<p>Take a look at the animated GIF below if you want to review the whole VM creation process when using <code>libvirt</code>.</p>
+<p>You can adapt this <code>virt-install</code> command to install your VMs according to your needs:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">virt-install --name=edge-device \
+--vcpus=2 \
+--memory=1536 \
+--cdrom=&lt;PATH TO RHEL OSTREE ISO&gt; \
+--disk size=20 \
+--os-variant=rhel9.1 \
+--boot uefi \
+--tpm backend.type=emulator,backend.version=2.0,model=tpm-crb</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Another options is <code>virt-manager</code>. Take a look at the animated GIF below if you want to review the whole VM creation process when using virt-manager.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -511,6 +526,9 @@ Caused by:
 </div>
 <div class="paragraph">
 <p>Once you are in the Edge Device, you can follow the FDO client logs until its completion (remember to break the command with <code>CTL-C</code>):</p>
+</div>
+<div class="paragraph">
+<p><strong>NOTE:</strong> In the example below, you will need to scroll to the right in order see the whole output of the command.</p>
 </div>
 <div class="tabset is-loading">
 <div class="ulist tabs">
