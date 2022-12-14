@@ -6,6 +6,8 @@ In this lab you are going to:
 . Deploy and configured the FDO servers in one (Option 1) or multiple nodes (Option 2).
 . Customize the FDO onboarding automation with your own use case (Option A) or with the example automation provided in the lab (Option B).
 
+Recently, a new https://github.com/ansible-collections/community.fdo/blob/main/examples/README.md[Ansible collection that helps configuring FDO] has been released but in this lab you will perform the steps manually to better understand the details.
+
 
 [#fdo-services]
 == FDO services
