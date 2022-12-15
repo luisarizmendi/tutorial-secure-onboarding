@@ -885,12 +885,12 @@ Starting for including your own public SSH key that will be used to SSH into the
 SSH_PUB_KEY="ssh-rsa AAAAB3......am8= user@machine"
 ----
 
-The onboarding automation will register your system in the https://console.redhat.com[Red Hat Hybrid Console] so the file will need you Red Hat account credentials.
+The onboarding automation will register your system in the https://console.redhat.com[Red Hat Hybrid Console] so the file will need you Red Hat account credentials. In order to not including the user and password directly in plain text, the script that I created accepts the inputs as base64 (for a production environment you should write a script that accept encrypted passwords, not just with base64).
 
 [source,bash,subs="+macros,+attributes"]
 ----
-RED_HAT_USER="myrhuser"
-RED_HAT_PASSWORD="myrhpassword"
+RED_HAT_USER=$(echo "myrhuser" | base64 )
+RED_HAT_PASSWORD=$(echo "myrhpassword" | base64 )
 ----
 
 
