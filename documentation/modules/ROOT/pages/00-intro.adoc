@@ -38,7 +38,7 @@ If you don't want to end up with a sea of device images, which *could be complex
 [#intro-security]
 == Device onboarding security and image templates
 
-As explained, the tradictional way of onboarding devices does not scale for edge use cases and an possible solution has been discussed: creating customized device images that can be installed by any non-specialized people onsite, but in that case you find an additional concern: Security.
+As explained, the traditional way of onboarding devices does not scale for edge use cases and an possible solution has been discussed: creating customized device images that can be installed by any non-specialized people onsite, but in that case you find an additional concern: Security.
 
 Your solution must also take device security into account. As part of every deployment, you will probably need to include in the device image sensitive data, such as passwords, certificates, tokens, or keys. How do you plan to distribute them?
 
