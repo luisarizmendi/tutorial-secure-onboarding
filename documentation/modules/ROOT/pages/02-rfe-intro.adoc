@@ -10,7 +10,7 @@ The system packages include:
 * Podman as the container engine
 * Additional RPM content
 
-You can customize the image to configure the OS content as per your requirements by using either Image Builder installed on an RHEL system or using http://console.redhat.com[Red Hat Hybrid Console].
+You can customize the image to configure the OS content as per your requirements by using either Image Builder installed on an RHEL system or using https://console.redhat.com/edge/manage-images[Red Hat Hybrid Console].
 
 
 [#rfe-intro-benefits]
