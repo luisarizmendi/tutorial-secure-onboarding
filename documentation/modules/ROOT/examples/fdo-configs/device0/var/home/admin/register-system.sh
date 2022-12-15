@@ -3,8 +3,8 @@
 #RHC_ORGID=$1
 #RHC_ACTIVATION_KEY=$2
 
-RHC_USER=(echo ${1} | base64 -d)
-RHC_PASS=(echo ${2} | base64 -d)
+RHC_USER=$(echo ${1} | base64 -d)
+RHC_PASS=$(echo ${2} | base64 -d)
 
 
 
