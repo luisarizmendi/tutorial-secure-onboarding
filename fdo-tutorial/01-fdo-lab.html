@@ -1265,12 +1265,12 @@ tar xvf fdo-configs.tar.gz</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The onboarding automation will register your system in the <a href="https://console.redhat.com">Red Hat Hybrid Console</a> so the file will need you Red Hat account credentials.</p>
+<p>The onboarding automation will register your system in the <a href="https://console.redhat.com">Red Hat Hybrid Console</a> so the file will need you Red Hat account credentials. In order to not including the user and password directly in plain text, the script that I created accepts the inputs as base64 (for a production environment you should write a script that accept encrypted passwords, not just with base64).</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">RED_HAT_USER="myrhuser"
-RED_HAT_PASSWORD="myrhpassword"</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">RED_HAT_USER=$(echo "myrhuser" | base64 )
+RED_HAT_PASSWORD=$(echo "myrhpassword" | base64 )</code></pre>
 </div>
 </div>
 <div class="paragraph">
