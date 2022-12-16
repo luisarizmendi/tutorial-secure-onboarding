@@ -986,7 +986,7 @@ sudo systemctl restart fdo-serviceinfo-api-server.service
 --
 ====
 
-If everything is ok, you will find that the FDO servers are up and running. Check if the services are listening in their ports, if the port 8083 is not up, probably there is something wrong in your serviceinfo_api_server configuration.
+If everything is ok, you will find that the FDO servers are up and running. Check if the services are listening in their ports, if the port 8083 is not up, probably there is something wrong in your serviceinfo_api_server configuration. Most of the time the logs don't not help, so try to remove some parts of the `serviceinfo_api_server.yml` file and restart the service until you find the port listening, then try to figure out the error (files are not in the path?, malformed command?, etc ).
 
 ****
 *NOTE:* In the example below, you will need to scroll to the right in order see the whole output of the command.
@@ -1032,6 +1032,9 @@ LISTEN                      0                           128                     
 ----
 --
 ====
+
+
+If you find a message on the Serviceinfo logs that says that there is a missing field `service_info`, that could mean that the path to your `serviceinfo_api_server.yml` file is not the right one (remember that it is different depending if you are using the All-in-One FDO server or not).
 
 
 
