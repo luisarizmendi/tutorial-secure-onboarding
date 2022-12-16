@@ -945,6 +945,7 @@ and then copy this file into the final directory (choose your FDO deployment opt
 All-in-one server::
 +
 --
+[.console-input]
 [source,bash,subs="+macros,+attributes"]
 ----
 sudo cp -f serviceinfo_api_server.yml  /etc/fdo/aio/configs/serviceinfo_api_server.yml
@@ -953,6 +954,7 @@ sudo cp -f serviceinfo_api_server.yml  /etc/fdo/aio/configs/serviceinfo_api_serv
 Dedicated servers::
 +
 --
+[.console-input]
 [source,bash,subs="+macros,+attributes"]
 ----
 sudo cp -f serviceinfo_api_server.yml /etc/fdo/serviceinfo-api-server.yml
@@ -971,6 +973,7 @@ Now that you have the configuration in plase, start or restart the service
 All-in-one server::
 +
 --
+[.console-input]
 [source,bash,subs="+macros,+attributes"]
 ----
 sudo systemctl restart fdo-aio
@@ -979,6 +982,7 @@ sudo systemctl restart fdo-aio
 Dedicated servers::
 +
 --
+[.console-input]
 [source,bash,subs="+macros,+attributes"]
 ----
 sudo systemctl restart fdo-serviceinfo-api-server.service
