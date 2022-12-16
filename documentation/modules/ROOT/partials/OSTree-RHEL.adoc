@@ -44,7 +44,7 @@ After that, we will see how common problems of several solution use cases will g
 
 Some years ago, some people were struggling with the complexity of developing using core aspects of the OS without “breaking things”, or at least having a safe way to “break things”. They ended up writing down a set of capabilities that they would like to have implemented to simplify the development (of GNOME) by being able to quickly create a new “instance” of the OS in the same system where they will perform some changes that could be easily reverted… but that will also cover several additional needs, such as sharing data between these multiple “versions” of the OS, using the system installed apps, specific hardware usage, etc…
 
-Getting a new “OS instance” could be accomplished using technologies such as virtualization, containers, etc… but the creation process is slow (ie. create a new VM or building a new container takes some time) and access to the same system data, applications and Hardware is not always easy, along with that the kind of rollback capability that they were looking for was not trivial sometimes. They needed something else.
+Getting a new “OS instance” could be accomplished using technologies such as virtualization, containers, etc… but the creation process is slow (ie. create a new VM or building a new container takes some time) and access to the same system data, applications, and hardware is not always easy, along with that the kind of rollback capability that they were looking for was not trivial sometimes. They needed something else.
 
 Based on those core requirements, and after reviewing some alternatives (virtualization, containers, BTRFS,…) they decided that “_chroot”_ could be a good candidate as the foundation of something new that could help with the gaps they found.
 
@@ -65,7 +65,7 @@ If you want to read a formal description of what libostree is you can check how 
 
 
 https://ostreedev.github.io/ostree/[*libostree* +
-__This project is now known as “libostree”, though it is still appropriate to use the previous name: “OSTree” (or…__ostreedev.github.io]https://ostreedev.github.io/ostree/[]
+__This project is now known as “libostree”, though it is still appropriate to use the previous name: “OSTree”.
 
 ____
 Libostree is both a shared library and suite of command line tools that combines a “git-like” model for committing and downloading bootable filesystem trees, along with a layer for deploying them and managing the bootloader configuration.
@@ -163,7 +163,7 @@ You might be thinking…if libostree is the one who manages the updates of the s
 
 A package manager is a tool that simplifies the management of Software packages (install, remove, update or configure), which are archive files containing the pre-compiled binaries and configuration files that shape an actual Software application. These packages were created to remove the need of compiling Sofware from source code in order to install something in your system.
 
-_Libostree_ only manages complete bootable file system trees, not individual files, actually, it has ** no knowledge of individual files at all (how they were generated, their origin, …) so it needs a separate mechanism to install additional packaged applications. You still need a package manager if you want to keep the simplicity of packaged Software instead of coming back to compile from source code on your own like in the not-that-good-old-days.
+_Libostree_ only manages complete bootable file system trees, not individual files, actually, it has no knowledge of individual files at all (how they were generated, their origin, …) so it needs a separate mechanism to install additional packaged applications. You still need a package manager if you want to keep the simplicity of packaged Software instead of coming back to compile from source code on your own like in the not-that-good-old-days.
 
 But you cannot use package managers as they are, since they probably don’t expect to have your OS in a read-only filesystem. You need a “hybrid” package manager that knows how to deal with _libostree_.
 
@@ -259,7 +259,7 @@ This is another interesting use case. In a previous article relative to https://
 
 
 https://luis-javier-arizmendi-alonso.medium.com/edge-computing-device-onboarding-part-i-introducing-the-challenge-59add9a86200[*Edge Computing device onboarding — Part I— Introducing the challenge* +
-__This article outlines the challenges that you will face while performing a secure device onboarding at the scale…__luis-javier-arizmendi-alonso.medium.com]https://luis-javier-arizmendi-alonso.medium.com/edge-computing-device-onboarding-part-i-introducing-the-challenge-59add9a86200[]
+__This article outlines the challenges that you will face while performing a secure device onboarding at the scale…
 
 I will copy-paste that list here:
 
@@ -303,7 +303,7 @@ You could start from the https://access.redhat.com/documentation/en-us/red_hat_e
 
 
 https://github.com/luisarizmendi/rhel-edge-quickstart[*GitHub - luisarizmendi/rhel-edge-quickstart* +
-__These scripts help to quickly create and publish RHEL for Edge images. You should execute them in a RHEL 9 server which…__github.com]https://github.com/luisarizmendi/rhel-edge-quickstart[]
+__These scripts help to quickly create and publish RHEL for Edge images.
 
 That’s all!
 
