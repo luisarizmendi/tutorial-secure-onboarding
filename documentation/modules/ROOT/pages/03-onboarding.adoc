@@ -338,8 +338,9 @@ One remark, in order to subscribe any RHEL system, you need the user and passwor
 
 In order to get the SCAP compliance report, your system needs to be part of a SCAP policy. You will need to first go to the Policy page and include the new edge system (if you don't have any SCAP Policy pre-configured you need to create one):
 
-*IDEA FOR IMPROVING THE ONBOARDING EXAMPLE:* If you have time, you can create an Ansible playbook that adds the system automatically to one pre-created SCAP policy in the Hybrid Console as part of the onboarding process, so we remove this manual step.
-
+****
+*IDEA FOR IMPROVING THE EXAMPLE:* If you have time, you can create an Ansible playbook that adds the system automatically to one pre-created SCAP policy in the Hybrid Console as part of the onboarding process, so we remove this manual step.
+****
 
 image::scap-policy.png[Insights inventory]
 
