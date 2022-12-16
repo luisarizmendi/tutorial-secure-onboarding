@@ -65,7 +65,7 @@ sudo dnf install -y cockpit-composer
 
 sudo systemctl enable cockpit.socket --now
 
-sudo firewall-cmd --add-service=cockpit && sudo firewall-cmd --add-service=cockpit --permanent
+sudo firewall-cmd --add-service=cockpit --permanent
 sudo firewall-cmd --reload 
 ----
 
