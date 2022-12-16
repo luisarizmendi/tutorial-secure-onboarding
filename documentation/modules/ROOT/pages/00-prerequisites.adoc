@@ -4,7 +4,7 @@ include::_attributes.adoc[]
 [#tldr]
 == TL/DR
 
-This lab has been created trying to minimize the pre-requisites. You should be able to run it using just your own (modern) laptop with any Hypervisor installed on it (lab tested with `libvirt`).
+This lab has been created trying to minimize the pre-requisites. You should be able to run it using just your own (modern) laptop with any Hypervisor installed on it (lab tested with `libvirt`). The lab has been tested with both x86 and ARM systems.
 
 Summary of minimal system pre-requisites:
 
