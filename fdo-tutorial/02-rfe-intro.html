@@ -451,7 +451,7 @@
 <p>Some years ago, some people were struggling with the complexity of developing using core aspects of the OS without “breaking things”, or at least having a safe way to “break things”. They ended up writing down a set of capabilities that they would like to have implemented to simplify the development (of GNOME) by being able to quickly create a new “instance” of the OS in the same system where they will perform some changes that could be easily reverted… but that will also cover several additional needs, such as sharing data between these multiple “versions” of the OS, using the system installed apps, specific hardware usage, etc…</p>
 </div>
 <div class="paragraph">
-<p>Getting a new “OS instance” could be accomplished using technologies such as virtualization, containers, etc… but the creation process is slow (ie. create a new VM or building a new container takes some time) and access to the same system data, applications and Hardware is not always easy, along with that the kind of rollback capability that they were looking for was not trivial sometimes. They needed something else.</p>
+<p>Getting a new “OS instance” could be accomplished using technologies such as virtualization, containers, etc… but the creation process is slow (ie. create a new VM or building a new container takes some time) and access to the same system data, applications, and hardware is not always easy, along with that the kind of rollback capability that they were looking for was not trivial sometimes. They needed something else.</p>
 </div>
 <div class="paragraph">
 <p>Based on those core requirements, and after reviewing some alternatives (virtualization, containers, BTRFS,…) they decided that “<em>chroot”</em> could be a good candidate as the foundation of something new that could help with the gaps they found.</p>
@@ -482,8 +482,8 @@
 <p>If you want to read a formal description of what libostree is you can check how it is described in its own <a href="https://github.com/ostreedev/ostree">source code repository:</a></p>
 </div>
 <div class="paragraph">
-<p><a href="https://ostreedev.github.io/ostree/"><strong>libostree</strong><br>
-<em>This project is now known as “libostree”, though it is still appropriate to use the previous name: “OSTree” (or…</em>ostreedev.github.io</a>https://ostreedev.github.io/ostree/[]</p>
+<p><a href="https://ostreedev.github.io/ostree/" class="bare">https://ostreedev.github.io/ostree/</a>[<strong>libostree</strong><br>
+__This project is now known as “libostree”, though it is still appropriate to use the previous name: “OSTree”.</p>
 </div>
 <div class="quoteblock">
 <blockquote>
@@ -643,7 +643,7 @@
 <p>A package manager is a tool that simplifies the management of Software packages (install, remove, update or configure), which are archive files containing the pre-compiled binaries and configuration files that shape an actual Software application. These packages were created to remove the need of compiling Sofware from source code in order to install something in your system.</p>
 </div>
 <div class="paragraph">
-<p><em>Libostree</em> only manages complete bootable file system trees, not individual files, actually, it has ** no knowledge of individual files at all (how they were generated, their origin, …) so it needs a separate mechanism to install additional packaged applications. You still need a package manager if you want to keep the simplicity of packaged Software instead of coming back to compile from source code on your own like in the not-that-good-old-days.</p>
+<p><em>Libostree</em> only manages complete bootable file system trees, not individual files, actually, it has no knowledge of individual files at all (how they were generated, their origin, …) so it needs a separate mechanism to install additional packaged applications. You still need a package manager if you want to keep the simplicity of packaged Software instead of coming back to compile from source code on your own like in the not-that-good-old-days.</p>
 </div>
 <div class="paragraph">
 <p>But you cannot use package managers as they are, since they probably don’t expect to have your OS in a read-only filesystem. You need a “hybrid” package manager that knows how to deal with <em>libostree</em>.</p>
@@ -806,8 +806,8 @@
 <p>This is another interesting use case. In a previous article relative to <a href="https://fidoalliance.org/intro-to-fido-device-onboard/">FIDO device onboarding (FDO)</a> feature (link below), which is quite interesting for Edge Computing use cases and which is available on RHEL, I introduced some common aspects that you find in an Edge computing solution architecture.</p>
 </div>
 <div class="paragraph">
-<p><a href="https://luis-javier-arizmendi-alonso.medium.com/edge-computing-device-onboarding-part-i-introducing-the-challenge-59add9a86200"><strong>Edge Computing device onboarding — Part I— Introducing the challenge</strong><br>
-<em>This article outlines the challenges that you will face while performing a secure device onboarding at the scale…</em>luis-javier-arizmendi-alonso.medium.com</a>https://luis-javier-arizmendi-alonso.medium.com/edge-computing-device-onboarding-part-i-introducing-the-challenge-59add9a86200[]</p>
+<p><a href="https://luis-javier-arizmendi-alonso.medium.com/edge-computing-device-onboarding-part-i-introducing-the-challenge-59add9a86200" class="bare">https://luis-javier-arizmendi-alonso.medium.com/edge-computing-device-onboarding-part-i-introducing-the-challenge-59add9a86200</a>[<strong>Edge Computing device onboarding — Part I— Introducing the challenge</strong><br>
+__This article outlines the challenges that you will face while performing a secure device onboarding at the scale…</p>
 </div>
 <div class="paragraph">
 <p>I will copy-paste that list here:</p>
@@ -895,8 +895,8 @@
 <p>You could start from the <a href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/composing_installing_and_managing_rhel_for_edge_images/introducing-rhel-for-edge-images_composing-installing-managing-rhel-for-edge-images">official docs</a> but if you want a quick ramp-up you could use the “quick-start” scripts that I created (link below) to simplify the RHEL for Edge image creation.</p>
 </div>
 <div class="paragraph">
-<p><a href="https://github.com/luisarizmendi/rhel-edge-quickstart"><strong>GitHub - luisarizmendi/rhel-edge-quickstart</strong><br>
-<em>These scripts help to quickly create and publish RHEL for Edge images. You should execute them in a RHEL 9 server which…</em>github.com</a>https://github.com/luisarizmendi/rhel-edge-quickstart[]</p>
+<p><a href="https://github.com/luisarizmendi/rhel-edge-quickstart" class="bare">https://github.com/luisarizmendi/rhel-edge-quickstart</a>[<strong>GitHub - luisarizmendi/rhel-edge-quickstart</strong><br>
+__These scripts help to quickly create and publish RHEL for Edge images.</p>
 </div>
 <div class="paragraph">
 <p>That’s all!</p>
