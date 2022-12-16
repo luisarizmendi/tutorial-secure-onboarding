@@ -486,14 +486,14 @@ CMD ["/usr/sbin/nginx", "-c", "/etc/nginx.conf"]
 EOF
 ----
 
-Now you can create your container image using this Dockerfile. If you used an argument for the OSTree iamge you need to include the full path to your OSTree repo `TAR` file:
+Now you can create your container image using this Dockerfile. 
 
 ****
 *NOTE:* Do not forget the last `.`
 ****
 
 ****
-*NOTE:* If you are running this Lab in RHEL ARM, you might find this error: `/usr/bin/crun: undefined symbol: criu_feature_check`. 
+*NOTE:* If you are running this Lab in RHEL ARM, you might find this error while buiding your container image : `/usr/bin/crun: undefined symbol: criu_feature_check`. 
 
 If you face this error you can try the https://access.redhat.com/discussions/6988326[published workaround], downgrade you `crun` version in the system that will run the container (Image Builder?), for example in ARM RHEL 9.0:
 
@@ -512,6 +512,7 @@ sudo yum --showduplicates list crun
 
 ****
 
+If you used an argument for the OSTree iamge you need to include the full path to your OSTree repo `TAR` file:
 
 [source,bash,subs="+macros,+attributes"]
 ----
