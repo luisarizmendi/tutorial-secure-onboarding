@@ -880,7 +880,7 @@ EOF</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Now you can create your container image using this Dockerfile. If you used an argument for the OSTree iamge you need to include the full path to your OSTree repo <code>TAR</code> file:</p>
+<p>Now you can create your container image using this Dockerfile.</p>
 </div>
 <div class="sidebarblock">
 <div class="content">
@@ -892,7 +892,7 @@ EOF</code></pre>
 <div class="sidebarblock">
 <div class="content">
 <div class="paragraph">
-<p><strong>NOTE:</strong> If you are running this Lab in RHEL ARM, you might find this error: <code>/usr/bin/crun: undefined symbol: criu_feature_check</code>.</p>
+<p><strong>NOTE:</strong> If you are running this Lab in RHEL ARM, you might find this error while buiding your container image : <code>/usr/bin/crun: undefined symbol: criu_feature_check</code>.</p>
 </div>
 <div class="paragraph">
 <p>If you face this error you can try the <a href="https://access.redhat.com/discussions/6988326">published workaround</a>, downgrade you <code>crun</code> version in the system that will run the container (Image Builder?), for example in ARM RHEL 9.0:</p>
@@ -911,6 +911,9 @@ EOF</code></pre>
 </div>
 </div>
 </div>
+</div>
+<div class="paragraph">
+<p>If you used an argument for the OSTree iamge you need to include the full path to your OSTree repo <code>TAR</code> file:</p>
 </div>
 <div class="listingblock">
 <div class="content">
