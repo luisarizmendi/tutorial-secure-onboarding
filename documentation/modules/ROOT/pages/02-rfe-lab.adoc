@@ -512,7 +512,7 @@ sudo podman build -t kvm-insights:ebcfe8b5-5aed-4d9b-a948-d7ddb9b51150 --build-a
 
 
 ****
-*NOTE:* If you are running this Lab in ARM, you might find this error: `/usr/bin/crun: undefined symbol: criu_feature_check`. If you face this error you can try the https://access.redhat.com/discussions/6988326[published workaround], install this `crun` version in the system that will run the container:
+*NOTE:* If you are running this Lab in ARM, you might find this error: `/usr/bin/crun: undefined symbol: criu_feature_check`. If you face this error you can try the https://access.redhat.com/discussions/6988326[published workaround], install this `crun` version in the system that will run the container (Image Builder?):
 
 [source,bash,subs="+macros,+attributes"]
 ----
