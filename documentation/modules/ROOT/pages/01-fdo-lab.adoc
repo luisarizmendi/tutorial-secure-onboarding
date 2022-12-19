@@ -839,7 +839,7 @@ This is a configuration example where TPM is used to reencrypt the `/dev/vda4` w
 
 
 ****
-*NOTE:* If you are using ARM you default device could be `vda3` instead of `vda4`
+*NOTE:* If you are using ARM you default device will be `vda3` instead of `vda4`
 ****
 
 
@@ -859,7 +859,7 @@ curl -O https://raw.githubusercontent.com/luisarizmendi/tutorial-secure-onboardi
 Download and extract the files required by the onboarding automation:
 
 ****
-*NOTE:* If you are using ARM you default device could be `vda3` instead of `vda4` so you would need to change it in the downloaded `serviceinfo_api_server.yml` file
+*NOTE:* If you are using ARM you default device will be `vda3` instead of `vda4` so you would need to change it in the downloaded `serviceinfo_api_server.yml` file
 ****
 
 
