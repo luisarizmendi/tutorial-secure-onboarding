@@ -493,7 +493,7 @@ Now you can create your container image using this Dockerfile.
 ****
 
 ****
-*NOTE:* If you are running this Lab in RHEL ARM, you might find this error while buiding your container image : `/usr/bin/crun: undefined symbol: criu_feature_check`. 
+*NOTE:* You might find this error while buiding your container image : `/usr/bin/crun: undefined symbol: criu_feature_check`. 
 
 If you face this error you can try the https://access.redhat.com/discussions/6988326[published workaround], downgrade you `crun` version in the system that will run the container (Image Builder?), for example in ARM RHEL 9.0:
 

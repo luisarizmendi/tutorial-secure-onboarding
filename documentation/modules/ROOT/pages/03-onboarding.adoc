@@ -244,9 +244,20 @@ Dec 13 05:06:45 edge-3e92db36 systemd[1]: fdo-client-linuxapp.service: Consumed 
 --
 ====
 
+The FDO client should be executed as the system starts, bu you can also re-launch it by restarting the `fdo-client-linuxapp` service:
+
+[.console-input]
+[source,bash,subs="+macros,+attributes"]
+----
+systemctl restart fdo-client-linuxapp.service
+----
+
 You will get logs that will depend on your configured onboarding automation and it will indicate that everything when OK with a `Secure Device Onboarding DONE` message as shown above.
 
 If you just see `Starting FDO client...` but nothing else happens, probably there is a configuration issue somewhere. Start by checking the Owner server logs and Serviceinfo_API configuration and listening ports.
+
+If you see something like `"No usable device credential located"`, that could mean that the RHEL ISO image was created but the FDO Manufacturing server was not available during the image creation, so the required certificates and keys were not introduced in the image. If that's the case, jump into the Image Builder and review the Manufacturing URL in the `blueprint-fdo` file. Check that its appears as `http://<manufacturing ip>:<manufacturing port>` and also check that the manufacturing port (by default 8080) is listening in the Manufacturing server using `ss -ltn`. If the Manufacturing server is working and is specificated in the blueprint file, then check that the device disk configured in the blueprint is also correct. If you find anything wrong... you will need to create a new ISO.
+
 
 Disk encryption was one of the options that you could configured in the Serviceinfo_API service. If encryption/re-encryption was required, you could also check if that's done now:
 
