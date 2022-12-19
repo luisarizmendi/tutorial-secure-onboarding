@@ -837,6 +837,14 @@ This is a configuration example where TPM is used to reencrypt the `/dev/vda4` w
     reencrypt: true
 ----
 
+
+****
+*NOTE:* If you are using ARM you default device could be `vda3` instead of `vda4`
+****
+
+
+
+
 [#fdo-optionb]
 === Option B: Using the example use case
 
@@ -849,6 +857,10 @@ curl -O https://raw.githubusercontent.com/luisarizmendi/tutorial-secure-onboardi
 ----
 
 Download and extract the files required by the onboarding automation:
+
+****
+*NOTE:* If you are using ARM you default device could be `vda3` instead of `vda4` so you would need to change it in the downloaded `serviceinfo_api_server.yml` file
+****
 
 
 [.console-input]
