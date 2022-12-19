@@ -646,10 +646,21 @@ Dec 13 05:06:45 edge-3e92db36 systemd[1]: fdo-client-linuxapp.service: Consumed 
 </div>
 </div>
 <div class="paragraph">
+<p>The FDO client should be executed as the system starts, bu you can also re-launch it by restarting the <code>fdo-client-linuxapp</code> service:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">systemctl restart fdo-client-linuxapp.service</code></pre>
+</div>
+</div>
+<div class="paragraph">
 <p>You will get logs that will depend on your configured onboarding automation and it will indicate that everything when OK with a <code>Secure Device Onboarding DONE</code> message as shown above.</p>
 </div>
 <div class="paragraph">
 <p>If you just see <code>Starting FDO client&#8230;&#8203;</code> but nothing else happens, probably there is a configuration issue somewhere. Start by checking the Owner server logs and Serviceinfo_API configuration and listening ports.</p>
+</div>
+<div class="paragraph">
+<p>If you see something like <code>"No usable device credential located"</code>, that could mean that the RHEL ISO image was created but the FDO Manufacturing server was not available during the image creation, so the required certificates and keys were not introduced in the image. If that&#8217;s the case, jump into the Image Builder and review the Manufacturing URL in the <code>blueprint-fdo</code> file. Check that its appears as <code><a href="http://&lt;manufacturing" class="bare">http://&lt;manufacturing</a> ip&gt;:&lt;manufacturing port&gt;</code> and also check that the manufacturing port (by default 8080) is listening in the Manufacturing server using <code>ss -ltn</code>. If the Manufacturing server is working and is specificated in the blueprint file, then check that the device disk configured in the blueprint is also correct. If you find anything wrong&#8230;&#8203; you will need to create a new ISO.</p>
 </div>
 <div class="paragraph">
 <p>Disk encryption was one of the options that you could configured in the Serviceinfo_API service. If encryption/re-encryption was required, you could also check if that&#8217;s done now:</p>
