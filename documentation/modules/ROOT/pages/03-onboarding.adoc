@@ -158,6 +158,11 @@ ccc1b09c-1a0d-8c47-bf42-3a18901c00a8
 
 After the installation, the system will reboot directly from the hard disk and will try to start the boot-time automation to complete the system installation. 
 
+****
+*NOTE:* If you are running in an ARM system, it could happen that the device does not reboot automatically and it enters into the `Emergency mode` instead. As far as I've seen in the logs, it happens because it fails to "start Switch Root" but if you reboot your machine the installed image should work, so the rest of the steps of this tutorial are completly valid.
+****
+
+
 The configured onboarding automation steps won't happen unless you have the All-in-One FDO server, because before being able to jump into the actual onboarding, you need to distribute the Vouchers.
 
 ****
