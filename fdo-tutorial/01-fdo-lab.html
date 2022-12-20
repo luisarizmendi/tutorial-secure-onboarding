@@ -1247,7 +1247,7 @@ Caused by:
 <div class="listingblock console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">curl -o ~/fdo-configs.tar.gz <a href="https://raw.githubusercontent.com/luisarizmendi/tutorial-secure-onboarding/master/documentation/modules/ROOT/examples/fdo-configs.tar.gz" class="bare">https://raw.githubusercontent.com/luisarizmendi/tutorial-secure-onboarding/master/documentation/modules/ROOT/examples/fdo-configs.tar.gz</a>
-tar xvf fdo-configs.tar.gz</code></pre>
+tar xvf ~/fdo-configs.tar.gz -C ~</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1255,7 +1255,7 @@ tar xvf fdo-configs.tar.gz</code></pre>
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo cp -r fdo-configs/ /etc</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo cp -r ~/fdo-configs/ /etc</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1331,12 +1331,12 @@ ADMIN_TOKEN=$(grep token /etc/fdo/owner-onboarding-server.yml  | awk '{print $2}
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sed -i "s|&lt;SSH PUB KEY&gt;|${SSH_PUB_KEY}|g" serviceinfo_api_server.yml
-sed -i "s|&lt;PATH FILES&gt;|${PATH_FILES}|g" serviceinfo_api_server.yml
-sed -i "s|&lt;RED HAT USER&gt;|${RED_HAT_USER}|g" serviceinfo_api_server.yml
-sed -i "s|&lt;RED HAT PASSWORD&gt;|${RED_HAT_PASSWORD}|g" serviceinfo_api_server.yml
-sed -i "s|&lt;SERVICE TOKEN&gt;|${SERVICE_TOKEN}|g" serviceinfo_api_server.yml
-sed -i "s|&lt;ADMIN TOKEN&gt;|${ADMIN_TOKEN}|g" serviceinfo_api_server.yml</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sed -i "s|&lt;SSH PUB KEY&gt;|${SSH_PUB_KEY}|g" ~/serviceinfo_api_server.yml
+sed -i "s|&lt;PATH FILES&gt;|${PATH_FILES}|g" ~/serviceinfo_api_server.yml
+sed -i "s|&lt;RED HAT USER&gt;|${RED_HAT_USER}|g" ~/serviceinfo_api_server.yml
+sed -i "s|&lt;RED HAT PASSWORD&gt;|${RED_HAT_PASSWORD}|g" ~/serviceinfo_api_server.yml
+sed -i "s|&lt;SERVICE TOKEN&gt;|${SERVICE_TOKEN}|g" ~/serviceinfo_api_server.yml
+sed -i "s|&lt;ADMIN TOKEN&gt;|${ADMIN_TOKEN}|g" ~/serviceinfo_api_server.yml</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1357,14 +1357,14 @@ sed -i "s|&lt;ADMIN TOKEN&gt;|${ADMIN_TOKEN}|g" serviceinfo_api_server.yml</code
 <div class="tab-pane" aria-labelledby="tabset11_all-in-one-server">
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo cp -f serviceinfo_api_server.yml  /etc/fdo/aio/configs/serviceinfo_api_server.yml</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo cp -f ~/serviceinfo_api_server.yml  /etc/fdo/aio/configs/serviceinfo_api_server.yml</code></pre>
 </div>
 </div>
 </div>
 <div class="tab-pane" aria-labelledby="tabset11_dedicated-servers">
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo cp -f serviceinfo_api_server.yml /etc/fdo/serviceinfo-api-server.yml</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo cp -f ~/serviceinfo_api_server.yml /etc/fdo/serviceinfo-api-server.yml</code></pre>
 </div>
 </div>
 </div>
