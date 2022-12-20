@@ -307,7 +307,7 @@ Start by downloading the blueprint:
 [.console-input]
 [source,bash,subs="+macros,+attributes"]
 ----
-curl -O https://raw.githubusercontent.com/luisarizmendi/tutorial-secure-onboarding/master/documentation/modules/ROOT/examples/blueprint-insights.toml
+curl -o ~/blueprint-insights.toml https://raw.githubusercontent.com/luisarizmendi/tutorial-secure-onboarding/master/documentation/modules/ROOT/examples/blueprint-insights.toml
 ----
 
 Then setup some variables with your values, you public SSH key:
