@@ -701,7 +701,7 @@ What is this Info API Service?
 
 In the FDO RHEL implementation, you find this “Service Info API” which we will be using to introduce the “automation” needed as part of the onboarding, by including the ssh key, files to be copied/created, commands to be executed, disk to be encrypted, etc. 
 
-The service is configured using a YAML file located under `/etc/fdo/serviceinfo-api-server.yml` if you splitted the FDO services or in `/etc/fdo/aio/configs/serviceinfo_api_server.yml` if you used the all-in-one approach.
+The service is configured using a YAML file located under in `/etc/fdo/aio/configs/serviceinfo_api_server.yml` if you used the all-in-one approach or `/etc/fdo/serviceinfo-api-server.yml` if you splitted the FDO services.
 
 There is an example of this located in `/usr/share/doc/fdo/serviceinfo-api-server.yml` that can be used as a template to create your own configuration file. You can also review the default configuration (in this case is for the all-in-one setup, you can know it by taking a look at the stores path):
 
