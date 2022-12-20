@@ -97,7 +97,7 @@ input::
 [.console-input]
 [source,bash,subs="+macros,+attributes"]
 ----
-ss -ltn
+sudo ss -ltnp | grep -E '^State|:808[1-3]'
 ----
 --
 output::
@@ -106,13 +106,11 @@ output::
 [.console-output]
 [source,bash,subs="+macros,+attributes"]
 ----
-State                 Recv-Q                Send-Q                               Local Address:Port                               Peer Address:Port               Process               
-LISTEN                0                     128                                        0.0.0.0:8080                                    0.0.0.0:*                                        
-LISTEN                0                     128                                        0.0.0.0:8081                                    0.0.0.0:*                                        
-LISTEN                0                     128                                        0.0.0.0:8082                                    0.0.0.0:*                                        
-LISTEN                0                     128                                        0.0.0.0:8083                                    0.0.0.0:*                                        
-LISTEN                0                     128                                        0.0.0.0:22                                      0.0.0.0:*                                        
-LISTEN                0                     128                                           [::]:22                                         [::]:*                
+State  Recv-Q Send-Q                    Local Address:Port Peer Address:PortProcess
+LISTEN 0      128                             0.0.0.0:8080      0.0.0.0:*
+LISTEN 0      128                             0.0.0.0:8081      0.0.0.0:*
+LISTEN 0      128                             0.0.0.0:8082      0.0.0.0:*
+LISTEN 0      128                             0.0.0.0:8083      0.0.0.0:*
 ----
 --
 ====
@@ -324,7 +322,7 @@ input::
 [.console-input]
 [source,bash,subs="+macros,+attributes"]
 ----
-sudo ss -ltn
+sudo ss -ltnp | grep -E '^State|:808[1-3]'
 ----
 
 --
@@ -334,10 +332,8 @@ output::
 [.console-output]
 [source,bash,subs="+macros,+attributes"]
 ----
-State                       Recv-Q                      Send-Q                                           Local Address:Port                                            Peer Address:Port                      Process                      
-LISTEN                      0                           128                                                    0.0.0.0:8080                                                 0.0.0.0:*                                                      
-LISTEN                      0                           128                                                    0.0.0.0:22                                                   0.0.0.0:*                                                      
-LISTEN                      0                           128                                                       [::]:22                                                      [::]:*                                                      
+State  Recv-Q Send-Q                    Local Address:Port Peer Address:PortProcess
+LISTEN 0      128                             0.0.0.0:8080      0.0.0.0:*
 ----
 --
 ====
@@ -480,10 +476,8 @@ output::
 [.console-output]
 [source,bash,subs="+macros,+attributes"]
 ----
-State                       Recv-Q                      Send-Q                                           Local Address:Port                                            Peer Address:Port                      Process                      
-LISTEN                      0                           128                                                    0.0.0.0:8082                                                 0.0.0.0:*                                                      
-LISTEN                      0                           128                                                    0.0.0.0:22                                                   0.0.0.0:*                                                      
-LISTEN                      0                           128                                                       [::]:22                                                      [::]:*                                                                                                
+State  Recv-Q Send-Q                    Local Address:Port Peer Address:PortProcess
+LISTEN 0      128                             0.0.0.0:8082      0.0.0.0:*
 ----
 --
 ====
@@ -655,7 +649,7 @@ input::
 [.console-input]
 [source,bash,subs="+macros,+attributes"]
 ----
-sudo ss -ltn
+sudo ss -ltnp | grep -E '^State|:808[1-3]'
 ----
 
 --
@@ -665,10 +659,8 @@ output::
 [.console-output]
 [source,bash,subs="+macros,+attributes"]
 ----
-State                       Recv-Q                      Send-Q                                           Local Address:Port                                            Peer Address:Port                      Process                      
-LISTEN                      0                           128                                                    0.0.0.0:22                                                   0.0.0.0:*                                                      
-LISTEN                      0                           128                                                    0.0.0.0:8081                                                 0.0.0.0:*                                                      
-LISTEN                      0                           128                                                       [::]:22                                                      [::]:*                                                    
+State  Recv-Q Send-Q                    Local Address:Port Peer Address:PortProcess
+LISTEN 0      128                             0.0.0.0:8081      0.0.0.0:*                                                    [::]:*                                                    
 ----
 --
 ====
@@ -1016,7 +1008,7 @@ input::
 [.console-input]
 [source,bash,subs="+macros,+attributes"]
 ----
-ss -ltn
+sudo ss -ltnp | grep -E '^State|:808[1-3]'
 ----
 --
 output (in All-in-one)::
@@ -1025,13 +1017,11 @@ output (in All-in-one)::
 [.console-output]
 [source,bash,subs="+macros,+attributes"]
 ----
-State                 Recv-Q                Send-Q                               Local Address:Port                               Peer Address:Port               Process               
-LISTEN                0                     128                                        0.0.0.0:8080                                    0.0.0.0:*                                        
-LISTEN                0                     128                                        0.0.0.0:8081                                    0.0.0.0:*                                        
-LISTEN                0                     128                                        0.0.0.0:8082                                    0.0.0.0:*                                        
-LISTEN                0                     128                                        0.0.0.0:8083                                    0.0.0.0:*                                        
-LISTEN                0                     128                                        0.0.0.0:22                                      0.0.0.0:*                                        
-LISTEN                0                     128                                           [::]:22                                         [::]:*                
+State  Recv-Q Send-Q                    Local Address:Port Peer Address:PortProcess
+LISTEN 0      128                             0.0.0.0:8080      0.0.0.0:*
+LISTEN 0      128                             0.0.0.0:8081      0.0.0.0:*
+LISTEN 0      128                             0.0.0.0:8082      0.0.0.0:*
+LISTEN 0      128                             0.0.0.0:8083      0.0.0.0:*
 ----
 --
 output (Dedicated servers)::
@@ -1040,11 +1030,9 @@ output (Dedicated servers)::
 [.console-output]
 [source,bash,subs="+macros,+attributes"]
 ----
-State                       Recv-Q                      Send-Q                                           Local Address:Port                                            Peer Address:Port                      Process                      
-LISTEN                      0                           128                                                    0.0.0.0:22                                                   0.0.0.0:*                                                      
-LISTEN                      0                           128                                                    0.0.0.0:8081                                                 0.0.0.0:*                                                      
-LISTEN                      0                           128                                                    0.0.0.0:8083                                                 0.0.0.0:*                                                      
-LISTEN                      0                           128                                                       [::]:22                                                      [::]:*                                                   
+State  Recv-Q Send-Q                    Local Address:Port Peer Address:PortProcess
+LISTEN 0      128                             0.0.0.0:8081      0.0.0.0:*
+LISTEN 0      128                             0.0.0.0:8083      0.0.0.0:*
 ----
 --
 ====
