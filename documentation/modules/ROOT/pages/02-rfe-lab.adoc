@@ -333,8 +333,8 @@ Then you need to apply those variables into the Blueprint template:
 [.console-input]
 [source,bash,subs="+macros,+attributes"]
 ----
-sed -i "s|<SSH PUB KEY>|${SSH_PUB_KEY}|g" blueprint-insights.toml
-sed -i "s|<ADMIN PASSW>|${ADMIN_PASSW}|g" blueprint-insights.toml
+sed -i "s|<SSH PUB KEY>|${SSH_PUB_KEY}|g" ~/blueprint-insights.toml
+sed -i "s|<ADMIN PASSW>|${ADMIN_PASSW}|g" ~/blueprint-insights.toml
 ----
 
 ... and you are done with the Blueprint.
@@ -357,7 +357,7 @@ For example, if you used the provided blueprint file, the exact command would be
 [.console-input]
 [source,bash,subs="+macros,+attributes"]
 ----
-sudo composer-cli blueprints push blueprint-insights.toml
+sudo composer-cli blueprints push ~/blueprint-insights.toml
 ----
 
 You can double-check that the Blueprint is ready to be used in the Image Builder with this command:

@@ -867,7 +867,7 @@ Download and extract the files required by the onboarding automation:
 [source,bash,subs="+macros,+attributes"]
 ----
 curl -o ~/fdo-configs.tar.gz https://raw.githubusercontent.com/luisarizmendi/tutorial-secure-onboarding/master/documentation/modules/ROOT/examples/fdo-configs.tar.gz
-tar xvf fdo-configs.tar.gz
+tar xvf ~/fdo-configs.tar.gz -C ~
 ----
 
 Probably you don't want to use your home directory, so copy the files into another definitive location, for example `/etc`:
@@ -875,7 +875,7 @@ Probably you don't want to use your home directory, so copy the files into anoth
 [.console-input]
 [source,bash,subs="+macros,+attributes"]
 ----
-sudo cp -r fdo-configs/ /etc
+sudo cp -r ~/fdo-configs/ /etc
 ----
 
 If you don't want to type that directory, create a variable that you can use in the commands proposed below in this section (do not include the last `/`)
@@ -941,12 +941,12 @@ Finally, use these variables to update the example `serviceinfo-api-server.yml` 
 [.console-input]
 [source,bash,subs="+macros,+attributes"]
 ----
-sed -i "s|<SSH PUB KEY>|${SSH_PUB_KEY}|g" serviceinfo_api_server.yml
-sed -i "s|<PATH FILES>|${PATH_FILES}|g" serviceinfo_api_server.yml
-sed -i "s|<RED HAT USER>|${RED_HAT_USER}|g" serviceinfo_api_server.yml
-sed -i "s|<RED HAT PASSWORD>|${RED_HAT_PASSWORD}|g" serviceinfo_api_server.yml
-sed -i "s|<SERVICE TOKEN>|${SERVICE_TOKEN}|g" serviceinfo_api_server.yml
-sed -i "s|<ADMIN TOKEN>|${ADMIN_TOKEN}|g" serviceinfo_api_server.yml
+sed -i "s|<SSH PUB KEY>|${SSH_PUB_KEY}|g" ~/serviceinfo_api_server.yml
+sed -i "s|<PATH FILES>|${PATH_FILES}|g" ~/serviceinfo_api_server.yml
+sed -i "s|<RED HAT USER>|${RED_HAT_USER}|g" ~/serviceinfo_api_server.yml
+sed -i "s|<RED HAT PASSWORD>|${RED_HAT_PASSWORD}|g" ~/serviceinfo_api_server.yml
+sed -i "s|<SERVICE TOKEN>|${SERVICE_TOKEN}|g" ~/serviceinfo_api_server.yml
+sed -i "s|<ADMIN TOKEN>|${ADMIN_TOKEN}|g" ~/serviceinfo_api_server.yml
 ----
 
 and then copy this file into the final directory (choose your FDO deployment option).
@@ -960,7 +960,7 @@ All-in-one server::
 [.console-input]
 [source,bash,subs="+macros,+attributes"]
 ----
-sudo cp -f serviceinfo_api_server.yml  /etc/fdo/aio/configs/serviceinfo_api_server.yml
+sudo cp -f ~/serviceinfo_api_server.yml  /etc/fdo/aio/configs/serviceinfo_api_server.yml
 ----
 --
 Dedicated servers::
@@ -969,7 +969,7 @@ Dedicated servers::
 [.console-input]
 [source,bash,subs="+macros,+attributes"]
 ----
-sudo cp -f serviceinfo_api_server.yml /etc/fdo/serviceinfo-api-server.yml
+sudo cp -f ~/serviceinfo_api_server.yml /etc/fdo/serviceinfo-api-server.yml
 ----
 --
 ====
