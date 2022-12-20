@@ -1059,7 +1059,7 @@ sudo systemctl restart firewalld</code></pre>
 <p>In the FDO RHEL implementation, you find this “Service Info API” which we will be using to introduce the “automation” needed as part of the onboarding, by including the ssh key, files to be copied/created, commands to be executed, disk to be encrypted, etc.</p>
 </div>
 <div class="paragraph">
-<p>The service is configured using a YAML file located under <code>/etc/fdo/serviceinfo-api-server.yml</code> if you splitted the FDO services or in <code>/etc/fdo/aio/configs/serviceinfo_api_server.yml</code> if you used the all-in-one approach.</p>
+<p>The service is configured using a YAML file located under in <code>/etc/fdo/aio/configs/serviceinfo_api_server.yml</code> if you used the all-in-one approach or <code>/etc/fdo/serviceinfo-api-server.yml</code> if you splitted the FDO services.</p>
 </div>
 <div class="paragraph">
 <p>There is an example of this located in <code>/usr/share/doc/fdo/serviceinfo-api-server.yml</code> that can be used as a template to create your own configuration file. You can also review the default configuration (in this case is for the all-in-one setup, you can know it by taking a look at the stores path):</p>
