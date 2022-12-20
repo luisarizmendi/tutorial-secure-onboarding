@@ -442,20 +442,18 @@ fdo-rendezvous-server.x86_64 : FDO Rendezvous Server implementation</code></pre>
 <div class="tab-pane" aria-labelledby="tabset2_input">
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">ss -ltn</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo ss -ltnp | grep -E '^State|:808[1-3]'</code></pre>
 </div>
 </div>
 </div>
 <div class="tab-pane" aria-labelledby="tabset2_output">
 <div class="listingblock console-output">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">State                 Recv-Q                Send-Q                               Local Address:Port                               Peer Address:Port               Process
-LISTEN                0                     128                                        0.0.0.0:8080                                    0.0.0.0:*
-LISTEN                0                     128                                        0.0.0.0:8081                                    0.0.0.0:*
-LISTEN                0                     128                                        0.0.0.0:8082                                    0.0.0.0:*
-LISTEN                0                     128                                        0.0.0.0:8083                                    0.0.0.0:*
-LISTEN                0                     128                                        0.0.0.0:22                                      0.0.0.0:*
-LISTEN                0                     128                                           [::]:22                                         [::]:*</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">State  Recv-Q Send-Q                    Local Address:Port Peer Address:PortProcess
+LISTEN 0      128                             0.0.0.0:8080      0.0.0.0:*
+LISTEN 0      128                             0.0.0.0:8081      0.0.0.0:*
+LISTEN 0      128                             0.0.0.0:8082      0.0.0.0:*
+LISTEN 0      128                             0.0.0.0:8083      0.0.0.0:*</code></pre>
 </div>
 </div>
 </div>
@@ -694,17 +692,15 @@ manufacturing:
 <div class="tab-pane" aria-labelledby="tabset5_input">
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo ss -ltn</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo ss -ltnp | grep -E '^State|:808[1-3]'</code></pre>
 </div>
 </div>
 </div>
 <div class="tab-pane" aria-labelledby="tabset5_output">
 <div class="listingblock console-output">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">State                       Recv-Q                      Send-Q                                           Local Address:Port                                            Peer Address:Port                      Process
-LISTEN                      0                           128                                                    0.0.0.0:8080                                                 0.0.0.0:*
-LISTEN                      0                           128                                                    0.0.0.0:22                                                   0.0.0.0:*
-LISTEN                      0                           128                                                       [::]:22                                                      [::]:*</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">State  Recv-Q Send-Q                    Local Address:Port Peer Address:PortProcess
+LISTEN 0      128                             0.0.0.0:8080      0.0.0.0:*</code></pre>
 </div>
 </div>
 </div>
@@ -846,10 +842,8 @@ bind: "0.0.0.0:8082"</code></pre>
 <div class="tab-pane" aria-labelledby="tabset7_output">
 <div class="listingblock console-output">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">State                       Recv-Q                      Send-Q                                           Local Address:Port                                            Peer Address:Port                      Process
-LISTEN                      0                           128                                                    0.0.0.0:8082                                                 0.0.0.0:*
-LISTEN                      0                           128                                                    0.0.0.0:22                                                   0.0.0.0:*
-LISTEN                      0                           128                                                       [::]:22                                                      [::]:*</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">State  Recv-Q Send-Q                    Local Address:Port Peer Address:PortProcess
+LISTEN 0      128                             0.0.0.0:8082      0.0.0.0:*</code></pre>
 </div>
 </div>
 </div>
@@ -1017,17 +1011,15 @@ sudo systemctl enable fdo-serviceinfo-api-server.service</code></pre>
 <div class="tab-pane" aria-labelledby="tabset9_input">
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo ss -ltn</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo ss -ltnp | grep -E '^State|:808[1-3]'</code></pre>
 </div>
 </div>
 </div>
 <div class="tab-pane" aria-labelledby="tabset9_output">
 <div class="listingblock console-output">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">State                       Recv-Q                      Send-Q                                           Local Address:Port                                            Peer Address:Port                      Process
-LISTEN                      0                           128                                                    0.0.0.0:22                                                   0.0.0.0:*
-LISTEN                      0                           128                                                    0.0.0.0:8081                                                 0.0.0.0:*
-LISTEN                      0                           128                                                       [::]:22                                                      [::]:*</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">State  Recv-Q Send-Q                    Local Address:Port Peer Address:PortProcess
+LISTEN 0      128                             0.0.0.0:8081      0.0.0.0:*                                                    [::]:*</code></pre>
 </div>
 </div>
 </div>
@@ -1436,31 +1428,27 @@ sed -i "s|&lt;ADMIN TOKEN&gt;|${ADMIN_TOKEN}|g" ~/serviceinfo_api_server.yml</co
 <div class="tab-pane" aria-labelledby="tabset13_input">
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">ss -ltn</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo ss -ltnp | grep -E '^State|:808[1-3]'</code></pre>
 </div>
 </div>
 </div>
 <div class="tab-pane" aria-labelledby="tabset13_output-in-all-in-one">
 <div class="listingblock console-output">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">State                 Recv-Q                Send-Q                               Local Address:Port                               Peer Address:Port               Process
-LISTEN                0                     128                                        0.0.0.0:8080                                    0.0.0.0:*
-LISTEN                0                     128                                        0.0.0.0:8081                                    0.0.0.0:*
-LISTEN                0                     128                                        0.0.0.0:8082                                    0.0.0.0:*
-LISTEN                0                     128                                        0.0.0.0:8083                                    0.0.0.0:*
-LISTEN                0                     128                                        0.0.0.0:22                                      0.0.0.0:*
-LISTEN                0                     128                                           [::]:22                                         [::]:*</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">State  Recv-Q Send-Q                    Local Address:Port Peer Address:PortProcess
+LISTEN 0      128                             0.0.0.0:8080      0.0.0.0:*
+LISTEN 0      128                             0.0.0.0:8081      0.0.0.0:*
+LISTEN 0      128                             0.0.0.0:8082      0.0.0.0:*
+LISTEN 0      128                             0.0.0.0:8083      0.0.0.0:*</code></pre>
 </div>
 </div>
 </div>
 <div class="tab-pane" aria-labelledby="tabset13_output-dedicated-servers">
 <div class="listingblock console-output">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">State                       Recv-Q                      Send-Q                                           Local Address:Port                                            Peer Address:Port                      Process
-LISTEN                      0                           128                                                    0.0.0.0:22                                                   0.0.0.0:*
-LISTEN                      0                           128                                                    0.0.0.0:8081                                                 0.0.0.0:*
-LISTEN                      0                           128                                                    0.0.0.0:8083                                                 0.0.0.0:*
-LISTEN                      0                           128                                                       [::]:22                                                      [::]:*</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">State  Recv-Q Send-Q                    Local Address:Port Peer Address:PortProcess
+LISTEN 0      128                             0.0.0.0:8081      0.0.0.0:*
+LISTEN 0      128                             0.0.0.0:8083      0.0.0.0:*</code></pre>
 </div>
 </div>
 </div>
