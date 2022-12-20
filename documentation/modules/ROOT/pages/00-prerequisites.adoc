@@ -53,7 +53,7 @@ The lab environment will be composed of an edge device and one or multiple serve
 
 For this option, you just need the minimum system requirements described in xref:00-prerequisites.adoc#tldr[TL/DR section].
 
-You will also need to https://access.redhat.com/downloads/content/479/ver=/rhel---9/9.1/x86_64/product-software[download a RHEL ISO] (At this moment, the latest one is RHEL 9.1). 
+You will also need to download a RHEL ISO (https://access.redhat.com/downloads/content/479/ver=/rhel---9/9.1/x86_64/product-software[RHEL x86] or https://access.redhat.com/downloads/content/419/ver=/rhel---9/9.1/aarch64/product-software[RHEL aarh64 for ARM]) (At this moment, the latest one is RHEL 9.1). 
 
 Once you have `libvirt` or any other hypervisor installed, and your RHEL ISO downloaded, you have to create a VM with *2 vCPUs, 4 GB memory and 50 GB disk* and install the Operating System using the RHEL ISO. 
 
