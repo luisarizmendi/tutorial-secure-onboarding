@@ -853,7 +853,7 @@ Download the example `serviceinfo_api_server.yml` file:
 [.console-input]
 [source,bash,subs="+macros,+attributes"]
 ----
-curl -O https://raw.githubusercontent.com/luisarizmendi/tutorial-secure-onboarding/master/documentation/modules/ROOT/examples/serviceinfo_api_server.yml
+curl -o ~/serviceinfo_api_server.yml https://raw.githubusercontent.com/luisarizmendi/tutorial-secure-onboarding/master/documentation/modules/ROOT/examples/serviceinfo_api_server.yml
 ----
 
 Download and extract the files required by the onboarding automation:
@@ -866,7 +866,7 @@ Download and extract the files required by the onboarding automation:
 [.console-input]
 [source,bash,subs="+macros,+attributes"]
 ----
-curl -O https://raw.githubusercontent.com/luisarizmendi/tutorial-secure-onboarding/master/documentation/modules/ROOT/examples/fdo-configs.tar.gz
+curl -o ~/fdo-configs.tar.gz https://raw.githubusercontent.com/luisarizmendi/tutorial-secure-onboarding/master/documentation/modules/ROOT/examples/fdo-configs.tar.gz
 tar xvf fdo-configs.tar.gz
 ----
 
