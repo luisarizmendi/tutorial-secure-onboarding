@@ -739,6 +739,10 @@ basearch=$(arch)
 
 Now that you have all the required values, run the actual command in the Image Builder that will create the ISO file with the embedded OSTree repository:
 
+****
+*NOTE:* It could be a good idea to double-check that the FDO manufacturing service is up and reachable from the Image Builder before creating the ISO, otherwise you will find the `No Usable device credential located, skipping Device Onboarding` error on the log when booting your device, which means that FDO client does not have the required keys to share with the Rendezvous and Owner server preventing the FDO process from starting.
+****
+
 
 [.console-input]
 [source,bash,subs="+macros,+attributes"]
