@@ -370,7 +370,7 @@
 <h2 id="rfe-imagebuilder"><a class="anchor" href="#rfe-imagebuilder"></a>Install Image builder</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The first step is to install the Image Builder in one of the RHEL VMs that you prepared.</p>
+<p>The first step is to install the Image Builder in one of the RHEL VMs that you prepared (in case of FDO all-in-one you could use the same RHEL VM where you installed the FDO services).</p>
 </div>
 <div class="listingblock console-input">
 <div class="content">
@@ -947,8 +947,12 @@ EOF</code></pre>
 <div class="paragraph">
 <p>Once you have the container image ready you can run a container based on it, but before that, be sure that you opened the required port. You will need to bind a port in your VM to the port configured in your container image (tcp/8080 in this example).</p>
 </div>
+<div class="sidebarblock">
+<div class="content">
 <div class="paragraph">
-<p>Remember that if you are using this VM to run other services, for example the FDO services, you need to be sure that you don&#8217;t use the same ports (use tcp/8090 to be sure that it does not interfiere with FDO default ports)</p>
+<p><strong>NOTE:</strong> Remember that if you are using this VM to run other services, for example the FDO services, you need to be sure that you don&#8217;t use the same ports (use tcp/8090 to be sure that it does not interfiere with FDO default ports)</p>
+</div>
+</div>
 </div>
 <div class="listingblock console-input">
 <div class="content">
