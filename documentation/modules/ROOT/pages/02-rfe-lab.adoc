@@ -30,7 +30,7 @@ But first, let's start from the beginning and let's install the Image Builder.
 [#rfe-imagebuilder]
 == Install Image builder
 
-The first step is to install the Image Builder in one of the RHEL VMs that you prepared.
+The first step is to install the Image Builder in one of the RHEL VMs that you prepared (in case of FDO all-in-one you could use the same RHEL VM where you installed the FDO services).
 
 
 [.console-input]
@@ -541,7 +541,10 @@ sudo podman tag <blueprint_name>:<image id> <blueprint_name>:latest
 
 Once you have the container image ready you can run a container based on it, but before that, be sure that you opened the required port. You will need to bind a port in your VM to the port configured in your container image (tcp/8080 in this example). 
 
-Remember that if you are using this VM to run other services, for example the FDO services, you need to be sure that you don't use the same ports (use tcp/8090 to be sure that it does not interfiere with FDO default ports)
+****
+*NOTE:* Remember that if you are using this VM to run other services, for example the FDO services, you need to be sure that you don't use the same ports (use tcp/8090 to be sure that it does not interfiere with FDO default ports)
+****
+
 
 [.console-input]
 [source,bash,subs="+macros,+attributes"]
