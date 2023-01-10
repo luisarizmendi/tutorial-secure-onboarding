@@ -9,8 +9,9 @@ This lab has been created trying to minimize the pre-requisites. You should be a
 Summary of minimal system pre-requisites:
 
 * Virtualization hypervisor with at least 6 vCPUs (threads), 6 GB memory, and 100 GB disk *free*.
-* Internet connection from VMs.
-* Valid RHEL subscriptions and account.
+* Internet connection
+* Connectivity Host <-> VM and VM <-> VM
+* Valid RHEL subscriptions and account
 
 [#virtualization]
 == Prepare your virtualization environment
@@ -43,6 +44,8 @@ virt-install --name=image-builder-fdo \
 Depending on the use case or configuration that you want to follow during this lab, you could need to add "special" devices to your edge VM, for example, you probably would like to use a virtual TPM to manage keys as you will be doing it with physical devices on real edge environments.
 
 This lab could be run completely offline, but in order to avoid creating local repositories we will be connecting to the public ones, so you will need Internet access from your VMs.
+
+You need to be sure that your host firewall and virtual bridge permit connectivity between the host and the VMs, between VMs and from VM to Internet.
 
 [#arch]
 == Choose your lab architecture
