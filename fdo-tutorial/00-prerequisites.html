@@ -330,10 +330,13 @@
 <p>Virtualization hypervisor with at least 6 vCPUs (threads), 6 GB memory, and 100 GB disk <strong>free</strong>.</p>
 </li>
 <li>
-<p>Internet connection from VMs.</p>
+<p>Internet connection</p>
 </li>
 <li>
-<p>Valid RHEL subscriptions and account.</p>
+<p>Connectivity Host &lt;&#8594; VM and VM &lt;&#8594; VM</p>
+</li>
+<li>
+<p>Valid RHEL subscriptions and account</p>
 </li>
 </ul>
 </div>
@@ -373,6 +376,9 @@ sudo systemctl enable --now libvirtd</code></pre>
 </div>
 <div class="paragraph">
 <p>This lab could be run completely offline, but in order to avoid creating local repositories we will be connecting to the public ones, so you will need Internet access from your VMs.</p>
+</div>
+<div class="paragraph">
+<p>You need to be sure that your host firewall and virtual bridge permit connectivity between the host and the VMs, between VMs and from VM to Internet.</p>
 </div>
 </div>
 </div>
