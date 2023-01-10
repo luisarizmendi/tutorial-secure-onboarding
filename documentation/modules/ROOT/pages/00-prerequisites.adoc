@@ -12,9 +12,6 @@ Summary of minimal system pre-requisites:
 * Internet connection from VMs.
 * Valid RHEL subscriptions and account.
 
-If you want to save some time during the lab, also download the latest RHEL ISO.
-
-
 [#virtualization]
 == Prepare your virtualization environment
 
@@ -84,7 +81,7 @@ and you will need enough resources to create the following VM during the lab ste
 
 === Option 2: Dedicated server VMs
 
-If your hypervisor system has enough CPU and RAM, you probably would like to use a more realistic architecture, where the FDO services are running in dedicated servers. In this case, you will still need the VMs shown in "Option 1" (and to download the RHEL ISO), but you will need to run three additional VMs for FDO servers.
+If your hypervisor system has enough CPU and RAM, you probably would like to use a more realistic architecture, where the FDO services are running in dedicated servers. In this case, you will still need the VMs shown in "Option 1", but you will need to run three additional VMs for FDO servers.
 
 For Option 2 you will need to have this VM installed and prepared:
 
