@@ -1170,6 +1170,13 @@ basearch=$(arch)</code></pre>
 <div class="paragraph">
 <p>Now that you have all the required values, run the actual command in the Image Builder that will create the ISO file with the embedded OSTree repository:</p>
 </div>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p><strong>NOTE:</strong> It could be a good idea to double-check that the FDO manufacturing service is up and reachable from the Image Builder before creating the ISO, otherwise you will find the <code>No Usable device credential located, skipping Device Onboarding</code> error on the log when booting your device, which means that FDO client does not have the required keys to share with the Rendezvous and Owner server preventing the FDO process from starting.</p>
+</div>
+</div>
+</div>
 <div class="listingblock console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo composer-cli compose start-ostree blueprint-fdo edge-simplified-installer --ref rhel/${baserelease}/${basearch}/edge --url <a href="http://${IMAGE_BUILDER_IP}:${IMAGE_PUBLISH_PORT}/repo/" class="bare">http://${IMAGE_BUILDER_IP}:${IMAGE_PUBLISH_PORT}/repo/</a></code></pre>
