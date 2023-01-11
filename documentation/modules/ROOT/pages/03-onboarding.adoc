@@ -129,13 +129,22 @@ During this phase, a pre-installed device is created with the certificates (that
 *NOTE:* Remember that when you create the RHEL image the FDO client is included along with the certificates and keys that have been generated during the FDO manufacturing service preparation.
 ****
 
-The Manufacturing server creates the owner voucher and store it in the /etc/fdo/stores/owner_vouchers directory (that you created during the Manufacturing server preparation). You can connect to the Manufacturing server and double-check that the voucher is created:
+The Manufacturing server creates the owner voucher and store it in the  `owner_vouchers` directory. You can connect to the Manufacturing server (or All-in-One server) and double-check that the voucher is created:
 
 
 
 [tabs]
 ====
-input::
+input All-in-one server::
++
+--
+[.console-input]
+[source,bash,subs="+macros,+attributes"]
+----
+ls /etc/fdo/aio/stores/owner_vouchers/
+----
+--
+input Dedicated servers::
 +
 --
 [.console-input]
@@ -176,7 +185,9 @@ In summary, after this step you have two different outputs: a preconfigured devi
 [#onboard-voucher]
 == Step 2 - Distribute the Vouchers
 
-When using the All-in-One FDO server, the manufacturing server, Rendezvous server and the Owner onboarding server do share the same vouchers store (same directory) and hence the Manufacturing server does “report” the voucher automatically as soon as it creates it. In the real world, of course, that does not happen, so you need to copy the files to "register" the new device that you have created, otherwise the device will ask for its onboarding instructions but since it's not registered, it will get nothing. 
+When using the All-in-One FDO server, the manufacturing server, Rendezvous server and the Owner onboarding server do share the same vouchers store (same directory) and hence the Manufacturing server does “report” the voucher automatically as soon as it creates it (remember that in case that you are using the all-in-one approach you can jump into the next step, xref:03-onboarding.adoc#onboard-finalboot[Automatic onboarding])
+
+In the real world where you probably have the FDO services in dedicated servers that does not happen, so you need to copy the files to "register" the new device that you have created, otherwise the device will ask for its onboarding instructions but since it's not registered, it will get nothing. 
 
 You need to distribute the Voucher that has been created in the Manufacturing server during the edge device first boot, to both the Rendezvous and the Owner server.
 
