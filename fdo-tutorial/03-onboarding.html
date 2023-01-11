@@ -497,13 +497,16 @@ Caused by:
 </div>
 </div>
 <div class="paragraph">
-<p>The Manufacturing server creates the owner voucher and store it in the /etc/fdo/stores/owner_vouchers directory (that you created during the Manufacturing server preparation). You can connect to the Manufacturing server and double-check that the voucher is created:</p>
+<p>The Manufacturing server creates the owner voucher and store it in the  <code>owner_vouchers</code> directory. You can connect to the Manufacturing server (or All-in-One server) and double-check that the voucher is created:</p>
 </div>
 <div class="tabset is-loading">
 <div class="ulist tabs">
 <ul>
 <li>
-<p><a id="tabset1_input"></a>input</p>
+<p><a id="tabset1_input-all-in-one-server"></a>input All-in-one server</p>
+</li>
+<li>
+<p><a id="tabset1_input-dedicated-servers"></a>input Dedicated servers</p>
 </li>
 <li>
 <p><a id="tabset1_output"></a>output</p>
@@ -511,7 +514,14 @@ Caused by:
 </ul>
 </div>
 <div class="content">
-<div class="tab-pane" aria-labelledby="tabset1_input">
+<div class="tab-pane" aria-labelledby="tabset1_input-all-in-one-server">
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">ls /etc/fdo/aio/stores/owner_vouchers/</code></pre>
+</div>
+</div>
+</div>
+<div class="tab-pane" aria-labelledby="tabset1_input-dedicated-servers">
 <div class="listingblock console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">ls /etc/fdo/stores/owner_vouchers/</code></pre>
@@ -556,7 +566,10 @@ Caused by:
 <h2 id="onboard-voucher"><a class="anchor" href="#onboard-voucher"></a>Step 2 - Distribute the Vouchers</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>When using the All-in-One FDO server, the manufacturing server, Rendezvous server and the Owner onboarding server do share the same vouchers store (same directory) and hence the Manufacturing server does “report” the voucher automatically as soon as it creates it. In the real world, of course, that does not happen, so you need to copy the files to "register" the new device that you have created, otherwise the device will ask for its onboarding instructions but since it&#8217;s not registered, it will get nothing.</p>
+<p>When using the All-in-One FDO server, the manufacturing server, Rendezvous server and the Owner onboarding server do share the same vouchers store (same directory) and hence the Manufacturing server does “report” the voucher automatically as soon as it creates it (remember that in case that you are using the all-in-one approach you can jump into the next step, <a href="#onboard-finalboot">Automatic onboarding</a>)</p>
+</div>
+<div class="paragraph">
+<p>In the real world where you probably have the FDO services in dedicated servers that does not happen, so you need to copy the files to "register" the new device that you have created, otherwise the device will ask for its onboarding instructions but since it&#8217;s not registered, it will get nothing.</p>
 </div>
 <div class="paragraph">
 <p>You need to distribute the Voucher that has been created in the Manufacturing server during the edge device first boot, to both the Rendezvous and the Owner server.</p>
