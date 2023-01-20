@@ -380,6 +380,49 @@ sudo systemctl enable --now libvirtd</code></pre>
 <div class="paragraph">
 <p>You need to be sure that your host firewall and virtual bridge permit connectivity between the host and the VMs, between VMs and from VM to Internet.</p>
 </div>
+<div class="sect2">
+<h3 id="_notes_for_macbook_m1_chip_users"><a class="anchor" href="#_notes_for_macbook_m1_chip_users"></a>Notes for MacBook M1 chip users</h3>
+<div class="paragraph">
+<p>If you are using Mac M1, this lab can be done using the <a href="https://access.redhat.com/downloads/content/419/ver=/rhel---9/9.1/aarch64/product-software">aarch64 version of RHEL</a> 9.0 or newer, 9.1 recommended.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>For the virtualization environment, using QEMU on MacOS with libvirt 8.0 or newer is required for the OStree images to start.</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It is possible to run the VM&#8217;s on Apple Virtualization, but currently there is a blocking issue regarding communication between different VM&#8217;s on the same host.</p>
+</div>
+<div class="paragraph">
+<p>Instructions for the <a href="https://www.arthurkoziel.com/running-virt-manager-and-libvirt-on-macos/">setup of virt-manager and libvirt can be found here</a>:</p>
+</div>
+<div class="paragraph">
+<p>Requirements:
+* <a href="https://docs.brew.sh/Installation">Brew</a>
+* Python3 - part of the Xcode installation, or install using: <code>brew install python</code></p>
+</div>
+<div class="paragraph">
+<p>Installation of virt-manager steps:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">brew tap arthurk/homebrew-virt-manager
+brew install virt-manager virt-viewer</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Usage:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">brew services start libvirt
+virt-manager -c "qemu:///session" --no-fork</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Leave the terminal open for virt-manager to remain running, or run it in a disowned state by adding &amp; to the end of the command.</p>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
