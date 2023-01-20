@@ -47,6 +47,37 @@ This lab could be run completely offline, but in order to avoid creating local r
 
 You need to be sure that your host firewall and virtual bridge permit connectivity between the host and the VMs, between VMs and from VM to Internet.
 
+=== Notes for MacBook M1 chip users
+
+If you are using Mac M1, this lab can be done using the https://access.redhat.com/downloads/content/419/ver=/rhel---9/9.1/aarch64/product-software[aarch64 version of RHEL] 9.0 or newer, 9.1 recommended. 
+
+ For the virtualization environment, using QEMU on MacOS with libvirt 8.0 or newer is required for the OStree images to start.
+
+It is possible to run the VM's on Apple Virtualization, but currently there is a blocking issue regarding communication between different VM's on the same host.
+
+Instructions for the https://www.arthurkoziel.com/running-virt-manager-and-libvirt-on-macos/[setup of virt-manager and libvirt can be found here]: 
+
+Requirements:
+* https://docs.brew.sh/Installation[Brew]
+* Python3 - part of the Xcode installation, or install using: `brew install python`
+
+Installation of virt-manager steps:
+
+```
+brew tap arthurk/homebrew-virt-manager
+brew install virt-manager virt-viewer
+```
+
+Usage:
+
+```
+brew services start libvirt
+virt-manager -c "qemu:///session" --no-fork
+```
+
+Leave the terminal open for virt-manager to remain running, or run it in a disowned state by adding & to the end of the command.
+
+
 [#arch]
 == Choose your lab architecture
 
