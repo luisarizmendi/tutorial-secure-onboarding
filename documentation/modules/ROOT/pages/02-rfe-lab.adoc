@@ -333,7 +333,7 @@ Then you need to apply those variables into the Blueprint template:
 [.console-input]
 [source,bash,subs="+macros,+attributes"]
 ----
-sed -i "s|<SSH PUB KEY>|${SSH_PUB_KEY}|g" ~/blueprint-insights.toml
+sed -i "s|<SSH PUB KEY>|$(echo ${SSH_PUB_KEY})|g" ~/blueprint-insights.toml
 sed -i "s|<ADMIN PASSW>|${ADMIN_PASSW}|g" ~/blueprint-insights.toml
 ----
 
