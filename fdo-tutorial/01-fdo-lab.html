@@ -1325,7 +1325,7 @@ ADMIN_TOKEN=$(grep token /etc/fdo/owner-onboarding-server.yml  | awk '{print $2}
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sed -i "s|&lt;SSH PUB KEY&gt;|${SSH_PUB_KEY}|g" ~/serviceinfo_api_server.yml
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sed -i "s|&lt;SSH PUB KEY&gt;|$(echo ${SSH_PUB_KEY})|g" ~/serviceinfo_api_server.yml
 sed -i "s|&lt;PATH FILES&gt;|${PATH_FILES}|g" ~/serviceinfo_api_server.yml
 sed -i "s|&lt;RED HAT USER&gt;|${RED_HAT_USER}|g" ~/serviceinfo_api_server.yml
 sed -i "s|&lt;RED HAT PASSWORD&gt;|${RED_HAT_PASSWORD}|g" ~/serviceinfo_api_server.yml
