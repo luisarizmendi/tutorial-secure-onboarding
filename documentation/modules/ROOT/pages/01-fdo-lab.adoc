@@ -933,7 +933,7 @@ Finally, use these variables to update the example `serviceinfo-api-server.yml` 
 [.console-input]
 [source,bash,subs="+macros,+attributes"]
 ----
-sed -i "s|<SSH PUB KEY>|${SSH_PUB_KEY}|g" ~/serviceinfo_api_server.yml
+sed -i "s|<SSH PUB KEY>|$(echo ${SSH_PUB_KEY})|g" ~/serviceinfo_api_server.yml
 sed -i "s|<PATH FILES>|${PATH_FILES}|g" ~/serviceinfo_api_server.yml
 sed -i "s|<RED HAT USER>|${RED_HAT_USER}|g" ~/serviceinfo_api_server.yml
 sed -i "s|<RED HAT PASSWORD>|${RED_HAT_PASSWORD}|g" ~/serviceinfo_api_server.yml
