@@ -28,7 +28,7 @@ sudo dnf -y install libguestfs-tools-c libvirt-daemon-config-network libvirt-dae
 sudo systemctl enable --now libvirtd
 ----
 
-After installing those packages you can create VMs using `virt-manager` or `virt-install` running a command similar to the one shown below:
+After installing those packages and downloading RHEL 9.0 or 9.1 ISO, you can create VMs using `virt-manager` or `virt-install` running a command similar to the one shown below:
 
 [source,bash,subs="+macros,+attributes"]
 ----
